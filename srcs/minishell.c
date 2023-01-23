@@ -6,30 +6,61 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/01/18 21:12:53 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:40:00 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	ft_signal_handler(int sig, siginfo_t *info, void *context)
+/**
+ * @brief	Displays the prompt and calls a new function "parsing" which returns an int (ret) and takes input and t_cmd struct as arguments
+ */
+int	get_input(void)
 {
-	(void)context;
-	(void)info;
-	(void)sig;
-	printf("[%s]\n", __FUNCTION__);
-	printf("\n");
-	prompt_and_read();
+	char	*input;
+	int		ret;
+
+	ret = 1;
+	input = readline("prompt >");
+	if (!input)
+		return (0);
+	if (!ft_strlen(input))
+		return (1);
+	// declarer la struct t_cmd + l'init et appeler la fonction de parsing en lui passant la struct.
+	return (ret);
 }
 
-int main(int argc, char **argv, char **env)
+/**
+ * @brief	Handle get_input returns
+ */
+void	prompt(void)
 {
-	struct sigaction	act;
-	
-	act.sa_flags = SA_SIGINFO;
-	act.sa_sigaction = &ft_signal_handler;
-	if (sigaction(SIGINT, &act, NULL) == -1)
-		exit(EXIT_FAILURE);
-	parsing(argc, argv, env);
+	int	ret;
+
+	ret = 0;
+	while (true)
+	{
+		ret = get_input();
+		if (ret == 0)
+		{
+			printf("CTRL+D = EXIT\n");
+			exit(1);// EXIT car ctrl + D
+		}
+		// else if (ret == ???) Voir apres ce qu'il faudrait rajouter pour gerer tous les cas.
+	}
+	return ;
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	(void)argv;
+	(void)env;
+	if (argc == 1)
+	{
+		init_term(0);
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, sig_handler);
+		prompt();
+	}
 	return (0);
 }

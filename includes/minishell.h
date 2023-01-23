@@ -5,6 +5,8 @@
 # include "../libft/includes/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -27,7 +29,12 @@
 //     bool    error;
 // }    t_command;
 
-void parsing(int argc, char **argv, char **env);
-char	**prompt_and_read(void);
+// @INIT_TERM_C
+void	set_term(struct termios *term, bool mode);
+void	init_term(bool mode);
+// @INIT_ENV_C
+
+// @SIG_HANDLER_C
+void	sig_handler(int sig);
 
 #endif
