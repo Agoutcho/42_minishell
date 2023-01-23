@@ -28,5 +28,6 @@
 // }    t_command;
 
 void parsing(int argc, char **argv, char **env);
+char	**prompt_and_read(void);
 
 #endif

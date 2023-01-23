@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:20:57 by nradal            #+#    #+#             */
-/*   Updated: 2023/01/17 23:22:38 by nradal           ###   ########.fr       */
+/*   Updated: 2023/01/18 21:13:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <fcntl.h>
 
 // char	*get_path(char *cmd, char **env) // verifie qu'il existe un path/cmd.	{oui = return path, non = null}
 // {
@@ -42,7 +43,14 @@ char	**prompt_and_read(void) // lit une ligne de l'entrée standard et la divise
 {
 	char	*line;
 
-	line = readline("prompt> ");
+	printf("[%s]\n", __FUNCTION__);
+	printf("prompt> ");
+	line = readline(NULL);
+	// printf("[%s] line %%p : %p\n", __FUNCTION__, line);
+	// if (line == NULL)
+	// 	exit(0);	
+	// printf("[%s] line s : %s, size : %zu\n", __FUNCTION__, line, ft_strlen(line));
+	// printf("[%s] line d[0] : %d, d[1] : %d, d[2] : %d, d[3] : %d\n", __FUNCTION__, line[0], line[1], line[2], line[3]);
 	if (line != NULL)
 		return (ft_split(line, ' '));
 	else
@@ -62,11 +70,12 @@ void parsing(int argc, char **argv, char **env)
 	while ((input = prompt_and_read()) != NULL)
 	{
 		// Affichage
-		int i = 0;
-		while (input[i] != NULL)
-		{
-			printf("\t(Affichage) %s\n", input[i]);
-			i++;
-		}
+		// int i = 0;
+		// printf("[%s]\n", __FUNCTION__);
+		// while (env[i] != NULL)
+		// {
+		// 	printf("\t(Affichage) %s\n", env[i]);
+		// 	i++;
+		// }
 	}
 }
