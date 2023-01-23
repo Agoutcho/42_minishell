@@ -17,17 +17,18 @@
 # include <sys/types.h>
 # include <errno.h>
 
-// typedef struct s_command {
-//     int        argc;        // nombre de mots dans argv
-//     char    **argv;         //ce que j'ai recup dans le prompt
-//     // gérer les redirections j'ai pas encore d'idée de comment faire. 
-//     char    *exec_path;      //le path de la commande a executer
-//     int        outfile;      // les files descriptor
-//     int        infile;
-//     int        heredoc;
-//     bool    is_builtins;
-//     bool    error;
-// }    t_command;
+typedef struct s_command {
+    char    **env;
+    // gérer les redirections j'ai pas encore d'idée de comment faire. 
+    char    **parsed_line;
+    char    *input;
+    char    *exec_path;      //le path de la commande a executer
+    int        outfile;      // les files descriptor
+    int        infile;
+    int        heredoc;
+    bool    is_builtins;
+    bool    error;
+}    t_command;
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);
