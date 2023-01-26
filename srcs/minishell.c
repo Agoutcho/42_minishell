@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/01/23 21:17:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:47:17 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,25 @@ void toutfree(char *input)
  */
 int	get_input(t_command *command)
 {
-	char	*input;
 	int		ret;
 
 	ret = 1;
 	command->input = readline("Rachele ═> ");
-	input = command->input;
-	if (!input)
+	if (!command->input)
 	{
-		toutfree(input);
+		toutfree(command->input);
 		return (0);
 	}
-	if (!ft_strlen(input))
+	if (!ft_strlen(command->input))
 	{
-		toutfree(input);
+		toutfree(command->input);
 		return (1);
 	}
-	if (input && *input && input[0] != ' ')
-    	add_history(input);
-	// declarer la struct t_cmd + l'init et appeler la fonction de parsing en lui passant la struct.
-	toutfree(input);
-	return (ret);
+	if (command->input && *command->input && command->input[0] != ' ')
+    	add_history(command->input);
+	parsing(command);
+	toutfree(command->input);
+	return (1);
 }
 
 /**
@@ -78,13 +76,14 @@ int	main(int argc, char **argv, char **env)
 {
 	t_command command;
 	
+	(void)env;
 	(void)argv;
 	if (argc == 1)
 	{
 		init_term(0);
 		// signal(SIGINT, sig_handler);
 		// signal(SIGQUIT, sig_handler);
-		command.env = env;
+		// command.env = env;
 		prompt(&command);
 	}
 	return (0);

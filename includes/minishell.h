@@ -23,9 +23,10 @@
  * 
  * @param x : has to be a char *
  * @param ... : is variadic macros
+ * 
+ * DOC : https://gcc.gnu.org/onlinedocs/cpp/Variadic-Macros.html#Variadic-Macros
  */
-# define DEBUGv(x, ...) printf("[%s:%d] "x"\n",__FUNCTION__ ,__LINE__, __VA_ARGS__)
-# define DEBUG(x) printf("[%s:%d] "x"\n",__FUNCTION__ ,__LINE__)
+# define DEBUG(x, ...) printf("[%s:%d] "x"\n",__FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
 typedef enum s_redir {
     in = 1, // ( < )
@@ -35,9 +36,9 @@ typedef enum s_redir {
 }   t_redir;
 
 typedef enum s_quote {
-    no,
-    big, // ( < )
-    litlle,    // ( > )
+    no_quote,
+    big_quote,        // ""
+    little_quote,     // ''
 }   t_quote;
 
 typedef struct s_parsing {
@@ -63,7 +64,7 @@ typedef struct s_path {
 typedef struct s_command {
     t_env    *env;
     t_path   path;
-    // gérer les redirections j'ai pas encore d'idée de comment faire. 
+    t_quote  quote;
     char    **parsed_line;
     char    *input;
     char    *exec_path;      //le path de la commande a executer
@@ -73,6 +74,10 @@ typedef struct s_command {
     bool    is_builtins;
     bool    error;
 }    t_command;
+
+// PARSING
+void parsing(t_command *command);
+void check_parse_error(t_command *command);
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);
