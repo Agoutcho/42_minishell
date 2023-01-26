@@ -16,6 +16,7 @@ INC_DIR = ./includes/
 SRC_NAME =	minishell.c	\
 			init_term.c	\
 			parsing.c \
+			parse_error.c \
 # signal_handler.c	\
 			
 OBJ_NAME = $(SRC_NAME:.c=.o)
