@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:34:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/01/26 23:54:19 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:00:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void check_quotes(t_command *command)
 {
     int i;
-    int big;
-    int little;
 
-    big = 0;
-    little = 0;
     i = 0;
     while (command->input[i])
     {
