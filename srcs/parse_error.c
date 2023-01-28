@@ -6,12 +6,37 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:34:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/01/27 00:00:49 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/01/28 05:11:52 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int is_last_value_ok(char *str, int i)
+{
+    int fd;
+
+    fd = STDERR_FILENO;
+    while (i-- > 0 && str[i])
+    {
+        if (str[i] == '|')
+        {
+            ft_fprintf(fd ,"Rachele: syntax error: unexpected end of file\n");
+            return (0);
+        }
+        else if (str[i] == '<' || str[i] == '>')
+        {
+            ft_fprintf(fd ,"Rachele: syntax error near ");
+            ft_fprintf(fd ,"unexpected token `newline'\n");
+            return (0);
+        }
+        else if (str[i] != ' ')
+            return (1);
+    }
+    return (1);
+}
+
+// command->input est malloc 
 void check_quotes(t_command *command)
 {
     int i;
@@ -32,42 +57,98 @@ void check_quotes(t_command *command)
     if (command->quote == big_quote)
     {
         free(command->input);
-        ft_fprintf(STDERR_FILENO ,"Rachele: syntax error near unexpected token `\"'\n");
-        exit(128);
+        ft_fprintf(STDERR_FILENO ,"Rachele: unexpected EOF while looking for matching `\"'\n");
+        ft_fprintf(STDERR_FILENO ,"Rachele: syntax error: unexpected end of file\n");
+        exit(2);
     }
     if (command->quote == little_quote)
     {
         free(command->input);
-        ft_fprintf(STDERR_FILENO ,"Rachele: syntax error near unexpected token `''\n");
-        exit(128);
+        ft_fprintf(STDERR_FILENO ,"Rachele: unexpected EOF while looking for matching `''\n");
+        ft_fprintf(STDERR_FILENO ,"Rachele: syntax error: unexpected end of file\n");
+        exit(2);
+    }
+    if (!is_last_value_ok(command->input, i))
+    {
+        free(command->input);
+        exit(2);
     }
 }
 
-int move_space(char *str, int i)
+long move_space(char *str, long *i)
 {
-    while (str[i] && str[i] == ' ')
-        i++;
-    if (!str[i])
+    while (str[*i] && str[*i] == ' ')
+        (*i)++;
+    if (!str[*i])
         return (-1);
-    return (i);
+    return (*i);
 }
 
-void check_parse_error(t_command *command)
+void exit_error(char c, char *input)
 {
-    int i;
+    free(input);
+    ft_fprintf(STDERR_FILENO ,"Rachele: syntax error near unexpected token `%c'\n", c);
+    exit(2);
+}
+
+int is_redir_ok(char *str, long i)
+{
+    if (str[i] != '>' && str[i] != '<')
+        return (1);
+    if (str[i] == '>' && str[i + 1] != '>')
+    {
+        while (str[i] && str[i] == ' ')
+            i++;
+        if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+            exit_error(str[i], str);
+    }
+    else if (str[i] == '<' && str[i + 1] != '<')
+    {
+        while (str[i] && str[i] == ' ')
+            i++;
+        if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+            exit_error(str[i], str);
+    }
+    else
+    {
+        i += 2;
+        while (str[i] && str[i] == ' ')
+            i++;
+        if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+            exit_error(str[i], str);
+    }
+    return (1);
+}
+
+void check_redir(t_command *command)
+{
+    long i;
 
     i = 0;
     command->quote = no_quote;
+    while (command->input[i])
+    {
+        if (command->quote == no_quote && is_redir_ok(command->input, i))
+            i++;
+        i++;
+    }
+}
+
+// command->input est malloc
+void check_parse_error(t_command *command)
+{
+    long i;
+
+    i = 0;
+    command->quote = no_quote;
+    check_redir(command);
     check_quotes(command);
-    // while (command->input[i])
-    // {
-    //     if ((i = move_space(command->input, i)) == -1)
-    //         return ;
-    //     // if (!is_quotes_ok(command->input, i))
-    //     // {
-    //     //     free(command->input);
-    //     //     ft_fprintf(2 ,"Rachele: syntax error near unexpected token `;;'\n");
-    //     //     exit(128);
-    //     // }
-    // }
+    if (move_space(command->input, &i) == -1)
+        return ;
+    if (command->input[i] == '|')
+    {
+        free(command->input);
+        ft_fprintf(STDERR_FILENO ,"Rachele: syntax error near unexpected token `|'\n");
+        exit(2);
+    }
 }

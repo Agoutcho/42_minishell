@@ -41,14 +41,6 @@ typedef enum s_quote {
     little_quote,     // ''
 }   t_quote;
 
-typedef struct s_parsing {
-    char *key; //PATH=
-    char *value; // /bin/:/usr/bin
-    int affiche_env; // 0 ou 1
-    struct s_env *next;
-    t_quote quote;
-}    t_parsing;
-
 typedef struct s_env {
     char *key; // PATH=
     char *value; // /bin/:/usr/bin
@@ -61,10 +53,54 @@ typedef struct s_path {
     char **path_splitted; // [0] = "/bin/" [1] = "/usr/bin"
 }    t_path;
 
+/**
+ * @brief Structure pour les redirections
+ *        type le type de redirection
+ *        file_name le nom du fichier 
+ */
+typedef struct s_redirect {
+    t_redir type;
+    char *file_name;
+}   t_redirect;
+
+/**
+ * @brief Structure pour les redirections
+ *        size est le nombre de redirection
+ *        redir est un tableau avec toutes les redirections
+ */
+typedef struct s_redirect_array {
+    unsigned long size;
+    t_redirect *redir_array;
+}   t_redirect_array;
+
+/**
+ * @brief Structure avec la commande, 
+ *        les arguments et options de la commande
+ *        et un boolean qui indique si la commande
+ *        a ete trouve ou pas
+ */
+typedef struct s_cmd_array {
+    char *the_cmd;
+    char **args;
+    int is_cmd_filled;
+    t_redirect_array redir;
+}   t_cmd_array;
+
+/**
+ * @brief Une structure avec un tableau de commande
+ *        de taille size. 
+ *        Separer par les pipes
+ */
+typedef struct s_cmd_hub {
+    unsigned long size;
+    t_cmd_array *cmd_array;
+}   t_cmd_hub;
+
 typedef struct s_command {
     t_env    *env;
     t_path   path;
     t_quote  quote;
+    t_cmd_hub cmd;
     char    **parsed_line;
     char    *input;
     char    *exec_path;      //le path de la commande a executer
@@ -78,6 +114,7 @@ typedef struct s_command {
 // PARSING
 void parsing(t_command *command);
 void check_parse_error(t_command *command);
+void init_command(t_command *command);
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);
