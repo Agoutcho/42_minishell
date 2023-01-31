@@ -147,6 +147,41 @@ void check_redir(t_command *command)
     }
 }
 
+int is_pipe_ok(char *str, long i)
+{
+    if (str[i] == '|')
+    {
+        i++;
+        while (str[i] && str[i] == ' ')
+            i++;
+        if (str[i] == '|')
+            exit_error(str[i], str);
+    }
+    return (1);
+}
+
+void check_pipe(t_command *command)
+{
+    long i;
+
+    i = 0;
+    command->quote = no_quote;
+    while (command->input[i])
+    {
+        if (command->input[i] == '"' && command->quote == no_quote)
+            command->quote = big_quote;
+        else if (command->input[i] == '"' && command->quote == big_quote)
+            command->quote = no_quote;
+        if (command->input[i] == '\'' && command->quote == no_quote)
+            command->quote = little_quote;
+        else if (command->input[i] == '\'' && command->quote == little_quote)
+            command->quote = no_quote;
+        if (command->quote == no_quote && !is_pipe_ok(command->input, i))
+            exit_error(command->input[i], command->input);
+        i++;
+    }
+}
+
 // command->input est malloc
 void check_parse_error(t_command *command)
 {
@@ -155,6 +190,7 @@ void check_parse_error(t_command *command)
     i = 0;
     command->quote = no_quote;
     check_redir(command);
+    check_pipe(command);
     check_quotes(command);
     if (move_space(command->input, &i) == -1)
         return ;
