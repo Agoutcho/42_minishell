@@ -42,6 +42,7 @@ void check_quotes(t_command *command)
     int i;
 
     i = 0;
+    command->quote = no_quote;
     while (command->input[i])
     {
         if (command->input[i] == '"' && command->quote == no_quote)
@@ -107,6 +108,7 @@ int is_redir_ok(char *str, long i)
     }
     else if (str[i] == '<' && str[i + 1] != '<')
     {
+        i++;
         while (str[i] && str[i] == ' ')
             i++;
         if (str[i] == '|' || str[i] == '>' || str[i] == '<')
@@ -131,8 +133,16 @@ void check_redir(t_command *command)
     command->quote = no_quote;
     while (command->input[i])
     {
-        if (command->quote == no_quote && is_redir_ok(command->input, i))
-            i++;
+        if (command->input[i] == '"' && command->quote == no_quote)
+            command->quote = big_quote;
+        else if (command->input[i] == '"' && command->quote == big_quote)
+            command->quote = no_quote;
+        if (command->input[i] == '\'' && command->quote == no_quote)
+            command->quote = little_quote;
+        else if (command->input[i] == '\'' && command->quote == little_quote)
+            command->quote = no_quote;
+        if (command->quote == no_quote && !is_redir_ok(command->input, i))
+            exit_error(command->input[i], command->input);
         i++;
     }
 }
