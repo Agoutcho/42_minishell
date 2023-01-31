@@ -26,9 +26,6 @@ void toutfree(char *input)
  */
 int	get_input(t_command *command)
 {
-	int		ret;
-
-	ret = 1;
 	command->input = readline("Rachele ═> ");
 	if (!command->input)
 	{

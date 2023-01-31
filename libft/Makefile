@@ -16,8 +16,6 @@ INC_PATH = ./includes/
 SRC_NAME =	ft_atoi.c 				\
 			ft_bzero.c 				\
 			ft_calloc.c 			\
-			ft_fprintf.c			\
-			ft_fprintf_utils.c		\
 			ft_isalnum.c 			\
 			ft_isalpha.c 			\
 			ft_isascii.c 			\
