@@ -16,6 +16,5 @@
 void parsing(t_command *command)
 {
     check_parse_error(command);
-    
     // init_command(command);
 }

@@ -28,13 +28,6 @@
  */
 # define DEBUG(x, ...) printf("[%s:%d] "x"\n",__FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
-typedef enum s_redir {
-    in = 1, // ( < )
-    out,    // ( > )
-    append, // ( >> )
-    heredoc // ( << )
-}   t_redir;
-
 typedef enum s_quote {
     no_quote,
     big_quote,        // ""
@@ -45,6 +38,7 @@ typedef struct s_env {
     char *key; // PATH=
     char *value; // /bin/:/usr/bin
     int affiche_env; // 0 ou 1
+    struct s_env *first;
     struct s_env *next;
 }    t_env;
 
@@ -52,6 +46,23 @@ typedef struct s_path {
     char *path; // PATH=/bin/:/usr/bin
     char **path_splitted; // [0] = "/bin/" [1] = "/usr/bin"
 }    t_path;
+
+// /**
+//  * @brief Structure pour les redirections
+//  *        size est le nombre de redirection
+//  *        redir est un tableau avec toutes les redirections
+//  */
+// typedef struct s_redirect_array {
+//     unsigned long size;
+//     t_redirect *redir_array;
+// }   t_redirect_array;
+
+typedef enum e_redir {
+    e_in = 1, // ( < )
+    e_out,    // ( > )
+    e_append, // ( >> )
+    e_heredoc // ( << )
+}   t_redir;
 
 /**
  * @brief Structure pour les redirections
@@ -64,16 +75,6 @@ typedef struct s_redirect {
 }   t_redirect;
 
 /**
- * @brief Structure pour les redirections
- *        size est le nombre de redirection
- *        redir est un tableau avec toutes les redirections
- */
-typedef struct s_redirect_array {
-    unsigned long size;
-    t_redirect *redir_array;
-}   t_redirect_array;
-
-/**
  * @brief Structure avec la commande, 
  *        les arguments et options de la commande
  *        et un boolean qui indique si la commande
@@ -83,7 +84,8 @@ typedef struct s_cmd_array {
     char *the_cmd;
     char **args;
     int is_cmd_filled;
-    t_redirect_array redir;
+    unsigned long redir_size;
+    t_redirect *redir_array;
 }   t_cmd_array;
 
 /**
@@ -115,6 +117,7 @@ typedef struct s_command {
 void parsing(t_command *command);
 void check_parse_error(t_command *command);
 void init_command(t_command *command);
+int init_env(t_command *command, char **env);
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);

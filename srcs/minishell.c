@@ -72,15 +72,18 @@ void	prompt(t_command *command)
 int	main(int argc, char **argv, char **env)
 {
 	t_command command;
+	char **envp;
 	
 	(void)env;
 	(void)argv;
 	if (argc == 1)
 	{
+		envp = env;
 		init_term(0);
 		// signal(SIGINT, sig_handler);
 		// signal(SIGQUIT, sig_handler);
-		// command.env = env;
+		DEBUG("INIT ENV");
+		init_env(&command, envp);
 		prompt(&command);
 	}
 	return (0);

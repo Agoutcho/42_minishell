@@ -15,6 +15,7 @@ INC_DIR = ./includes/
 #	SRC
 SRC_NAME =	minishell.c	\
 			init_command.c \
+			init_env.c \
 			init_term.c	\
 			parsing.c \
 			parse_error.c \
