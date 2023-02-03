@@ -28,6 +28,8 @@
  */
 # define DEBUG(x, ...) printf("[%s:%d] "x"\n",__FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
+// valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
+
 typedef enum s_quote {
     no_quote,
     big_quote,        // ""
@@ -103,7 +105,6 @@ typedef struct s_command {
     t_path   path;
     t_quote  quote;
     t_cmd_hub cmd;
-    char    **parsed_line;
     char    *input;
     char    *exec_path;      //le path de la commande a executer
     int        outfile;      // les files descriptor

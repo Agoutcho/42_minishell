@@ -44,6 +44,42 @@ int	get_input(t_command *command)
 	return (1);
 }
 
+void bigfree(t_command *command)
+{
+	t_env *temp;
+
+	command->env = command->env->first;
+	while (command->env->next)
+	{
+		temp = command->env;
+		if (command->env->key)
+		{
+			free (command->env->key);
+			command->env->key = NULL;
+		}
+		if (command->env->value)
+		{
+			free (command->env->value);
+			command->env->value = NULL;
+		}
+		command->env = command->env->next;
+		free (temp);
+	}
+	temp = command->env;
+	if (command->env->key)
+	{
+		free (command->env->key);
+		command->env->key = NULL;
+	}
+	if (command->env->value)
+	{
+		free (command->env->value);
+		command->env->value = NULL;
+	}
+	command->env = command->env->next;
+	free (temp);
+}
+
 /**
  * @brief	Handle get_input returns
  */
@@ -58,6 +94,7 @@ void	prompt(t_command *command)
 		if (ret == 0)
 		{
 			printf("CTRL+D = EXIT\n");
+			bigfree(command);
 			exit(1);// EXIT car ctrl + D
 		}
 		else 

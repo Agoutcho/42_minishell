@@ -12,6 +12,19 @@
 
 #include "../includes/minishell.h"
 
+char *change_shlvl(char *env_value)
+{
+    char *shlvl;
+
+    DEBUG("     env_value :  %p", &env_value)
+    shlvl = ft_itoa(ft_atoi(env_value) + 1);
+    DEBUG("     shlvl :      %p", &shlvl)
+    free(env_value);
+    DEBUG("     env_value :  %p", &env_value)
+    DEBUG("     shlvl :      %p", &shlvl)
+    return (shlvl);
+}
+
 int lst_add_env_value(char *envp, t_env *env)
 {
     int key_len;
@@ -32,46 +45,89 @@ int lst_add_env_value(char *envp, t_env *env)
     if (!env->value)
         return (0);
     ft_strlcat(env->key, envp, key_len + 2);
-    ft_strlcat(env->value, envp + key_len + 1, value_len + 2);
+    ft_strlcpy(env->value, envp + key_len + 1, value_len + 2);
+    if (ft_strncmp(env->key, "SHLVL=", ft_strlen(env->key) + 1) == 0)
+    {
+        DEBUG("env->value : %p", &env->value)
+        env->value = change_shlvl(env->value);
+        DEBUG("env->value : %p", &env->value)
+    }
+    return (1);
+}
+
+int lst_add_back_env(t_command *command, char **env, int j)
+{
+    t_env *new;
+    t_env *temp;
+
+    // DEBUG("command->first key : %s", command->env->first->key);
+    temp = command->env;
+    // DEBUG("temp->first key : %s", temp->first->key);
+    while (temp->next)
+        temp = temp->next;
+    // DEBUG("last temp->key : %s", temp->key);
+    new = (t_env *)malloc(sizeof(t_env));
+    if (!new)
+        return (0);
+    new->first = temp->first;
+    // DEBUG("new->first key : %s", new->first->key);
+    new->next = NULL;
+    temp->next = new;
+    if (!lst_add_env_value(env[j], new))
+        return (0);
+    return (1);
+}
+
+int copy_env(t_command *command, char **env)
+{
+    int j;
+    t_env *first;
+    
+    first = (t_env *)malloc(sizeof(t_env));
+    if (!first)
+        return (0);
+    command->env = first;
+    command->env->first = first;
+    command->env->next = NULL;
+    if (!lst_add_env_value(env[0], command->env))
+        return (0);
+    j = 1;
+    while (env[j])
+    {
+        // DEBUG("------------------")
+        // DEBUG("Before add back")
+        // DEBUG("env[%d] : %s",j ,env[j])
+        // DEBUG("command->env->key : %s", command->env->key)
+        // DEBUG("command->env->first->key : %s", command->env->first->key)
+        // DEBUG("------------------")
+        if (!lst_add_back_env(command, env, j))
+            return (0);
+        // DEBUG("env[%d] : %s",j ,env[j])
+        // DEBUG("------------------")
+        // DEBUG("After add back")
+        // DEBUG("env[%d] : %s",j ,env[j])
+        // DEBUG("command->env->key : %s", command->env->key)
+        // DEBUG("command->env->first->key : %s", command->env->first->key)
+        // DEBUG("------------------")
+        j++;
+    }
     return (1);
 }
 
 int init_env(t_command *command, char **env)
 {
-    int j;
-    t_env *first;
-    t_env *new;
-
-    (void)command;
-    j = 0;
-    if (env[j] != NULL)
+    t_env *temp;
+    if (env[0] != NULL && !copy_env(command, env))
+        return (0);
+    temp = command->env;
+    DEBUG("command->env->first->key : %s", command->env->first->key)
+    while (temp->next)
     {
-        first = (t_env *)malloc(sizeof(t_env));
-        if (!first)
-            return (0);
-        command->env = first;
-        command->env->first = first;
-        command->env->next = NULL;
-        if (!lst_add_env_value(env[j], command->env))
-            return (0);
-        j++;
-        while (env[j])
-        {
-            new = (t_env *)malloc(sizeof(t_env));
-            if (!new)
-                return (0);
-            new->first = first;
-            new->next = NULL;
-            command->env->next = new;
-            command->env = new;
-            if (!lst_add_env_value(env[j], command->env))
-                return (0);
-            DEBUG("enj[%d] : %s", j, env[j])
-            DEBUG("key : %s", command->env->key)
-            DEBUG("value : %s", command->env->value)
-            j++;
-        }
-        command->env = first;
+        // DEBUG("temp->first->key : %s", temp->first->key)
+        // DEBUG("temp->key : %s", temp->key)
+        // DEBUG("temp->value : %s", temp->value)
+        temp = temp->next;
     }
+    DEBUG("command->env->first->key : %s", command->env->first->key)
     return (1);
 }
