@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/01/20 17:58:42 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/04 03:20:48 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ int lst_add_env_value(char *envp, t_env *env)
     ft_strlcat(env->key, envp, key_len + 2);
     ft_strlcpy(env->value, envp + key_len + 1, value_len + 2);
     if (ft_strncmp(env->key, "SHLVL=", ft_strlen(env->key) + 1) == 0)
-    {
-        DEBUG("env->value : %p", &env->value)
         env->value = change_shlvl(env->value);
-        DEBUG("env->value : %p", &env->value)
-    }
+    env->affiche_env = 1;
     return (1);
 }
 
@@ -114,20 +111,18 @@ int copy_env(t_command *command, char **env)
     return (1);
 }
 
+// int create_env(t_command *command)
+// {
+//     t_env *first;
+
+//     first = NULL;
+// }
+
 int init_env(t_command *command, char **env)
 {
-    t_env *temp;
     if (env[0] != NULL && !copy_env(command, env))
         return (0);
-    temp = command->env;
-    DEBUG("command->env->first->key : %s", command->env->first->key)
-    while (temp->next)
-    {
-        // DEBUG("temp->first->key : %s", temp->first->key)
-        // DEBUG("temp->key : %s", temp->key)
-        // DEBUG("temp->value : %s", temp->value)
-        temp = temp->next;
-    }
-    DEBUG("command->env->first->key : %s", command->env->first->key)
+    // else if (env[0] == NULL && !create_env(command))
+    //     return (0);
     return (1);
 }

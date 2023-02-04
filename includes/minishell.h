@@ -119,6 +119,7 @@ void parsing(t_command *command);
 void check_parse_error(t_command *command);
 void init_command(t_command *command);
 int init_env(t_command *command, char **env);
+t_env *find_env_value(t_command *command, char *key);
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);

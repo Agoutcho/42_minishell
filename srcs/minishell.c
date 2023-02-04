@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/01/26 23:47:17 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/04 03:46:29 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,14 @@ void bigfree(t_command *command)
 	while (command->env->next)
 	{
 		temp = command->env;
-		if (command->env->key)
-		{
-			free (command->env->key);
-			command->env->key = NULL;
-		}
-		if (command->env->value)
-		{
-			free (command->env->value);
-			command->env->value = NULL;
-		}
+		toutfree(command->env->key);
+		toutfree(command->env->value);
 		command->env = command->env->next;
 		free (temp);
 	}
 	temp = command->env;
-	if (command->env->key)
-	{
-		free (command->env->key);
-		command->env->key = NULL;
-	}
-	if (command->env->value)
-	{
-		free (command->env->value);
-		command->env->value = NULL;
-	}
+	toutfree(command->env->key);
+	toutfree(command->env->value);
 	command->env = command->env->next;
 	free (temp);
 }
@@ -109,6 +93,7 @@ void	prompt(t_command *command)
 int	main(int argc, char **argv, char **env)
 {
 	t_command command;
+	t_env *temp;
 	char **envp;
 	
 	(void)env;
@@ -121,6 +106,8 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGQUIT, sig_handler);
 		DEBUG("INIT ENV");
 		init_env(&command, envp);
+		temp = find_env_value(&command, "PATH=");
+		DEBUG("PATH=%s",temp->value)
 		prompt(&command);
 	}
 	return (0);
