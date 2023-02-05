@@ -123,6 +123,7 @@ int init_env(t_command *command, char **env);
 t_env *find_env_value(t_command *command, char *key);
 void big_free(t_command *command);
 void set_quote(t_command *command, long *i);
+long move_space(char *str, long *i);
 
 
 // @INIT_TERM_C
