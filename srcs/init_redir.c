@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   init_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 20:03:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/05 01:57:41 by atchougo         ###   ########.fr       */
+/*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
+/*   Updated: 2023/02/05 03:32:06 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,21 @@
 
 // command->input est malloc 
 // command->env est malloc
-void parsing(t_command *command)
+// command->cmd.cmd_array est malloc
+void init_redir(t_command *command)
 {
-    check_parse_error(command);
-    init_command(command);
-    init_redir(command);
+    long i;
+    unsigned long j;
+
+    i = 0;
+    j = 0;
+    DEBUG("command->cmd.size : %ld", command->cmd.size);
+    command->quote = e_no_quote;
+    while (j < command->cmd.size && command->input[i])
+    {
+        set_quote(command, &i);
+        if (command->quote == e_no_quote && command->input[i] == '|')
+            j++;
+        if (command->quote == e_no_quote)
+    }
 }

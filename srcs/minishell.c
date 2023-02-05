@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/04 03:46:29 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:40:44 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void toutfree(char *input)
+void tout_free(char *input)
 {
 	if (input)
 	{
@@ -29,22 +29,22 @@ int	get_input(t_command *command)
 	command->input = readline("Rachele ═> ");
 	if (!command->input)
 	{
-		toutfree(command->input);
+		tout_free(command->input);
 		return (0);
 	}
 	if (!ft_strlen(command->input))
 	{
-		toutfree(command->input);
+		tout_free(command->input);
 		return (1);
 	}
 	if (command->input && *command->input && command->input[0] != ' ')
     	add_history(command->input);
 	parsing(command);
-	toutfree(command->input);
+	tout_free(command->input);
 	return (1);
 }
 
-void bigfree(t_command *command)
+void big_free(t_command *command)
 {
 	t_env *temp;
 
@@ -52,14 +52,14 @@ void bigfree(t_command *command)
 	while (command->env->next)
 	{
 		temp = command->env;
-		toutfree(command->env->key);
-		toutfree(command->env->value);
+		tout_free(command->env->key);
+		tout_free(command->env->value);
 		command->env = command->env->next;
 		free (temp);
 	}
 	temp = command->env;
-	toutfree(command->env->key);
-	toutfree(command->env->value);
+	tout_free(command->env->key);
+	tout_free(command->env->value);
 	command->env = command->env->next;
 	free (temp);
 }
@@ -78,7 +78,7 @@ void	prompt(t_command *command)
 		if (ret == 0)
 		{
 			printf("CTRL+D = EXIT\n");
-			bigfree(command);
+			big_free(command);
 			exit(1);// EXIT car ctrl + D
 		}
 		else 

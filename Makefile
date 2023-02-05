@@ -17,6 +17,7 @@ SRC_NAME =	minishell.c	\
 			add_to_env.c \
 			init_command.c \
 			init_env.c \
+			init_redir.c \
 			init_term.c	\
 			parsing.c \
 			parse_error.c \

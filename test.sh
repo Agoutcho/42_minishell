@@ -27,3 +27,7 @@
 <<< # F 
 <<> # F
 
+# comptage commande / pipes :
+# Ces deux tests a la suite affichent tous les deux 3 commandes :
+test '|' mpm | lol "|||lol" mdr | lol 
+test |"rezkofekozokergokf"

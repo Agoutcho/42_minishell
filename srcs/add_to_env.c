@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:53:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/04 02:44:18 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:13:55 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ int check_printable(char *str)
     return (0);
 }
 
+/**
+ * @brief Add a new element in env list at the end 
+ * 
+ * @param command 
+ * @param str The string to add like "var=lol"
+ * @return int 
+ */
 int add_to_env(t_command *command, char *str)
 {
     t_env *new;

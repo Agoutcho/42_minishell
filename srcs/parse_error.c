@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:34:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/01/28 05:11:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/05 03:20:16 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,39 @@ void check_quotes(t_command *command)
     int i;
 
     i = 0;
-    command->quote = no_quote;
+    command->quote = e_no_quote;
     while (command->input[i])
     {
-        if (command->input[i] == '"' && command->quote == no_quote)
-            command->quote = big_quote;
-        else if (command->input[i] == '"' && command->quote == big_quote)
-            command->quote = no_quote;
-        if (command->input[i] == '\'' && command->quote == no_quote)
-            command->quote = little_quote;
-        else if (command->input[i] == '\'' && command->quote == little_quote)
-            command->quote = no_quote;
+        if (command->input[i] == '"' && command->quote == e_no_quote)
+            command->quote = e_big_quote;
+        else if (command->input[i] == '"' && command->quote == e_big_quote)
+            command->quote = e_no_quote;
+        if (command->input[i] == '\'' && command->quote == e_no_quote)
+            command->quote = e_little_quote;
+        else if (command->input[i] == '\'' && command->quote == e_little_quote)
+            command->quote = e_no_quote;
         i++;
     }
-    if (command->quote == big_quote)
+    if (command->quote == e_big_quote)
     {
         free(command->input);
         ft_putstr_fd("Rachele: unexpected EOF while looking for matching `\"'\n", STDERR_FILENO);
         ft_putstr_fd("Rachele: syntax error: unexpected end of file\n", STDERR_FILENO);
+        big_free(command);
         exit(2);
     }
-    if (command->quote == little_quote)
+    if (command->quote == e_little_quote)
     {
         free(command->input);
         ft_putstr_fd("Rachele: unexpected EOF while looking for matching `''\n", STDERR_FILENO);
         ft_putstr_fd("Rachele: syntax error: unexpected end of file\n", STDERR_FILENO);
+        big_free(command);
         exit(2);
     }
     if (!is_last_value_ok(command->input, i))
     {
         free(command->input);
+        big_free(command);
         exit(2);
     }
 }
@@ -85,16 +88,17 @@ long move_space(char *str, long *i)
     return (*i);
 }
 
-void exit_error(char c, char *input)
+void exit_error(char c, char *input, t_command *command)
 {
     free(input);
     ft_putstr_fd("Rachele: syntax error near unexpected token `", STDERR_FILENO);
     ft_putchar_fd(c, STDERR_FILENO);
     ft_putstr_fd("'\n", STDERR_FILENO);
+    big_free(command);
     exit(2);
 }
 
-int is_redir_ok(char *str, long i)
+int is_redir_ok(char *str, long i, t_command *command)
 {
     if (str[i] != '>' && str[i] != '<')
         return (1);
@@ -104,7 +108,7 @@ int is_redir_ok(char *str, long i)
         while (str[i] && str[i] == ' ')
             i++;
         if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-            exit_error(str[i], str);
+            exit_error(str[i], str, command);
     }
     else if (str[i] == '<' && str[i + 1] != '<')
     {
@@ -112,7 +116,7 @@ int is_redir_ok(char *str, long i)
         while (str[i] && str[i] == ' ')
             i++;
         if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-            exit_error(str[i], str);
+            exit_error(str[i], str, command);
     }
     else
     {
@@ -120,7 +124,7 @@ int is_redir_ok(char *str, long i)
         while (str[i] && str[i] == ' ')
             i++;
         if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-            exit_error(str[i], str);
+            exit_error(str[i], str, command);
     }
     return (1);
 }
@@ -130,24 +134,25 @@ void check_redir(t_command *command)
     long i;
 
     i = 0;
-    command->quote = no_quote;
+    command->quote = e_no_quote;
     while (command->input[i])
     {
-        if (command->input[i] == '"' && command->quote == no_quote)
-            command->quote = big_quote;
-        else if (command->input[i] == '"' && command->quote == big_quote)
-            command->quote = no_quote;
-        if (command->input[i] == '\'' && command->quote == no_quote)
-            command->quote = little_quote;
-        else if (command->input[i] == '\'' && command->quote == little_quote)
-            command->quote = no_quote;
-        if (command->quote == no_quote && !is_redir_ok(command->input, i))
-            exit_error(command->input[i], command->input);
+        if (command->input[i] == '"' && command->quote == e_no_quote)
+            command->quote = e_big_quote;
+        else if (command->input[i] == '"' && command->quote == e_big_quote)
+            command->quote = e_no_quote;
+        if (command->input[i] == '\'' && command->quote == e_no_quote)
+            command->quote = e_little_quote;
+        else if (command->input[i] == '\'' && command->quote == e_little_quote)
+            command->quote = e_no_quote;
+        if (command->quote == e_no_quote \
+            && !is_redir_ok(command->input, i, command))
+            exit_error(command->input[i], command->input, command);
         i++;
     }
 }
 
-int is_pipe_ok(char *str, long i)
+int is_pipe_ok(char *str, long i, t_command *command)
 {
     if (str[i] == '|')
     {
@@ -155,7 +160,7 @@ int is_pipe_ok(char *str, long i)
         while (str[i] && str[i] == ' ')
             i++;
         if (str[i] == '|')
-            exit_error(str[i], str);
+            exit_error(str[i], str, command);
     }
     return (1);
 }
@@ -165,19 +170,20 @@ void check_pipe(t_command *command)
     long i;
 
     i = 0;
-    command->quote = no_quote;
+    command->quote = e_no_quote;
     while (command->input[i])
     {
-        if (command->input[i] == '"' && command->quote == no_quote)
-            command->quote = big_quote;
-        else if (command->input[i] == '"' && command->quote == big_quote)
-            command->quote = no_quote;
-        if (command->input[i] == '\'' && command->quote == no_quote)
-            command->quote = little_quote;
-        else if (command->input[i] == '\'' && command->quote == little_quote)
-            command->quote = no_quote;
-        if (command->quote == no_quote && !is_pipe_ok(command->input, i))
-            exit_error(command->input[i], command->input);
+        if (command->input[i] == '"' && command->quote == e_no_quote)
+            command->quote = e_big_quote;
+        else if (command->input[i] == '"' && command->quote == e_big_quote)
+            command->quote = e_no_quote;
+        if (command->input[i] == '\'' && command->quote == e_no_quote)
+            command->quote = e_little_quote;
+        else if (command->input[i] == '\'' && command->quote == e_little_quote)
+            command->quote = e_no_quote;
+        if (command->quote == e_no_quote \
+            && !is_pipe_ok(command->input, i, command))
+            exit_error(command->input[i], command->input, command);
         i++;
     }
 }
@@ -188,7 +194,7 @@ void check_parse_error(t_command *command)
     long i;
 
     i = 0;
-    command->quote = no_quote;
+    command->quote = e_no_quote;
     check_redir(command);
     check_pipe(command);
     check_quotes(command);
@@ -198,6 +204,7 @@ void check_parse_error(t_command *command)
     {
         free(command->input);
         ft_putstr_fd("Rachele: syntax error near unexpected token `|'\n", STDERR_FILENO);
+        big_free(command);
         exit(2);
     }
 }

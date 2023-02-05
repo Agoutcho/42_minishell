@@ -30,15 +30,15 @@
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 
-typedef enum s_quote {
-    no_quote,
-    big_quote,        // ""
-    little_quote,     // ''
+typedef enum e_quote {
+    e_no_quote,
+    e_big_quote,        // ""
+    e_little_quote,     // ''
 }   t_quote;
 
 typedef struct s_env {
-    char *key; // PATH=
-    char *value; // /bin/:/usr/bin
+    char *key; // PATH= //malloc
+    char *value; // /bin/:/usr/bin //malloc
     int affiche_env; // 0 ou 1
     struct s_env *first;
     struct s_env *next;
@@ -97,11 +97,11 @@ typedef struct s_cmd_array {
  */
 typedef struct s_cmd_hub {
     unsigned long size;
-    t_cmd_array *cmd_array;
+    t_cmd_array *cmd_array; //maloc
 }   t_cmd_hub;
 
 typedef struct s_command {
-    t_env    *env;
+    t_env    *env; //malloc
     t_path   path;
     t_quote  quote;
     t_cmd_hub cmd;
@@ -118,8 +118,12 @@ typedef struct s_command {
 void parsing(t_command *command);
 void check_parse_error(t_command *command);
 void init_command(t_command *command);
+void init_redir(t_command *command);
 int init_env(t_command *command, char **env);
 t_env *find_env_value(t_command *command, char *key);
+void big_free(t_command *command);
+void set_quote(t_command *command, long *i);
+
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);
