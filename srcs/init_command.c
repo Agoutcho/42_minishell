@@ -47,8 +47,8 @@ void init_command(t_command *command)
             counter_command++;
         i++;
     }
-    command->cmd.size = counter_command;
+    command->size_cmd_array = counter_command;
     temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
-    command->cmd.cmd_array = temp;
+    command->cmd_array = temp;
     DEBUG("counter : %d", counter_command)
 }

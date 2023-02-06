@@ -91,20 +91,17 @@ typedef struct s_cmd_array {
 }   t_cmd_array;
 
 /**
- * @brief Une structure avec un tableau de commande
+ * @brief cmd_array
+ *        Une structure avec un tableau de commande
  *        de taille size. 
  *        Separer par les pipes
  */
-typedef struct s_cmd_hub {
-    unsigned long size;
-    t_cmd_array *cmd_array; //maloc
-}   t_cmd_hub;
-
 typedef struct s_command {
     t_env    *env; //malloc
     t_path   path;
     t_quote  quote;
-    t_cmd_hub cmd;
+    t_cmd_array *cmd_array; //maloc
+    unsigned long size_cmd_array;
     char    *input;
     char    *exec_path;      //le path de la commande a executer
     int        outfile;      // les files descriptor

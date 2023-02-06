@@ -20,12 +20,12 @@ int is_redir(char c)
         return (0);
 }
 
-void do_redirection(t_command *command, int i_cmd, int *i)
+void do_redirection(t_command *command, unsigned long i_cmd, long *i)
 {
     
 }
 
-void do_command(t_command *command, int i_cmd, int *i)
+void do_command(t_command *command, unsigned long i_cmd, long *i)
 {
     
 }
@@ -40,9 +40,9 @@ void init_redir(t_command *command)
 
     i = 0;
     j = 0;
-    DEBUG("command->cmd.size : %ld", command->cmd.size);
+    DEBUG("command->cmd.size : %ld", command->size_cmd_array);
     command->quote = e_no_quote;
-    while (j < command->cmd.size && command->input[i])
+    while (j < command->size_cmd_array && command->input[i])
     {
         set_quote(command, &i);
         if (command->quote == e_no_quote)
