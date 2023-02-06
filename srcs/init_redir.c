@@ -27,7 +27,12 @@ void do_redirection(t_command *command, unsigned long i_cmd, long *i)
 
 void do_command(t_command *command, unsigned long i_cmd, long *i)
 {
-    
+    while (command->input[*i])
+    {
+        if (command->input[*i] == '|' || is_redir(command->input[*i]))
+            return ;
+        
+    } 
 }
 
 // command->input est malloc 
