@@ -93,7 +93,7 @@ void	prompt(t_command *command)
 int	main(int argc, char **argv, char **env)
 {
 	t_command command;
-	t_env *temp;
+	// t_env *temp;
 	char **envp;
 	
 	(void)env;
@@ -106,8 +106,8 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGQUIT, sig_handler);
 		DEBUG("INIT ENV");
 		init_env(&command, envp);
-		temp = find_env_value(&command, "PATH=");
-		DEBUG("PATH=%s",temp->value)
+		// temp = find_env_value(&command, "PATH=");
+		// DEBUG("PATH=%s",temp->value)
 		prompt(&command);
 	}
 	return (0);

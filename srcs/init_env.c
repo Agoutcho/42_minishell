@@ -16,12 +16,8 @@ char *change_shlvl(char *env_value)
 {
     char *shlvl;
 
-    DEBUG("     env_value :  %p", &env_value)
     shlvl = ft_itoa(ft_atoi(env_value) + 1);
-    DEBUG("     shlvl :      %p", &shlvl)
     free(env_value);
-    DEBUG("     env_value :  %p", &env_value)
-    DEBUG("     shlvl :      %p", &shlvl)
     return (shlvl);
 }
 
