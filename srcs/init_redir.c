@@ -110,16 +110,22 @@ void do_command(t_command *command, unsigned long i_cmd, long *i)
 
     while (command->input[*i])
     {
-        DEBUG("*i : %ld", *i);
-        arg_size = count_arg_size(command, command->input, i);
-        if (!command->input[*i])
-            return ;
-        DEBUG("*i : %ld", *i);
-        DEBUG("arg_size : %d", arg_size);
-        if (command->input[*i] == '|' || is_redir(command->input[*i]))
-            return ;
-        DEBUG("*i : %ld", *i);
-        i++;
+        if (command->cmd_array[i_cmd].is_cmd_filled == 0)
+        {
+            DEBUG("*i : %ld", *i);
+            arg_size = count_arg_size(command, command->input, i);
+            DEBUG("*i : %ld", *i);
+            DEBUG("arg_size : %d", arg_size);
+            if (command->input[*i] == '|' || is_redir(command->input[*i]))
+                return ;
+            DEBUG("*i : %ld", *i);
+        }
+        else
+        {
+            
+        }
+        if (command->input[*i])
+            i++;
     }
 }
 
@@ -150,7 +156,7 @@ void init_redir(t_command *command)
         else if (command->quote == e_no_quote)
             do_command(command, j, &i);
         // else
-        //     do_command_no_quote(command, j, &i);
+        //     do_command_quote(command, j, &i);
         i++;
     }
 }

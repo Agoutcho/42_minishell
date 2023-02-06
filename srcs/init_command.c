@@ -12,6 +12,18 @@
 
 #include "../includes/minishell.h"
 
+void init_cmd_filled(t_command *command)
+{
+    int i;
+
+    i = 0;
+    while (i < command->size_cmd_array)
+    {
+        command->cmd_array[i].is_cmd_filled = 0;
+        i++;
+    }
+}
+
 void set_quote(t_command *command, long *i)
 {
     int previous_quote;
@@ -50,5 +62,6 @@ void init_command(t_command *command)
     command->size_cmd_array = counter_command;
     temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
     command->cmd_array = temp;
+    init_cmd_filled(command);
     DEBUG("counter : %d", counter_command)
 }
