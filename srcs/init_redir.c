@@ -88,7 +88,7 @@ void count_dollar_size(t_command *command, char *str, long *i, int *counter)
 //     int counter;
 
 //     counter = 0;
-//     while (str[*i] && str[*i] != '<' && str[*i] != '>' && str[*i] != '|' \
+//     while (str[*i] && str[*i] != '<' && str[*i] != '>' && str[*i] != '|' 
 //         && str[*i] != ' ')
 //     {
 //         DEBUG("str[%ld] : %c", *i, str[*i]);
@@ -103,20 +103,44 @@ void count_dollar_size(t_command *command, char *str, long *i, int *counter)
 //     return (counter);
 // }
 
-int count_arg_size(t_command *command, char *str, long *i)
+int count_arg_size(t_command *command, char *str, long i)
 {
     int counter;
+    (void)command;
 
     counter = 0;
-    while (str[*i] && str[*i] != '<' && str[*i] != '>' && str[*i] != '|' \
-        && str[*i] != ' ')
+    while (str[i] && str[i] != '<' && str[i] != '>' && str[i] != '|' \
+        && str[i] != ' ' && str[i] != '\"' && str[i] != '\'' \
+        && str[i] != '$')
     {
-        DEBUG("str[%ld] : %c", *i, str[*i]);
+        DEBUG("str[%ld] : %c", i, str[i]);
             counter++;
-        DEBUG("TEST");
+        DEBUG("counter : %d", counter)
+        i++;
     }
-    DEBUG("TEST");
     return (counter);
+}
+
+t_args *add_args(t_command *command, long *i, unsigned long i_cmd)
+{
+    t_args *temp;
+    int arg_size;
+
+    arg_size = count_arg_size(command, command->input, *i);
+    temp = (t_args *)malloc(sizeof(t_args));
+    if (!temp)
+        big_free(command);
+    DEBUG("TEST")
+    temp->next = NULL;
+    temp->arg = add_command(command, command->input, i, arg_size);
+    if (command->cmd_array[i_cmd].args)
+    {
+        temp->first = command->cmd_array[i_cmd].args->first;
+        command->cmd_array[i_cmd].args->next = temp;
+    }
+    else
+        temp->first = temp;
+    return (temp);
 }
 
 char *add_command(t_command *command, char *str, long *i, int size)
@@ -129,14 +153,15 @@ char *add_command(t_command *command, char *str, long *i, int size)
     if (!temp)
         big_free(command);
     while (str[*i] && str[*i] != '<' && str[*i] != '>' && str[*i] != '|' \
-        && str[*i] != ' ')
+        && str[*i] != ' ' && str[*i] != '\"' && str[*i] != '\'' \
+        && str[*i] != '$')
     {
         DEBUG("str[%ld] : %c", *i, str[*i]);
         temp[index] = str[*i];
         index++;
         (*i)++;
         DEBUG("TEST");
-    } 
+    }
     temp[index] = 0;
     return (temp);
 }
@@ -144,24 +169,22 @@ char *add_command(t_command *command, char *str, long *i, int size)
 void do_command(t_command *command, unsigned long i_cmd, long *i)
 {
     int arg_size;
-    (void)i_cmd;
 
-    while (command->input[*i])
+    arg_size = count_arg_size(command, command->input, *i);
+    if (command->cmd_array[i_cmd].is_cmd_filled == 0)
     {
-        if (command->cmd_array[i_cmd].is_cmd_filled == 0)
-        {
-            DEBUG("*i : %ld", *i);
-            arg_size = count_arg_size(command, command->input, i);
-            DEBUG("arg_size : %d", arg_size);
-            command->cmd_array[i_cmd].the_cmd = add_command(command, \
-                command->input, i, arg_size);
-            command->cmd_array[i_cmd].is_cmd_filled = 1;
-            DEBUG("*i : %ld", *i);
-        }
-        else
-        {
-            
-        }
+        DEBUG("*i : %ld", *i);
+        DEBUG("arg_size : %d", arg_size);
+        command->cmd_array[i_cmd].the_cmd = add_command(command, \
+            command->input, i, arg_size);
+        command->cmd_array[i_cmd].is_cmd_filled = 1;
+        DEBUG("*i : %ld", *i);
+    }
+    else
+    {
+        while (command->cmd_array[i_cmd].args && command->cmd_array[i_cmd].args->next)
+            command->cmd_array[i_cmd].args = command->cmd_array[i_cmd].args->next;
+        command->cmd_array[i_cmd].args = add_args(command, i, i_cmd);
     }
 }
 
@@ -177,13 +200,14 @@ void init_redir(t_command *command)
     j = 0;
     DEBUG("command->cmd.size : %ld", command->size_cmd_array);
     command->quote = e_no_quote;
+    command->cmd_array[0].args = NULL;
     while (j < command->size_cmd_array && command->input[i])
     {
         DEBUG("command->input[%ld] : %c", i, command->input[i])
         DEBUG("j : %ld", j)
-        set_quote(command, &i);
         if (command->quote == e_no_quote)
             move_space(command->input, &i);
+        set_quote(command, &i);
         if (command->quote == e_no_quote && command->input[i] == '|')
         {
             j++;

@@ -14,7 +14,7 @@
 
 void init_cmd_filled(t_command *command)
 {
-    int i;
+    unsigned long i;
 
     i = 0;
     while (i < command->size_cmd_array)

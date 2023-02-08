@@ -26,7 +26,7 @@
  * 
  * DOC : https://gcc.gnu.org/onlinedocs/cpp/Variadic-Macros.html#Variadic-Macros
  */
-# define DEBUG(x, ...) printf("[%s:%d] "x"\n",__FUNCTION__ ,__LINE__, ##__VA_ARGS__);
+# define DEBUG(x, ...) printf("[%s][%s:%d] "x"\n",__FILE__, __FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 
@@ -77,14 +77,25 @@ typedef struct s_redirect {
 }   t_redirect;
 
 /**
+ * @brief Structure pour les argumnts
+ *        liste chainee de tous les args
+ *        arg l'argument apres la commande
+ */
+typedef struct s_args {
+    struct s_args *first;
+    struct s_args *next;
+    char *arg; //malloc
+} t_args;
+
+/**
  * @brief Structure avec la commande, 
  *        les arguments et options de la commande
  *        et un boolean qui indique si la commande
  *        a ete trouve ou pas
  */
 typedef struct s_cmd_array {
-    char *the_cmd;
-    char **args;
+    char *the_cmd; //malloc
+    t_args *args; // malloc liste chainee
     int is_cmd_filled;
     unsigned long redir_size;
     t_redirect *redir_array;
@@ -100,7 +111,7 @@ typedef struct s_command {
     t_env    *env; //malloc
     t_path   path;
     t_quote  quote;
-    t_cmd_array *cmd_array; //maloc
+    t_cmd_array *cmd_array; //malloc
     unsigned long size_cmd_array;
     char    *input;
     char    *exec_path;      //le path de la commande a executer
@@ -121,6 +132,7 @@ t_env *find_env_value(t_command *command, char *key);
 void big_free(t_command *command);
 void set_quote(t_command *command, long *i);
 long move_space(char *str, long *i);
+char *add_command(t_command *command, char *str, long *i, int size);
 
 
 // @INIT_TERM_C

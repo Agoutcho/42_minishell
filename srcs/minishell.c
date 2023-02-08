@@ -40,6 +40,9 @@ int	get_input(t_command *command)
 	if (command->input && *command->input && command->input[0] != ' ')
     	add_history(command->input);
 	parsing(command);
+	DEBUG("nombre de commande : %ld",command->size_cmd_array)
+	DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
+	DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
 	tout_free(command->input);
 	return (1);
 }
