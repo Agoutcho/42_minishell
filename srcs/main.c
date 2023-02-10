@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:40:11 by atchougo          #+#    #+#             */
-/*   Updated: 2023/01/28 04:17:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:18:48 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int main(void)
 {
     int i;
 
-    if (i++)
-    {
-        ;
-    }
+    i = 500;
+    DEBUG("i : %d", (unsigned char)i);
 }

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/08 05:27:10 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:28:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void do_command(t_command *command, unsigned long i_cmd, long *i)
     int arg_size;
 
     arg_size = count_arg_size(command, command->input, *i);
+    // if_special(command);
     if (command->cmd_array[i_cmd].is_cmd_filled == 0)
     {
         DEBUG("*i : %ld", *i);
@@ -182,7 +183,7 @@ void do_command(t_command *command, unsigned long i_cmd, long *i)
     }
     else
     {
-        while (command->cmd_array[i_cmd].args && command->cmd_array[i_cmd].args->next)
+        while (command->cmd_array[i_cmd].args)
             command->cmd_array[i_cmd].args = command->cmd_array[i_cmd].args->next;
         command->cmd_array[i_cmd].args = add_args(command, i, i_cmd);
     }

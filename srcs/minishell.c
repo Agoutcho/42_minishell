@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/04 18:40:44 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:41:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_input(t_command *command)
 	parsing(command);
 	DEBUG("nombre de commande : %ld",command->size_cmd_array)
 	DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
-	DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
+	// DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
 	tout_free(command->input);
 	return (1);
 }
