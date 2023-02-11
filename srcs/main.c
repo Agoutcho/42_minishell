@@ -36,10 +36,28 @@
 //     return 0;
 // }
 
+void add_i(int *i);
+
+void lolilol(int i)
+{
+    DEBUG("i avant add : %d", i);
+    add_i(&i);
+    DEBUG("i apres add : %d", i);
+}
+
+void add_i(int *i)
+{
+    (*i)++;
+}
+
 int main(void)
 {
     int i;
 
     i = 500;
-    DEBUG("i : %d", (unsigned char)i);
+    DEBUG("i avant add : %d", i);
+    add_i(&i);
+    DEBUG("i apres add : %d", i);
+    lolilol(i);
+    DEBUG("i apres lolilol : %d", i);
 }

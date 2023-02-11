@@ -28,12 +28,22 @@
  */
 # define DEBUG(x, ...) printf("[%s][%s:%d] "x"\n",__FILE__, __FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
+# define BLACK  printf("\033[0;30m");
+# define RED    printf("\033[0;31m");
+# define GREEN  printf("\033[0;32m");
+# define YELLOW printf("\033[0;33m");
+# define BLUE   printf("\033[0;34m");
+# define PURPLE printf("\033[0;35m");
+# define CYAN   printf("\033[0;36m");
+# define WHITE  printf("\033[0;37m");
+# define RESET  printf("\033[0m");
+
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 
 typedef enum e_quote {
     e_no_quote,
-    e_big_quote,        // ""
-    e_little_quote,     // ''
+    e_big_quote = 34,        // ""
+    e_little_quote = 39,     // ''
 }   t_quote;
 
 typedef struct s_env {
@@ -113,6 +123,7 @@ typedef struct s_command {
     t_quote  quote;
     t_cmd_array *cmd_array; //malloc
     unsigned long size_cmd_array;
+    long     i_input;
     char    *input;
     char    *exec_path;      //le path de la commande a executer
     int        outfile;      // les files descriptor
@@ -130,7 +141,7 @@ void init_redir(t_command *command);
 int init_env(t_command *command, char **env);
 t_env *find_env_value(t_command *command, char *key);
 void big_free(t_command *command);
-void set_quote(t_command *command, long *i);
+void set_quote(t_command *command, long *i, int change_i);
 long move_space(char *str, long *i);
 char *add_command(t_command *command, char *str, long *i, int size);
 

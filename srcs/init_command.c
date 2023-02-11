@@ -24,8 +24,9 @@ void init_cmd_filled(t_command *command)
     }
 }
 
-void set_quote(t_command *command, long *i)
+void set_quote(t_command *command, long *i, int change_i)
 {
+    // DEBUG();
     int previous_quote;
 
     previous_quote = command->quote;
@@ -37,7 +38,8 @@ void set_quote(t_command *command, long *i)
         command->quote = e_little_quote;
     else if (command->input[*i] == '\'' && command->quote == e_little_quote)
         command->quote = e_no_quote;
-    if(previous_quote != (int)command->quote && command->input[(*i) + 1])
+    if(change_i && previous_quote != (int)command->quote \
+        && command->input[(*i) + 1])
         (*i)++;
 }
 
@@ -54,7 +56,7 @@ void init_command(t_command *command)
     command->quote = e_no_quote;
     while (command->input[i])
     {
-        set_quote(command, &i);
+        set_quote(command, &i, 1);
         if (command->quote == e_no_quote && command->input[i] == '|')
             counter_command++;
         i++;
