@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/05 03:29:08 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:39:39 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void set_quote(t_command *command, long *i, int change_i)
         command->quote = e_little_quote;
     else if (command->input[*i] == '\'' && command->quote == e_little_quote)
         command->quote = e_no_quote;
-    if(change_i && previous_quote != (int)command->quote \
-        && command->input[(*i) + 1])
+    if(change_i && previous_quote != (int)command->quote)
         (*i)++;
 }
 

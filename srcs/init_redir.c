@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/09 17:28:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/11 23:33:38 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,13 +143,14 @@ int count_dollar_size(t_command *command, char *str, long *i, int *counter)
 
 int is_stop_char(t_command *command, char c)
 {
+    DEBUG("c : %c", c);
     if (command->quote != e_no_quote)
     {
         // DEBUG("c : %d, quote : %d", c, command->quote);
         return (0);
     }
     else if (command->quote == e_no_quote && !is_redir(c) && c != '|' \
-        && c != ' ' && c != '\t' && c != '\n' && c != '\r')
+        && c != ' ' && c != '\t' && c != '\n' && c != '\r' && c)
     {
         // DEBUG("c : %d", c);
         return (0);
@@ -166,6 +167,7 @@ int count_arg_size(t_command *command, char *str, long i)
     // check_special => '~' 
     while (str[i] && !is_stop_char(command, str[i]))
     {
+        // RED
         // DEBUG("str[%ld] : %c", i, str[i]);
         set_quote(command, &i, 1);
         // DEBUG("str[%ld] : %c", i, str[i]);
@@ -173,18 +175,20 @@ int count_arg_size(t_command *command, char *str, long i)
             counter += count_dollar_size(command, str, &i, &counter); // check $- $$ $?  $"" $ 
         else if (command->quote != e_no_quote && str[i] != (char)command->quote)
         {
-            // DEBUG()
+            // DEBUG("str[%ld] : %c", i, str[i]);
             i++;
             counter++;
         }
         else if (command->quote == e_no_quote && !is_stop_char(command, str[i]))
         {
-            // DEBUG()
+            // DEBUG("str[%ld] : %c", i, str[i]);
             i++;
             counter++;
         }
         // DEBUG("counter : %d", counter)
     }
+    // DEBUG("counter : %d", counter)
+    // RESET
     return (counter);
 }
 
