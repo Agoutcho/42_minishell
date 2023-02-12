@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/09 17:41:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/12 00:13:29 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	main(int argc, char **argv, char **env)
 	
 	(void)env;
 	(void)argv;
+	g_global_error = 0;
 	if (argc == 1)
 	{
 		envp = env;

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/11 23:33:38 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/12 01:48:37 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ int is_redir(char c)
 // {
     
 // }
+
+int is_dollar_ok(char *str, long *i)
+{
+    GREEN
+    DEBUG("str[%ld] : %c", *i, str[*i])
+    if ((str[*i] == '$' && str[(*i) + 1] != '-' && str[(*i) + 1] != '?' \
+        && !ft_isalnum(str[(*i) + 1])) || !str[(*i) + 1] \
+        || str[(*i) + 1] == ' ')
+        {
+            DEBUG("dollar pas bon")
+            DEBUG("str[%ld] : %c", *i, str[*i])
+            DEBUG("str[%ld + 1] : %c", (*i) + 1, str[(*i) + 1])
+            (*i)++;
+            return (0);
+        }
+    (*i)++;
+    return (1);
+    RESET
+}
 
 int find_lenght_in_env(t_command *command, char *str)
 {
@@ -46,22 +65,40 @@ int find_lenght_in_env(t_command *command, char *str)
     return (0);
 }
 
+int count_dollar_special(t_command *command, char *str, long *i)
+{
+    char *temp;
+    int result;
+    
+    if (str[*i] == '?')
+    {
+        (*i)++;
+        temp = ft_itoa(g_global_error);
+        result = (int)ft_strlen(temp);
+    }
+    else // if (str[*i] == '-')
+    {
+        temp = ft_strdup("OLDPWD=");
+        result = find_lenght_in_env(command, temp);
+    }
+    free(temp);
+    return (result);
+}
+
 int count_dollar_size(t_command *command, char *str, long *i, int *counter)
 {
     int size_dollar;
     int temp_i;
     char *temp;
 
+    // check for  $- $$ $?  $"" $ if i+1 != alphanum && ? && -
     DEBUG("*i : %ld", *i)
-    (*i)++;
+    if (!is_dollar_ok(str, i))
+        return (1);
     DEBUG("*i : %ld", *i)
-    if (str[*i] == 0 || str[*i] == ' ')
-    {
-        DEBUG("str[i - 1] : %c str[i] : %c", str[(*i) - 1], str[*i])
-        (*counter)++;
-        return 0;
-    }
     temp_i = *i;
+    if (str[*i] == '-' || str[*i] == '?')
+        return (count_dollar_special(command, str, i));
     while (str[temp_i] && ft_isalnum(str[temp_i]))
         temp_i++;
     size_dollar = temp_i - *i + 1;
@@ -78,10 +115,10 @@ int count_dollar_size(t_command *command, char *str, long *i, int *counter)
     }
     DEBUG("size_dollar : %d", size_dollar)
     *counter = (*counter) + find_lenght_in_env(command, temp);
-    (*i) += temp_i - *i - 1;
+    (*i) += temp_i - *i;
     DEBUG("*i : %ld", *i);
     free(temp);
-    return (1);
+    return (0);
 }
 
 // void count_dollar_size(t_command *command, char *str, long *i, int *counter)
@@ -220,7 +257,30 @@ t_args *add_args(t_command *command, long *i, unsigned long i_cmd, int size)
     return (temp);
 }
 
-void add_dollar(){}
+// check $- $$ $?  $"" $
+void add_dollar(t_command *command, char *str, long *i, char *temp, long *index)
+{
+    if (!is_dollar_ok(str, i) && command->quote == e_no_quote \
+        && (str[(*i) + 1] == '\'' || str[(*i) + 1] == '"'))
+    {
+        (*i)++;
+        return ;
+    }
+    else if (!is_dollar_ok(str, i))
+    {
+        temp[*index] = str[*i];
+        (*index)++;
+        (*i)++;
+        return ;
+    }
+    (*i)++;
+    if (str[*i] == '-')
+        adding_tiret();
+    else if (str[*i] == '?')
+        adding_qmark();
+    else 
+        adding_dollar_env();
+}
 
 char *add_command(t_command *command, char *str, long *i, int size)
 {
@@ -238,7 +298,7 @@ char *add_command(t_command *command, char *str, long *i, int size)
         set_quote(command, i, 1);
         // DEBUG("str[%ld] : %c", *i, str[*i]);
         if (str[*i] == '$' && command->quote != e_little_quote)
-            add_dollar(command, str, &i); // check $- $$ $?  $"" $
+            add_dollar(command, str, &i, temp, &index); // check $- $$ $?  $"" $
         else if (command->quote != e_no_quote && str[*i] != (char)command->quote)
         {
             // DEBUG()

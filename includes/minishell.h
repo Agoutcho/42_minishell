@@ -40,6 +40,8 @@
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 
+int g_global_error;
+
 typedef enum e_quote {
     e_no_quote,
     e_big_quote = 34,        // ""
