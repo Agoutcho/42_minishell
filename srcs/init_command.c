@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/11 22:39:39 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/13 03:25:42 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void init_cmd_filled(t_command *command)
 
 void set_quote(t_command *command, long *i, int change_i)
 {
-    // DEBUG();
     int previous_quote;
 
     previous_quote = command->quote;

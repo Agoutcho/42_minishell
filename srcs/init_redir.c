@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/13 01:41:27 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/13 03:38:06 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,15 +201,16 @@ int count_arg_size(t_command *command, char *str, long i)
     int counter;
     (void)command;
 
+    DEBUG();
     counter = 0;
     // check_special => '~' 
     while (str[i] && !is_stop_char(command, str[i]))
     {
-        // RED
-        // DEBUG("str[%ld] : %c", i, str[i]);
+        RED
+        DEBUG("str[%ld] : %c", i, str[i]);
         set_quote(command, &i, 1);
-        // DEBUG("str[%ld] : %c", i, str[i]);
-        if (str[i] == '$' && command->quote != e_little_quote)
+        DEBUG("str[%ld] : %c", i, str[i]);
+        if (str[i] && str[i] == '$' && command->quote != e_little_quote)
             counter += count_dollar_size(command, str, &i, &counter); // check $- $$ $?  $"" $ 
         else if (command->quote != e_no_quote && str[i] != (char)command->quote)
         {
@@ -225,8 +226,8 @@ int count_arg_size(t_command *command, char *str, long i)
         }
         // DEBUG("counter : %d", counter)
     }
-    // DEBUG("counter : %d", counter)
-    // RESET
+    DEBUG("counter : %d", counter)
+    RESET
     return (counter);
 }
 
@@ -399,39 +400,41 @@ char *add_command(t_command *command, char *str, long *i, int size)
     char *temp;
     long index;
 
+    CYAN
+    DEBUG();
     index = 0;
     temp = (char *)malloc(sizeof(char) * size + 1);
     if (!temp)
         big_free(command);
-
     while (str[*i] && !is_stop_char(command, str[*i]))
     {
-        // DEBUG("str[%ld] : %c", *i, str[*i]);
+        DEBUG("str[%ld] : %c %d", *i, str[*i],str[*i]);
         set_quote(command, i, 1);
-        // DEBUG("str[%ld] : %c", *i, str[*i]);
-        if (str[*i] == '$' && command->quote != e_little_quote)
+        DEBUG("str[%ld] : %c %d", *i, str[*i],str[*i]);
+        if (str[*i] && str[*i] == '$' && command->quote != e_little_quote)
             add_dollar(command, str, i, temp, &index); // check $- $$ $?  $"" $
-        else if (command->quote != e_no_quote && str[*i] != (char)command->quote)
+        else if (str[*i] && command->quote != e_no_quote && str[*i] != (char)command->quote)
         {
             // DEBUG()
             // add_with_quote();
             while (str[*i] != (char)command->quote && str[*i] != '$')
             {
-                // DEBUG("temp[%ld] : %c str[%ld] : %c", index, temp[index], *i, str[*i]);
+                DEBUG("temp[%ld] : %c str[%ld] : %c", index, temp[index], *i, str[*i]);
                 temp[index] = str[*i];
                 index++;
                 (*i)++;
             }
         }
-        else if (command->quote == e_no_quote && !is_stop_char(command, str[*i]))
+        else if (str[*i] && command->quote == e_no_quote && !is_stop_char(command, str[*i]))
         {
-            // DEBUG("temp[%ld] : %c str[%ld] : %c", index, temp[index], *i, str[*i]);
+            DEBUG("temp[%ld] : %c str[%ld] : %c", index, temp[index], *i, str[*i]);
             temp[index] = str[*i];
             index++;
             (*i)++;
         }
     }
     temp[index] = 0;
+    RESET
     return (temp);
 }
 
@@ -440,8 +443,10 @@ void do_command(t_command *command, unsigned long i_cmd, long *i)
 {
     int arg_size;
 
+    DEBUG();
+    DEBUG("input : %s", command->input);
     arg_size = count_arg_size(command, command->input, *i);
-    // DEBUG("arg_size : %d", arg_size)
+    DEBUG("arg_size : %d", arg_size)
     if (command->cmd_array[i_cmd].is_cmd_filled == 0)
     {
         // DEBUG("*i : %ld", *i);
@@ -485,6 +490,7 @@ void init_redir(t_command *command)
     command->cmd_array[0].args = NULL;
     while (j < command->size_cmd_array && command->input[i])
     {
+        DEBUG("command->quote : %d i : %ld j : %ld", command->quote, i, j);
         // PURPLE
         // DEBUG("command->input[%ld] : %c", i, command->input[i])
         // DEBUG("command->input[%ld] : %d", i, command->input[i])
@@ -497,7 +503,8 @@ void init_redir(t_command *command)
         // DEBUG("command->input[%ld] : %d", i, command->input[i])
         // DEBUG("j : %ld", j)
         // RESET
-        set_quote(command, &i, 0);
+        set_quote(command, &i, 1);
+        DEBUG("command->quote : %d i : %ld j : %ld", command->quote, i, j);
         if (command->quote == e_no_quote && command->input[i] == '|')
         {
             j++;
@@ -505,7 +512,7 @@ void init_redir(t_command *command)
         }
         // else if (command->quote == e_no_quote && is_redir(command->input[i]))
         //     do_redirection(command, j, &i);
-        else if (command->quote == e_no_quote && command->input[i])
+        else if (command->input[i])
             do_command(command, j, &i);
         // else
         //     do_command_quote(command, j, &i);
