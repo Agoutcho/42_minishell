@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:40:11 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/09 15:18:48 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/12 18:09:02 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,11 @@
 //     return 0;
 // }
 
-void add_i(int *i);
-
-void lolilol(int i)
-{
-    DEBUG("i avant add : %d", i);
-    add_i(&i);
-    DEBUG("i apres add : %d", i);
-}
-
-void add_i(int *i)
-{
-    (*i)++;
-}
-
 int main(void)
 {
     int i;
 
-    i = 500;
-    DEBUG("i avant add : %d", i);
-    add_i(&i);
-    DEBUG("i apres add : %d", i);
-    lolilol(i);
-    DEBUG("i apres lolilol : %d", i);
+    i = 0;
+    while (__environ[i])
+        DEBUG("%s", __environ[i++]);
 }

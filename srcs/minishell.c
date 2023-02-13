@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/12 00:13:29 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/12 18:12:47 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGINT, sig_handler);
 		// signal(SIGQUIT, sig_handler);
 		DEBUG("INIT ENV");
-		init_env(&command, envp);
+		init_env(&command, envp); // utiliser __environ au lieu de envp ou env
 		// temp = find_env_value(&command, "PATH=");
 		// DEBUG("PATH=%s",temp->value)
 		prompt(&command);

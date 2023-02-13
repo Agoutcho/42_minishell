@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/12 01:48:37 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:21:53 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ int is_dollar_ok(char *str, long *i)
             DEBUG("dollar pas bon")
             DEBUG("str[%ld] : %c", *i, str[*i])
             DEBUG("str[%ld + 1] : %c", (*i) + 1, str[(*i) + 1])
-            (*i)++;
+            (*i)++; // A enlever
             return (0);
         }
-    (*i)++;
     return (1);
     RESET
 }
@@ -51,7 +50,7 @@ int find_lenght_in_env(t_command *command, char *str)
     temp = command->env->first;
     if (!*str)
         return (0);
-    while (temp->next)
+    while (temp)
     {
         DEBUG("key : %s", temp->key);
         if (ft_strncmp(temp->key, str, ft_strlen(str) + 1) == 0)
@@ -95,6 +94,7 @@ int count_dollar_size(t_command *command, char *str, long *i, int *counter)
     DEBUG("*i : %ld", *i)
     if (!is_dollar_ok(str, i))
         return (1);
+    (*i)++;
     DEBUG("*i : %ld", *i)
     temp_i = *i;
     if (str[*i] == '-' || str[*i] == '?')
@@ -257,10 +257,118 @@ t_args *add_args(t_command *command, long *i, unsigned long i_cmd, int size)
     return (temp);
 }
 
+void find_val_in_env(t_command *command, char *t_key, char *parsed, long *idex)
+{
+    t_env *temp;
+    int i;
+
+    i = 0;
+    temp = command->env->first;
+    while (temp)
+    {
+        DEBUG("key : %s", temp->key);
+        if (ft_strncmp(temp->key, t_key, ft_strlen(t_key) + 1) == 0)
+        {
+            DEBUG("value : %s", temp->value)
+            DEBUG("len : %zu", ft_strlen(temp->value))
+            while (temp->value[i])
+            {
+                parsed[*idex] = temp->value[i];
+                (*idex)++;
+                i++;
+            }
+            return ;
+        }
+        temp = temp->next;
+    }
+}
+
+void adding_dollar_env(t_command *command, char *str, long *i, char *parsed, long *index)
+{
+    int size_dollar;
+    int temp_i;
+    char *temp_key;
+
+    DEBUG("*i : %ld", *i)
+    temp_i = *i;
+    while (str[temp_i] && ft_isalnum(str[temp_i]))
+        temp_i++;
+    size_dollar = temp_i - *i + 1;
+    DEBUG("size_dollar : %d", size_dollar)
+    temp_key = (char *)malloc(sizeof(char) * (size_dollar + 1));
+    if (!temp_key)
+        big_free(command);
+    temp_key[size_dollar] = 0;
+    temp_key[--size_dollar] = '=';
+    while (size_dollar-- > 0)
+    {
+        temp_key[size_dollar] = str[(*i) + size_dollar];
+        DEBUG("temp_key[size_dollar] : %c str[(*i) + size_dollar] : %c", temp_key[size_dollar], str[(*i) + size_dollar])
+    }
+    DEBUG("size_dollar : %d", size_dollar)
+    find_val_in_env(command, temp_key, parsed, index);
+    (*i) += temp_i - *i;
+    DEBUG("*i : %ld", *i);
+    DEBUG("str[%ld] : %c", *i, str[*i]);
+    free(temp_key);
+}
+
+void adding_qmark(t_command *command, long *i, char *parsed, long *index)
+{
+    char *temp;
+    int i_val;
+
+    i_val = 0;
+    temp = ft_itoa(g_global_error);
+    if (!temp)
+        big_free(command);
+    while (temp[i_val])
+    {
+        parsed[*index] = temp[i_val];
+        (*index)++;
+        i_val++;
+    }
+    (*i)++;
+    free(temp);
+}
+
+void adding_hyphen(t_command *command, long *i, char *parsed, long *index)
+{
+    char *temp;
+    int i_val;
+    t_env *tenv;
+
+    i_val = 0;
+    tenv = command->env->first; 
+    temp = ft_strdup("OLDPWD=");
+    if (!temp)
+        big_free(command);
+    while (tenv)
+    {
+        DEBUG("key : %s", tenv->key);
+        if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
+        {
+            DEBUG("value : %s", tenv->value)
+            DEBUG("len : %zu", ft_strlen(tenv->value))
+            while (tenv->value[i_val])
+            {
+                DEBUG("tenv->value[i_val] : %c", tenv->value[i_val])
+                parsed[*index] = tenv->value[i_val];
+                (*index)++;
+                i_val++;
+            }
+            break ;
+        }
+        tenv = tenv->next;
+    }
+    (*i)++;
+    free(temp);
+}
+
 // check $- $$ $?  $"" $
 void add_dollar(t_command *command, char *str, long *i, char *temp, long *index)
 {
-    if (!is_dollar_ok(str, i) && command->quote == e_no_quote \
+    if (command->quote == e_no_quote \
         && (str[(*i) + 1] == '\'' || str[(*i) + 1] == '"'))
     {
         (*i)++;
@@ -270,16 +378,15 @@ void add_dollar(t_command *command, char *str, long *i, char *temp, long *index)
     {
         temp[*index] = str[*i];
         (*index)++;
-        (*i)++;
         return ;
     }
     (*i)++;
     if (str[*i] == '-')
-        adding_tiret();
+        adding_hyphen(command, i, temp, index);
     else if (str[*i] == '?')
-        adding_qmark();
-    else 
-        adding_dollar_env();
+        adding_qmark(command, i, temp, index);
+    else
+        adding_dollar_env(command, str, i, temp, index);
 }
 
 char *add_command(t_command *command, char *str, long *i, int size)
@@ -298,7 +405,7 @@ char *add_command(t_command *command, char *str, long *i, int size)
         set_quote(command, i, 1);
         // DEBUG("str[%ld] : %c", *i, str[*i]);
         if (str[*i] == '$' && command->quote != e_little_quote)
-            add_dollar(command, str, &i, temp, &index); // check $- $$ $?  $"" $
+            add_dollar(command, str, i, temp, &index); // check $- $$ $?  $"" $
         else if (command->quote != e_no_quote && str[*i] != (char)command->quote)
         {
             // DEBUG()
