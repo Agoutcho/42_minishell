@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/13 01:21:53 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:41:27 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int is_redir(char c)
     
 // }
 
-int is_dollar_ok(char *str, long *i)
+int is_dollar_ok(char *str, long *i, int change_i)
 {
     GREEN
     DEBUG("str[%ld] : %c", *i, str[*i])
@@ -35,8 +35,9 @@ int is_dollar_ok(char *str, long *i)
         {
             DEBUG("dollar pas bon")
             DEBUG("str[%ld] : %c", *i, str[*i])
-            DEBUG("str[%ld + 1] : %c", (*i) + 1, str[(*i) + 1])
-            (*i)++; // A enlever
+            DEBUG("str[%ld] : %c", (*i) + 1, str[(*i) + 1])
+            if (change_i)
+                (*i)++; // A enlever
             return (0);
         }
     return (1);
@@ -92,7 +93,7 @@ int count_dollar_size(t_command *command, char *str, long *i, int *counter)
 
     // check for  $- $$ $?  $"" $ if i+1 != alphanum && ? && -
     DEBUG("*i : %ld", *i)
-    if (!is_dollar_ok(str, i))
+    if (!is_dollar_ok(str, i, 1))
         return (1);
     (*i)++;
     DEBUG("*i : %ld", *i)
@@ -368,16 +369,20 @@ void adding_hyphen(t_command *command, long *i, char *parsed, long *index)
 // check $- $$ $?  $"" $
 void add_dollar(t_command *command, char *str, long *i, char *temp, long *index)
 {
+    GREEN
+    DEBUG()
+    RESET
     if (command->quote == e_no_quote \
         && (str[(*i) + 1] == '\'' || str[(*i) + 1] == '"'))
     {
         (*i)++;
         return ;
     }
-    else if (!is_dollar_ok(str, i))
+    else if (!is_dollar_ok(str, i, 0))
     {
         temp[*index] = str[*i];
         (*index)++;
+        (*i)++;
         return ;
     }
     (*i)++;
@@ -410,7 +415,7 @@ char *add_command(t_command *command, char *str, long *i, int size)
         {
             // DEBUG()
             // add_with_quote();
-            while (str[*i] != (char)command->quote)
+            while (str[*i] != (char)command->quote && str[*i] != '$')
             {
                 // DEBUG("temp[%ld] : %c str[%ld] : %c", index, temp[index], *i, str[*i]);
                 temp[index] = str[*i];
