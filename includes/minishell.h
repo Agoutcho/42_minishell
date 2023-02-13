@@ -146,6 +146,7 @@ void big_free(t_command *command);
 void set_quote(t_command *command, long *i, int change_i);
 long move_space(char *str, long *i);
 char *add_command(t_command *command, char *str, long *i, int size);
+void parsing_input(t_command *command);
 
 
 // @INIT_TERM_C

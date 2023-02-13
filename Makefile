@@ -19,8 +19,10 @@ SRC_NAME =	minishell.c	\
 			init_env.c \
 			init_redir.c \
 			init_term.c	\
-			parsing.c \
 			parse_error.c \
+			parsing.c \
+			parsing_input.c \
+
 # signal_handler.c	\
 			
 OBJ_NAME = $(SRC_NAME:.c=.o)
