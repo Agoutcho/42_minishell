@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:02 by nradal            #+#    #+#             */
-/*   Updated: 2023/01/20 15:46:01 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/14 20:16:22 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
  * @param mode	1 enable.
  * 				0 disable.
  */
-void set_term(struct termios *term, bool mode)
+void	set_term(struct termios *term, bool mode)
 {
-    if (mode == 1)
-        term->c_lflag |= (ICANON | ECHOCTL);
+	if (mode == 1)
+		term->c_lflag |= (ICANON | ECHOCTL);
 	else
-        term->c_lflag &= ~(ICANON | ECHOCTL);
-    tcsetattr(STDIN_FILENO, TCSANOW, term);
+		term->c_lflag &= ~(ICANON | ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, term);
 }
 
 /**
@@ -38,7 +38,7 @@ void set_term(struct termios *term, bool mode)
 void	init_term(bool mode)
 {
 	struct termios	term;
-	
+
 	if (isatty(STDIN_FILENO) == 1)
 	{
 		if (tcgetattr(STDIN_FILENO, &term) == 0)

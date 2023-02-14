@@ -42,13 +42,15 @@
 extern char **environ;
 int g_exit_code;
 
-typedef enum e_quote {
+typedef enum e_quote 
+{
     e_no_quote,
     e_big_quote = 34,        // ""
     e_little_quote = 39,     // ''
 }   t_quote;
 
-typedef struct s_env {
+typedef struct s_env 
+{
     char *key; // PATH= //malloc
     char *value; // /bin/:/usr/bin //malloc
     int affiche_env; // 0 ou 1
@@ -66,19 +68,28 @@ typedef struct s_env {
 //     t_redirect *redir_array;
 // }   t_redirect_array;
 
-typedef enum e_redir {
+typedef enum e_redir 
+{
     e_in = 1, // ( < )
     e_out,    // ( > )
     e_append, // ( >> )
     e_heredoc // ( << )
 }   t_redir;
 
+typedef struct s_heredoc
+{
+    char *line;
+    struct s_heredoc *first;
+    struct s_heredoc *next;
+} t_heredoc;
+
 /**
  * @brief Structure pour les redirections
  *        type le type de redirection
  *        file_name le nom du fichier 
  */
-typedef struct s_redirect {
+typedef struct s_redirect 
+{
     t_redir type;
     char *file_name;
     int file_fd;
@@ -89,7 +100,8 @@ typedef struct s_redirect {
  *        liste chainee de tous les args
  *        arg l'argument apres la commande
  */
-typedef struct s_args {
+typedef struct s_args 
+{
     struct s_args *first;
     struct s_args *next;
     char *arg; //malloc
@@ -101,7 +113,8 @@ typedef struct s_args {
  *        et un boolean qui indique si la commande
  *        a ete trouve ou pas
  */
-typedef struct s_cmd_array {
+typedef struct s_cmd_array 
+{
     char *the_cmd; //malloc
     t_args *args; // malloc liste chainee
     int is_cmd_filled;
@@ -115,7 +128,8 @@ typedef struct s_cmd_array {
  *        de taille size. 
  *        Separer par les pipes
  */
-typedef struct s_command {
+typedef struct s_command 
+{
     t_env    *env; //malloc
     t_quote  quote;
     t_cmd_array *cmd_array; //malloc

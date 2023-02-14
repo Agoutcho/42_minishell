@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/14 04:40:33 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:16:00 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int is_redir(char c)
+int	is_redir(char c)
 {
     // DEBUG()
     if (c == '<' || c == '>')
@@ -21,11 +21,11 @@ int is_redir(char c)
         return (0);
 }
 
-void init_redir(t_command *command)
+void	init_redir(t_command *command)
 {
-    long i;
-    int j;
-    int counter_redir;
+    long	i;
+    int		j;
+    int		counter_redir;
 
     i = 0;
     j = 0;

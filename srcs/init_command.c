@@ -6,62 +6,62 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/13 03:25:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:14:44 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void init_cmd_filled(t_command *command)
+void	init_cmd_filled(t_command *command)
 {
-    unsigned long i;
+	unsigned long	i;
 
-    i = 0;
-    while (i < command->size_cmd_array)
-    {
-        command->cmd_array[i].is_cmd_filled = 0;
-        i++;
-    }
+	i = 0;
+	while (i < command->size_cmd_array)
+	{
+		command->cmd_array[i].is_cmd_filled = 0;
+		i++;
+	}
 }
 
-void set_quote(t_command *command, long *i, int change_i)
+void	set_quote(t_command *command, long *i, int change_i)
 {
-    int previous_quote;
+	int	previous_quote;
 
-    previous_quote = command->quote;
-    if (command->input[*i] == '"' && command->quote == e_no_quote)
-        command->quote = e_big_quote;
-    else if (command->input[*i] == '"' && command->quote == e_big_quote)
-        command->quote = e_no_quote;
-    if (command->input[*i] == '\'' && command->quote == e_no_quote)
-        command->quote = e_little_quote;
-    else if (command->input[*i] == '\'' && command->quote == e_little_quote)
-        command->quote = e_no_quote;
-    if(change_i && previous_quote != (int)command->quote)
-        (*i)++;
+	previous_quote = command->quote;
+	if (command->input[*i] == '"' && command->quote == e_no_quote)
+		command->quote = e_big_quote;
+	else if (command->input[*i] == '"' && command->quote == e_big_quote)
+		command->quote = e_no_quote;
+	if (command->input[*i] == '\'' && command->quote == e_no_quote)
+		command->quote = e_little_quote;
+	else if (command->input[*i] == '\'' && command->quote == e_little_quote)
+		command->quote = e_no_quote;
+	if(change_i && previous_quote != (int)command->quote)
+		(*i)++;
 }
 
 // command->input est malloc 
 // command->env est malloc
-void init_command(t_command *command)
+void	init_command(t_command *command)
 {
-    long i;
-    int counter_command;
-    t_cmd_array *temp;
+	long	i;
+	int	counter_command;
+	t_cmd_array *temp;
 
-    i = 0;
-    counter_command = 1;
-    command->quote = e_no_quote;
-    while (command->input[i])
-    {
-        set_quote(command, &i, 1);
-        if (command->quote == e_no_quote && command->input[i] == '|')
-            counter_command++;
-        i++;
-    }
-    command->size_cmd_array = counter_command;
-    temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
-    command->cmd_array = temp;
-    init_cmd_filled(command);
-    DEBUG("counter : %d", counter_command)
+	i = 0;
+	counter_command = 1;
+	command->quote = e_no_quote;
+	while (command->input[i])
+	{
+		set_quote(command, &i, 1);
+		if (command->quote == e_no_quote && command->input[i] == '|')
+			counter_command++;
+		i++;
+	}
+	command->size_cmd_array = counter_command;
+	temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
+	command->cmd_array = temp;
+	init_cmd_filled(command);
+	DEBUG("counter : %d", counter_command)
 }

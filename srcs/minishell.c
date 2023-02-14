@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/14 04:53:09 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:17:08 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void tout_free(char *input)
+void	tout_free(char *input)
 {
 	if (input)
 	{
@@ -23,44 +23,44 @@ void tout_free(char *input)
 
 
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
-void affiche(t_command *command)
+void	affiche(t_command *command)
 {
-	unsigned long i;
-	unsigned long j;
+	unsigned long	i;
+	unsigned long	j;
 
 	j = 0;
 	i = 0;
 	DEBUG("\033[0;31m---------[AFFICHAGE]-----------\033[0m")
-	DEBUG("nombre de commande : %ld", command->size_cmd_array)
-	while (i < command->size_cmd_array)
-	{
-		DEBUG("-----------------------------------")
-		DEBUG("Commande : %ld", i + 1)
-		if (command->cmd_array[i].args)
-			command->cmd_array[i].args = command->cmd_array[i].args->first;
-		CYAN
-		DEBUG("command : |%s|", command->cmd_array[i].the_cmd)
-		RESET
-		DEBUG("nombre de redirection : %ld", command->cmd_array[i].redir_size)
-		while (j < command->cmd_array[i].redir_size)
+		DEBUG("nombre de commande : %ld", command->size_cmd_array)
+		while (i < command->size_cmd_array)
 		{
-			GREEN
-			DEBUG("j : %ld", j)
-			DEBUG("type : %d", command->cmd_array[i].redir_array[j].type)
-			DEBUG("file : %s", command->cmd_array[i].redir_array[j].file_name)
-			RESET
-			j++;
+			DEBUG("-----------------------------------")
+				DEBUG("Commande : %ld", i + 1)
+				if (command->cmd_array[i].args)
+					command->cmd_array[i].args = command->cmd_array[i].args->first;
+			CYAN
+				DEBUG("command : |%s|", command->cmd_array[i].the_cmd)
+				RESET
+				DEBUG("nombre de redirection : %ld", command->cmd_array[i].redir_size)
+				while (j < command->cmd_array[i].redir_size)
+				{
+					GREEN
+						DEBUG("j : %ld", j)
+						DEBUG("type : %d", command->cmd_array[i].redir_array[j].type)
+						DEBUG("file : %s", command->cmd_array[i].redir_array[j].file_name)
+						RESET
+						j++;
+				}
+			j = 0;
+			while (command->cmd_array[i].args)
+			{
+				YELLOW
+					DEBUG("arg : |%s|", command->cmd_array[i].args->arg)
+					command->cmd_array[i].args = command->cmd_array[i].args->next;
+				RESET
+			}
+			i++;
 		}
-		j = 0;
-		while (command->cmd_array[i].args)
-		{
-			YELLOW
-			DEBUG("arg : |%s|", command->cmd_array[i].args->arg)
-			command->cmd_array[i].args = command->cmd_array[i].args->next;
-			RESET
-		}
-		i++;
-	}
 }
 
 /**
@@ -81,7 +81,7 @@ int	get_input(t_command *command)
 		return (1);
 	}
 	if (command->input && *command->input && command->input[0] != ' ')
-    	add_history(command->input);
+		add_history(command->input);
 	DEBUG("%s", command->input);
 	parsing(command);
 	affiche(command);
@@ -91,9 +91,9 @@ int	get_input(t_command *command)
 	return (1);
 }
 
-void big_free(t_command *command)
+void	big_free(t_command *command)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	command->env = command->env->first;
 	while (command->env->next)
@@ -130,7 +130,7 @@ void	prompt(t_command *command)
 		}
 		else 
 		{
-			
+
 		}
 		// else if (ret == ???) Voir apres ce qu'il faudrait rajouter pour gerer tous les cas.
 	}
@@ -142,26 +142,26 @@ int	main(int argc, char **argv, char **env)
 	t_command command;
 	// t_env *temp;
 	// char **envp;
-	
+
 	(void)env;
 	(void)argv;
 	g_exit_code = 0;
 	YELLOW
-	printf("\n|------------------------------------------------------------|\n");
+		printf("\n|------------------------------------------------------------|\n");
 	printf("\n|------------------------MINISHELL---------------------------|\n");
 	printf("\n|------------------------------------------------------------|\n\n");
 	RESET
-	if (argc == 1)
-	{
-		// envp = env;
-		init_term(0);
-		// signal(SIGINT, sig_handler);
-		// signal(SIGQUIT, sig_handler);
-		DEBUG("INIT ENV");
-		init_env(&command, environ); // utiliser __environ au lieu de envp ou env
-		// temp = find_env_value(&command, "PATH=");
-		// DEBUG("PATH=%s",temp->value)
-		prompt(&command);
-	}
+		if (argc == 1)
+		{
+			// envp = env;
+			init_term(0);
+			// signal(SIGINT, sig_handler);
+			// signal(SIGQUIT, sig_handler);
+			DEBUG("INIT ENV");
+			init_env(&command, environ); // utiliser __environ au lieu de envp ou env
+			// temp = find_env_value(&command, "PATH=");
+			// DEBUG("PATH=%s",temp->value)
+			prompt(&command);
+		}
 	return (0);
 }
