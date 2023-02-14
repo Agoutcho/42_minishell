@@ -6,24 +6,49 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/13 14:35:57 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/14 04:47:19 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int is_redir(char c)
+void add_type(t_command *command, unsigned long i_cmd, long *i, long *k)
 {
-    if (c == '<' || c == '>')
-        return (1);
+    DEBUG()
+    
+    if (command->input[*i] == '>' && command->input[(*i) + 1] == '>')
+        command->cmd_array[i_cmd].redir_array[*k].type = e_append;
+    else if (command->input[*i] == '>' && command->input[(*i) + 1] != '>')
+        command->cmd_array[i_cmd].redir_array[*k].type = e_out;
+    else if (command->input[*i] == '<' && command->input[(*i) + 1] == '<')
+        command->cmd_array[i_cmd].redir_array[*k].type = e_heredoc;
+    else if (command->input[*i] == '<' && command->input[(*i) + 1] != '<')
+        command->cmd_array[i_cmd].redir_array[*k].type = e_in;
+    DEBUG("type : %d", command->cmd_array[i_cmd].redir_array[*k].type)
+    if (command->cmd_array[i_cmd].redir_array[*k].type == e_append \
+        || command->cmd_array[i_cmd].redir_array[*k].type == e_heredoc)
+        (*i) = (*i) + 2;
     else 
-        return (0);
+        (*i)++;
 }
 
-// void do_redirection(t_command *command, unsigned long i_cmd, long *i)
-// {
-    
-// }
+void do_redirection(t_command *command, unsigned long i_cmd, long *i, long *k)
+{
+    int arg_size;
+
+    DEBUG();
+    add_type(command, i_cmd, i, k);
+    DEBUG()
+    if (command->quote == e_no_quote)
+        move_space(command->input, i);
+    arg_size = count_arg_size(command, command->input, *i);
+    DEBUG("arg_size : %d", arg_size)
+    command->cmd_array[i_cmd].redir_array[*k].file_name = add_command(command, \
+            command->input, i, arg_size);
+    DEBUG("k : %ld", *k);
+    DEBUG("redir : %s", command->cmd_array[i_cmd].redir_array[*k].file_name);
+    (*k)++;
+}
 
 int is_dollar_ok(char *str, long *i, int change_i)
 {
@@ -438,9 +463,11 @@ void parsing_input(t_command *command)
 {
     long i;
     unsigned long j;
+    long k;
 
     i = 0;
     j = 0;
+    k = 0;
     // PURPLE
     // DEBUG("command->cmd.size : %ld", command->size_cmd_array);
     // RESET
@@ -468,8 +495,8 @@ void parsing_input(t_command *command)
             j++;
             i++;
         }
-        // else if (command->quote == e_no_quote && is_redir(command->input[i]))
-        //     do_redirection(command, j, &i);
+        else if (command->quote == e_no_quote && is_redir(command->input[i]))
+            do_redirection(command, j, &i, &k);
         else if (command->input[i])
             do_command(command, j, &i);
         // else

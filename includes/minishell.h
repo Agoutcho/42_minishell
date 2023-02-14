@@ -39,7 +39,7 @@
 # define RESET  printf("\033[0m");
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
-
+extern char **environ;
 int g_global_error;
 
 typedef enum e_quote {
@@ -147,6 +147,8 @@ void set_quote(t_command *command, long *i, int change_i);
 long move_space(char *str, long *i);
 char *add_command(t_command *command, char *str, long *i, int size);
 void parsing_input(t_command *command);
+int is_redir(char c);
+int count_arg_size(t_command *command, char *str, long i);
 
 
 // @INIT_TERM_C

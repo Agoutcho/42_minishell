@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/12 18:12:47 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/14 04:53:09 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@ void tout_free(char *input)
 	}
 }
 
+
+// echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL
 void affiche(t_command *command)
 {
 	unsigned long i;
+	unsigned long j;
 
+	j = 0;
 	i = 0;
 	DEBUG("\033[0;31m---------[AFFICHAGE]-----------\033[0m")
 	DEBUG("nombre de commande : %ld", command->size_cmd_array)
@@ -35,6 +39,15 @@ void affiche(t_command *command)
 		if (command->cmd_array[i].args)
 			command->cmd_array[i].args = command->cmd_array[i].args->first;
 		DEBUG("command : |%s|", command->cmd_array[i].the_cmd)
+		DEBUG("%ld", command->cmd_array[i].redir_size)
+		while (j < command->cmd_array[i].redir_size)
+		{
+			DEBUG("j : %ld", j)
+			DEBUG("type : %d", command->cmd_array[i].redir_array[j].type)
+			DEBUG("file : %s", command->cmd_array[i].redir_array[j].file_name)
+			j++;
+		}
+		j = 0;
 		while (command->cmd_array[i].args)
 		{
 			DEBUG("arg : |%s|", command->cmd_array[i].args->arg)
