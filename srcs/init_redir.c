@@ -14,7 +14,7 @@
 
 int is_redir(char c)
 {
-    DEBUG()
+    // DEBUG()
     if (c == '<' || c == '>')
         return (1);
     else 
@@ -36,7 +36,7 @@ void init_redir(t_command *command)
     DEBUG()
     while (command->input[i])
     {
-        DEBUG("input[%ld] : %c", i, command->input[i]);
+        // DEBUG("input[%ld] : %c", i, command->input[i]);
         set_quote(command, &i, 1);
         if (command->input[i] && command->quote == e_no_quote && is_redir(command->input[i]))
             counter_redir++;

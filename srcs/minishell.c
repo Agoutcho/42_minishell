@@ -22,7 +22,7 @@ void tout_free(char *input)
 }
 
 
-// echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL
+// echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void affiche(t_command *command)
 {
 	unsigned long i;
@@ -38,20 +38,26 @@ void affiche(t_command *command)
 		DEBUG("Commande : %ld", i + 1)
 		if (command->cmd_array[i].args)
 			command->cmd_array[i].args = command->cmd_array[i].args->first;
+		CYAN
 		DEBUG("command : |%s|", command->cmd_array[i].the_cmd)
-		DEBUG("%ld", command->cmd_array[i].redir_size)
+		RESET
+		DEBUG("nombre de redirection : %ld", command->cmd_array[i].redir_size)
 		while (j < command->cmd_array[i].redir_size)
 		{
+			GREEN
 			DEBUG("j : %ld", j)
 			DEBUG("type : %d", command->cmd_array[i].redir_array[j].type)
 			DEBUG("file : %s", command->cmd_array[i].redir_array[j].file_name)
+			RESET
 			j++;
 		}
 		j = 0;
 		while (command->cmd_array[i].args)
 		{
+			YELLOW
 			DEBUG("arg : |%s|", command->cmd_array[i].args->arg)
 			command->cmd_array[i].args = command->cmd_array[i].args->next;
+			RESET
 		}
 		i++;
 	}
@@ -135,19 +141,22 @@ int	main(int argc, char **argv, char **env)
 {
 	t_command command;
 	// t_env *temp;
-	char **envp;
+	// char **envp;
 	
 	(void)env;
 	(void)argv;
 	g_global_error = 0;
+	DEBUG("\033[0;31m---------[ZEPARTI]-----------\033[0m")
+	DEBUG("\033[0;31m---------[ZEPARTI]-----------\033[0m")
+	DEBUG("\033[0;31m---------[ZEPARTI]-----------\033[0m")
 	if (argc == 1)
 	{
-		envp = env;
+		// envp = env;
 		init_term(0);
 		// signal(SIGINT, sig_handler);
 		// signal(SIGQUIT, sig_handler);
 		DEBUG("INIT ENV");
-		init_env(&command, envp); // utiliser __environ au lieu de envp ou env
+		init_env(&command, environ); // utiliser __environ au lieu de envp ou env
 		// temp = find_env_value(&command, "PATH=");
 		// DEBUG("PATH=%s",temp->value)
 		prompt(&command);
