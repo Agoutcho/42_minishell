@@ -40,7 +40,7 @@
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 extern char **environ;
-int g_global_error;
+int g_exit_code;
 
 typedef enum e_quote {
     e_no_quote,
@@ -55,11 +55,6 @@ typedef struct s_env {
     struct s_env *first;
     struct s_env *next;
 }    t_env;
-
-typedef struct s_path {
-    char *path; // PATH=/bin/:/usr/bin
-    char **path_splitted; // [0] = "/bin/" [1] = "/usr/bin"
-}    t_path;
 
 // /**
 //  * @brief Structure pour les redirections
@@ -86,6 +81,7 @@ typedef enum e_redir {
 typedef struct s_redirect {
     t_redir type;
     char *file_name;
+    int file_fd;
 }   t_redirect;
 
 /**
@@ -121,18 +117,11 @@ typedef struct s_cmd_array {
  */
 typedef struct s_command {
     t_env    *env; //malloc
-    t_path   path;
     t_quote  quote;
     t_cmd_array *cmd_array; //malloc
     unsigned long size_cmd_array;
     long     i_input;
     char    *input;
-    char    *exec_path;      //le path de la commande a executer
-    int        outfile;      // les files descriptor
-    int        infile;
-    int        heredoc;
-    bool    is_builtins;
-    bool    error;
 }    t_command;
 
 // PARSING

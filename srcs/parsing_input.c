@@ -104,7 +104,7 @@ int count_dollar_special(t_command *command, char *str, long *i)
     if (str[*i] == '?')
     {
         (*i)++;
-        temp = ft_itoa(g_global_error);
+        temp = ft_itoa(g_exit_code);
         result = (int)ft_strlen(temp);
     }
     else // if (str[*i] == '-')
@@ -301,7 +301,7 @@ void adding_qmark(t_command *command, long *i, char *parsed, long *index)
     int i_val;
 
     i_val = 0;
-    temp = ft_itoa(g_global_error);
+    temp = ft_itoa(g_exit_code);
     if (!temp)
         big_free(command);
     while (temp[i_val])
