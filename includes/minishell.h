@@ -39,6 +39,9 @@
 # define RESET  printf("\033[0m");
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
+/* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full 
+--show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes 
+--read-var-info=yes */
 extern char **environ;
 int g_exit_code;
 

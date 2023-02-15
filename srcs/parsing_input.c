@@ -179,7 +179,7 @@ int	count_arg_size(t_command *command, char *str, long i)
 	counter = 0;
 	if (command->quote != e_no_quote && str[i] == (char)command->quote)
 		command->quote = e_no_quote;
-	// check_special => '~' 
+	// check_special => '~' // TODO check ~/ ~+ ~-
 	while (str[i] && !is_stop_char(command, str[i]))
 	{
 		// RED
@@ -348,6 +348,7 @@ void	adding_hyphen(t_command *command, long *i, char *parsed, long *index)
 }
 
 // check $- $$ $?  $"" $
+// TODO peut etre ajouter '$_' => la derniere variable connue  https://abs.traduc.org/abs-5.3-fr/ch09.html
 void	add_dollar(t_command *command, char *str, long *i, char *temp, long *index)
 {
 	GREEN
@@ -468,9 +469,15 @@ void	do_command(t_command *command, unsigned long i_cmd, long *i)
 		}
 }
 
+// TODO ~ et ~/ et ~:    https://abs.traduc.org/abs-5.3-fr/ch03.html#tilde
+// ~ = $HOME
+// ~+ = $PWD
+// ~- = $OLDPWD
+
 // command->input est malloc 
 // command->env est malloc
 // command->cmd.cmd_array est malloc
+// TODO add tilde management
 void	parsing_input(t_command *command)
 {
 	long		i;
@@ -512,7 +519,5 @@ void	parsing_input(t_command *command)
 			do_redirection(command, j, &i, &k);
 		else if (command->input[i])
 			do_command(command, j, &i);
-		// else
-		//     do_command_quote(command, j, &i);
 	}
 }

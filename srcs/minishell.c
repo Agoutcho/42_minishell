@@ -21,7 +21,6 @@ void	tout_free(char *input)
 	}
 }
 
-
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void	affiche(t_command *command)
 {
@@ -91,24 +90,50 @@ int	get_input(t_command *command)
 	return (1);
 }
 
+// TODO free command args and redirections
 void	big_free(t_command *command)
 {
-	t_env	*temp;
+	t_env				*temp;
+	t_args				*targs;
+	unsigned long		i;
+	unsigned long		j;
 
+	j = 0;
+	i = 0;
 	command->env = command->env->first;
-	while (command->env->next)
+	while (command->env)
 	{
 		temp = command->env;
 		tout_free(command->env->key);
 		tout_free(command->env->value);
 		command->env = command->env->next;
 		free (temp);
+		temp = NULL;
 	}
-	temp = command->env;
-	tout_free(command->env->key);
-	tout_free(command->env->value);
-	command->env = command->env->next;
-	free (temp);
+	while (i < command->size_cmd_array)
+	{
+		tout_free(command->cmd_array[i].the_cmd);
+		if (command->cmd_array[i].args)
+			command->cmd_array[i].args = command->cmd_array[i].args->first;
+		while (command->cmd_array[i].args)
+		{
+			targs = command->cmd_array[i].args;
+			tout_free(targs->arg);
+			command->cmd_array[i].args = command->cmd_array[i].args->next;
+			free (targs);
+			targs = NULL;
+		}
+		while (j < command->cmd_array[i].redir_size)
+		{
+			tout_free(command->cmd_array[i].redir_array[j].file_name);
+			j++;
+		}
+		free (command->cmd_array[i].redir_array);
+		command->cmd_array[i].redir_array = NULL;
+		i++;
+	}
+	free (command->cmd_array);
+	command->cmd_array = NULL;
 }
 
 /**
@@ -137,6 +162,10 @@ void	prompt(t_command *command)
 	return ;
 }
 
+
+
+// TODO add env if there is no env
+// TODO add HEREDOC
 int	main(int argc, char **argv, char **env)
 {
 	t_command command;
@@ -147,7 +176,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	g_exit_code = 0;
 	YELLOW
-		printf("\n|------------------------------------------------------------|\n");
+	printf("\n|------------------------------------------------------------|\n");
 	printf("\n|------------------------MINISHELL---------------------------|\n");
 	printf("\n|------------------------------------------------------------|\n\n");
 	RESET

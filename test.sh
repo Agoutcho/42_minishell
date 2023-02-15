@@ -31,3 +31,8 @@
 # Ces deux tests a la suite affichent tous les deux 3 commandes :
 test '|' mpm | lol "|||lol" mdr | lol 
 test |"rezkofekozokergokf"
+
+SEGFAULT :
+
+"echo" lol > fichier1.txt >> fichier2.txt << "HEREDOC" xD| cat '  ving' "$SHELL" < '$entre' << "$SHELL" > $"" | pipe lol | pipo
+"echo" lol > fichier1.txt >> fichier2.txt << "HEREDOC" xD|pipe lol | pipo

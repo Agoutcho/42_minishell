@@ -37,7 +37,7 @@ FT = ./libft/
 FT_LIB = $(addprefix $(FT),libft.a)
 
 #	FLAGS
-CC = gcc $(CFLAGS)
+CC = gcc -g3 $(CFLAGS)
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(FT_LIB) $(NAME)
