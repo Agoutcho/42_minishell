@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+void init_to_zero(t_command *command);
+
 void	tout_free(char *input)
 {
 	if (input)
@@ -84,11 +86,12 @@ int	get_input(t_command *command)
 		add_history(command->input);
 	DEBUG("%s", command->input);
 	parsing(command);
-	affiche(command);
+	// affiche(command);
 	// DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
 	// DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
 	tout_free(command->input);
 	big_free(command);
+	init_to_zero(command);
 	return (1);
 }
 
@@ -178,6 +181,14 @@ void	prompt(t_command *command)
 	return ;
 }
 
+void init_to_zero(t_command *command)
+{
+	command->size_cmd_array = 0;
+	command->cmd_array = NULL;
+	command->env = NULL;
+	command->input = NULL;
+}
+
 
 
 // TODO add env if there is no env
@@ -196,10 +207,6 @@ int	main(int argc, char **argv, char **env)
 	printf("\n|------------------------MINISHELL---------------------------|\n");
 	printf("\n|------------------------------------------------------------|\n\n");
 	RESET
-	command.size_cmd_array = 0;
-	command.cmd_array = NULL;
-	command.env = NULL;
-	command.input = NULL;
 	if (argc == 1)
 	{
 		// envp = env;
