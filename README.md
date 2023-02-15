@@ -25,3 +25,4 @@ Developpement d'un shell type bash, avec un prompt, le parsing des commandes et 
 - Petite doc sympa sur des commandes Unix avec toutes les notions utiles et **builtins** [Rappel de cours UNIX](https://www.math.u-bordeaux.fr/~foury/Info1/TP3/rappel.html)
 - PDF sur comment faire un SHELL avec les redirections le wildcard et le parsing avec le [Lexical Analyser](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 - [explainSHELL](https://explainshell.com/) Taper n'importe quel commande shell et il l'explique avec en plus le man
+- [Tuto Etudiante 42](https://github.com/AudeizReading/minishell/wiki/00--MINISHELL----WIKI)
