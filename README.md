@@ -17,3 +17,11 @@ Developpement d'un shell type bash, avec un prompt, le parsing des commandes et 
 
 ◦ **exit** with no options
 
+## Tuto et liens 
+
+- [Shell Command Language OpenGroup](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html) Documentation **principale** complete et courte sur le fonctionnement d'un shell 
+- [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html) La doc sur bash mieux que le man sh. **Tres utile pour avoir des info viables**.
+- Grosse doc sur la **programmation SHELL** en **Francais** notamment les [caractères spéciaux ($ ~ ...)](https://abs.traduc.org/abs-5.3-fr/ch03.html) 
+- Petite doc sympa sur des commandes Unix avec toutes les notions utiles et **builtins** [Rappel de cours UNIX](https://www.math.u-bordeaux.fr/~foury/Info1/TP3/rappel.html)
+- PDF sur comment faire un SHELL avec les redirections le wildcard et le parsing avec le [Lexical Analyser](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
+- [explainSHELL](https://explainshell.com/) Taper n'importe quel commande shell et il l'explique avec en plus le man
