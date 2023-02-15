@@ -45,9 +45,9 @@ void	set_quote(t_command *command, long *i, int change_i)
 // command->env est malloc
 void	init_command(t_command *command)
 {
-	long	i;
-	int	counter_command;
-	t_cmd_array *temp;
+	long		i;
+	int			counter_command;
+	t_cmd_array	*temp;
 
 	i = 0;
 	counter_command = 1;

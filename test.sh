@@ -36,3 +36,15 @@ SEGFAULT :
 
 "echo" lol > fichier1.txt >> fichier2.txt << "HEREDOC" xD| cat '  ving' "$SHELL" < '$entre' << "$SHELL" > $"" | pipe lol | pipo
 "echo" lol > fichier1.txt >> fichier2.txt << "HEREDOC" xD|pipe lol | pipo
+
+"echo"" """"
+"echo" """"
+"$;l"
+"$"
+$""
+"$''"
+$~
+$: $? $- $a
+export yo=ho
+ec"$yo"
+export yo+=to => hoto
