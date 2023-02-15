@@ -136,7 +136,7 @@ typedef struct s_command
     t_env    *env; //malloc
     t_quote  quote;
     t_cmd_array *cmd_array; //malloc
-    unsigned long size_cmd_array;
+    unsigned long size_cmd_array; // init a 0
     long     i_input;
     char    *input;
 }    t_command;

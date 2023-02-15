@@ -24,6 +24,7 @@ void	tout_free(char *input)
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void	affiche(t_command *command)
 {
+	t_args			*targs;
 	unsigned long	i;
 	unsigned long	j;
 
@@ -36,14 +37,14 @@ void	affiche(t_command *command)
 			DEBUG("-----------------------------------")
 				DEBUG("Commande : %ld", i + 1)
 				if (command->cmd_array[i].args)
-					command->cmd_array[i].args = command->cmd_array[i].args->first;
+					targs = command->cmd_array[i].args->first;
 			CYAN
 				DEBUG("command : |%s|", command->cmd_array[i].the_cmd)
 				RESET
 				DEBUG("nombre de redirection : %ld", command->cmd_array[i].redir_size)
 				while (j < command->cmd_array[i].redir_size)
 				{
-					GREEN
+					GREEN;
 						DEBUG("j : %ld", j)
 						DEBUG("type : %d", command->cmd_array[i].redir_array[j].type)
 						DEBUG("file : %s", command->cmd_array[i].redir_array[j].file_name)
@@ -51,11 +52,11 @@ void	affiche(t_command *command)
 						j++;
 				}
 			j = 0;
-			while (command->cmd_array[i].args)
+			while (targs)
 			{
 				YELLOW
 					DEBUG("arg : |%s|", command->cmd_array[i].args->arg)
-					command->cmd_array[i].args = command->cmd_array[i].args->next;
+					targs = targs->next;
 				RESET
 			}
 			i++;
@@ -87,6 +88,7 @@ int	get_input(t_command *command)
 	// DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
 	// DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
 	tout_free(command->input);
+	big_free(command);
 	return (1);
 }
 
@@ -100,9 +102,12 @@ void	big_free(t_command *command)
 
 	j = 0;
 	i = 0;
-	command->env = command->env->first;
+	DEBUG("DEBUT FREE")
+	if (command->env)
+		command->env = command->env->first;
 	while (command->env)
 	{
+		DEBUG("env : %p", command->env)
 		temp = command->env;
 		tout_free(command->env->key);
 		tout_free(command->env->value);
@@ -112,11 +117,16 @@ void	big_free(t_command *command)
 	}
 	while (i < command->size_cmd_array)
 	{
+		DEBUG("i :%ld command->size_cmd_array :%ld", i, command->size_cmd_array)
 		tout_free(command->cmd_array[i].the_cmd);
 		if (command->cmd_array[i].args)
+		{
+			DEBUG("arg : %p arg-first : %p", command->cmd_array[i].args, command->cmd_array[i].args->first)
 			command->cmd_array[i].args = command->cmd_array[i].args->first;
+		}
 		while (command->cmd_array[i].args)
 		{
+			DEBUG("FREE ARG")
 			targs = command->cmd_array[i].args;
 			tout_free(targs->arg);
 			command->cmd_array[i].args = command->cmd_array[i].args->next;
@@ -125,6 +135,7 @@ void	big_free(t_command *command)
 		}
 		while (j < command->cmd_array[i].redir_size)
 		{
+			DEBUG("j :%ld command->cmd_array[i].redir_size :%ld", j, command->cmd_array[i].redir_size)
 			tout_free(command->cmd_array[i].redir_array[j].file_name);
 			j++;
 		}
@@ -132,8 +143,13 @@ void	big_free(t_command *command)
 		command->cmd_array[i].redir_array = NULL;
 		i++;
 	}
-	free (command->cmd_array);
-	command->cmd_array = NULL;
+	if (command->cmd_array)
+	{
+		DEBUG("free tableau cmd : %p", command->cmd_array)
+		free (command->cmd_array);
+		command->cmd_array = NULL;
+	}
+	DEBUG("FIN FREE")
 }
 
 /**
@@ -180,17 +196,21 @@ int	main(int argc, char **argv, char **env)
 	printf("\n|------------------------MINISHELL---------------------------|\n");
 	printf("\n|------------------------------------------------------------|\n\n");
 	RESET
-		if (argc == 1)
-		{
-			// envp = env;
-			init_term(0);
-			// signal(SIGINT, sig_handler);
-			// signal(SIGQUIT, sig_handler);
-			DEBUG("INIT ENV");
-			init_env(&command, environ); // utiliser __environ au lieu de envp ou env
-			// temp = find_env_value(&command, "PATH=");
-			// DEBUG("PATH=%s",temp->value)
-			prompt(&command);
-		}
+	command.size_cmd_array = 0;
+	command.cmd_array = NULL;
+	command.env = NULL;
+	command.input = NULL;
+	if (argc == 1)
+	{
+		// envp = env;
+		init_term(0);
+		// signal(SIGINT, sig_handler);
+		// signal(SIGQUIT, sig_handler);
+		DEBUG("INIT ENV");
+		init_env(&command, environ); // utiliser __environ au lieu de envp ou env
+		// temp = find_env_value(&command, "PATH=");
+		// DEBUG("PATH=%s",temp->value)
+		prompt(&command);
+	}
 	return (0);
 }
