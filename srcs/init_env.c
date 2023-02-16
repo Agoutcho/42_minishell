@@ -62,6 +62,8 @@ int	lst_add_back_env(t_command *command, char **env, int j)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (0);
+	// DEBUG("last temp->key : %s", temp->key);
+	// DEBUG("temp->first : %p", temp->first);
 	new->first = temp->first;
 	// DEBUG("new->first key : %s", new->first->key);
 	new->next = NULL;

@@ -78,20 +78,30 @@ int	find_lenght_in_env(t_command *command, char *str)
 {
 	t_env	*temp;
 
+	DEBUG("str : %p", str);
+	DEBUG("str : %s", str);
+	DEBUG("command->env : %p", command->env);
+	DEBUG("command->env->first : %p", command->env->first);
 	temp = command->env->first;
+	DEBUG("temp : %p", temp);
 	if (!*str)
 		return (0);
 	while (temp)
 	{
 		// DEBUG("key : %s", temp->key);
+		// DEBUG("temp->first : %p", temp->first);
+		// DEBUG("command->env : %p", command->env);
+		// DEBUG("command->env->first : %p", command->env->first);
 		if (ft_strncmp(temp->key, str, ft_strlen(str) + 1) == 0)
 		{
-			DEBUG("key : %s", temp->key);
-			DEBUG("value : %s", temp->value)
-				DEBUG("len : %zu", ft_strlen(temp->value))
+			// DEBUG("key : %s", temp->key);
+			// DEBUG("value : %s", temp->value)
+			// 	DEBUG("len : %zu", ft_strlen(temp->value))
 				return (ft_strlen(temp->value));
 		}
 		temp = temp->next;
+		// DEBUG("command->env : %p", command->env);
+		// DEBUG("command->env->first : %p", command->env->first);
 	}
 	return (0);
 }
@@ -172,31 +182,35 @@ int	is_stop_char(t_command *command, char c)
 
 int	is_tilde_ok(t_command *command, char *str, int *counter, long i)
 {
-	char	*temp;
 	int 	ret_value;
 
 	PURPLE
 	if (str[i - 1])
-		DEBUG("str[%ld] : %c", i, str[i - 1])
+		DEBUG("str[%ld] : %c", i - 1, str[i - 1])
 	DEBUG("str[%ld] : %c", i, str[i])
 	if (str[i + 1])
-		DEBUG("str[%ld] : %c", i, str[i + 1])
+		DEBUG("str[%ld] : %c", i + 1, str[i + 1])
 	i++;
 	if (str[i - 1] != '~' || (str[i] && str[i] != ' ' && str[i] != '/' \
 		&& str[i] != ':' && str[i] != '+' && str[i] != '-' && str[i] != '<' \
 		&& str[i] != '>' && str[i] != '|'))
 		return (0);
-	if (str[i] == ' ' || str[i] == '/' || str[i] == ':')
-		temp = "HOME=";
-	if (str[i] == '+' && (!str[i + 1] || str[i + 1] == ' ' \
-		|| str[i + 1] == '/' || str[i + 1] == ':' || str[i + 1] == '<' \
-		|| str[i + 1] == '>' || str[i + 1] == '|'))
-		temp = "PWD=";
-	if (str[i] == '-' && (!str[i + 1] || str[i + 1] == ' ' \
-		|| str[i + 1] == '/' || str[i + 1] == ':' || str[i + 1] == '<' \
-		|| str[i + 1] == '>' || str[i + 1] == '|'))
-		temp = "OLDPWD=";
-	ret_value = find_lenght_in_env(command, temp);
+	DEBUG("str[%ld] : %c", i, str[i]);
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	if (str[i - 1] == '+' && (!str[i] || str[i] == ' ' \
+		|| str[i] == '/' || str[i] == ':' || str[i] == '<' \
+		|| str[i] == '>' || str[i] == '|'))
+		ret_value = find_lenght_in_env(command, "PWD=");
+	if (str[i - 1] == '-' && (!str[i] || str[i] == ' ' \
+		|| str[i] == '/' || str[i] == ':' || str[i] == '<' \
+		|| str[i] == '>' || str[i] == '|'))
+		ret_value = find_lenght_in_env(command, "OLDPWD=");
+	if (!str[i] || str[i] == ' ' || str[i] == '/' || str[i] == ':')
+		ret_value = find_lenght_in_env(command, "HOME=");
+	DEBUG("str[%ld] : %c", i, str[i]);
+	if (str[i] == '/' || str[i] == ':')
+		ret_value += count_arg_size(command, command->input, i);
 	*counter = *counter + ret_value;
 	DEBUG("counter : %d", *counter);
 	return (ret_value);
@@ -423,6 +437,7 @@ int	find_til_in_env(t_command *command, char *t_key, char *parsed, long *idex)
 
 	i = 0;
 	temp = command->env->first;
+	DEBUG("t_key : %s", t_key);
 	while (temp)
 	{
 		// DEBUG("key : %s", temp->key);
@@ -433,10 +448,12 @@ int	find_til_in_env(t_command *command, char *t_key, char *parsed, long *idex)
 				DEBUG("len : %zu", ft_strlen(temp->value))
 				while (temp->value[i])
 				{
+					// DEBUG("temp->value[%d] : %c", i, temp->value[i])
 					parsed[*idex] = temp->value[i];
 					(*idex)++;
 					i++;
 				}
+				parsed[*idex] = 0;
 			return (1);
 		}
 		temp = temp->next;
@@ -444,34 +461,53 @@ int	find_til_in_env(t_command *command, char *t_key, char *parsed, long *idex)
 	return (0);
 }
 
-int	add_tild(t_command *command, char *str, long *i, char *parsed, long *index)
+int	add_tild(t_command *command, char *str, long *i, char **parsed, long arg_size)
 {
-	char	*temp;
+	char	*new_com;
+	char	*join;
+	int		ret_value;
+	long	index;
 
+	index = 0;
+	ret_value = 0;
 	PURPLE
 	if (str[*i - 1])
-		DEBUG("str[%ld] : %c", *i, str[*i - 1])
+		DEBUG("str[%ld] : %c", *i - 1, str[*i - 1])
 	DEBUG("str[%ld] : %c", *i, str[*i])
 	if (str[*i + 1])
-		DEBUG("str[%ld] : %c", *i, str[*i + 1])
+		DEBUG("str[%ld] : %c", *i + 1, str[*i + 1])
+	if (str[*i] != '~' || (str[*i + 1] && str[*i + 1] != ' ' && str[*i + 1] != '/' \
+		&& str[*i + 1] != ':' && str[*i + 1] != '+' && str[*i + 1] != '-' && str[*i + 1] != '<' \
+		&& str[*i + 1] != '>' && str[*i + 1] != '|'))
+		return (ret_value);
 	(*i)++;
-	if (str[*i - 1] != '~' || (str[*i] && str[*i] != ' ' && str[*i] != '/' \
-		&& str[*i] != ':' && str[*i] != '+' && str[*i] != '-' && str[*i] != '<' \
-		&& str[*i] != '>' && str[*i] != '|'))
-		return (0);
-	if (str[*i] == ' ' || str[*i] == '/' || str[*i] == ':')
-		temp = "HOME=";
-	if (str[*i] == '+' && (!str[*i + 1] || str[*i + 1] == ' ' \
-		|| str[*i + 1] == '/' || str[*i + 1] == ':' || str[*i + 1] == '<' \
-		|| str[*i + 1] == '>' || str[*i + 1] == '|'))
-		temp = "PWD=";
-	if (str[*i] == '-' && (!str[*i + 1] || str[*i + 1] == ' ' \
-		|| str[*i + 1] == '/' || str[*i + 1] == ':' || str[*i + 1] == '<' \
-		|| str[*i + 1] == '>' || str[*i + 1] == '|'))
-		temp = "OLDPWD=";
 	if (str[*i] == '-' || str[*i] == '+')
 		(*i)++;
-	return (find_til_in_env(command, temp, parsed, index));
+	DEBUG("str[%ld] : %c", *i, str[*i])
+	if (str[*i - 1] == '+' && (!str[*i] || str[*i] == ' ' \
+		|| str[*i] == '/' || str[*i] == ':' || str[*i] == '<' \
+		|| str[*i] == '>' || str[*i] == '|'))
+		ret_value = find_til_in_env(command, "PWD=", *parsed, &index);
+	if (str[*i - 1] == '-' && (!str[*i] || str[*i] == ' ' \
+		|| str[*i] == '/' || str[*i] == ':' || str[*i] == '<' \
+		|| str[*i] == '>' || str[*i] == '|'))
+		ret_value = find_til_in_env(command, "OLDPWD=", *parsed, &index);
+	if (!str[*i] || str[*i] == ' ' || str[*i] == '/' || str[*i] == ':')
+		ret_value = find_til_in_env(command, "HOME=", *parsed, &index);
+	if (str[*i] == '/' || str[*i] == ':')
+	{
+		DEBUG()
+		new_com = add_command(command, command->input, i, arg_size - index);
+		DEBUG("new_com : %s", new_com)
+		join = ft_strjoin(*parsed, new_com);
+		DEBUG("join : %s", join)
+		free (*parsed);
+		DEBUG("Before parsed : %s", *parsed)
+		*parsed = join;
+		DEBUG("After parsed : %s", *parsed)
+		free (new_com);
+	}
+	return (ret_value);
 }
 
 char	*add_command(t_command *command, char *str, long *i, int size)
@@ -487,7 +523,7 @@ char	*add_command(t_command *command, char *str, long *i, int size)
 		big_free(command);
 	if (command->quote != e_no_quote && str[*i] == (char)command->quote)
 		command->quote = e_no_quote;
-	if (command->quote == e_no_quote && add_tild(command, str, i, temp, &index))
+	if (command->quote == e_no_quote && add_tild(command, str, i, &temp, size))
 		return (temp);
 	while (str[*i] && !is_stop_char(command, str[*i]))
 	{
@@ -534,9 +570,9 @@ void	do_command(t_command *command, unsigned long i_cmd, long *i)
 		{
 			// DEBUG("*i : %ld", *i);
 			// DEBUG("arg_size : %d", arg_size);
+			command->cmd_array[i_cmd].is_cmd_filled = 1;
 			command->cmd_array[i_cmd].the_cmd = add_command(command, \
 					command->input, i, arg_size);
-			command->cmd_array[i_cmd].is_cmd_filled = 1;
 			RED
 				DEBUG("command->cmd_array[%ld].the_cmd : %s", i_cmd, command->cmd_array[i_cmd].the_cmd)
 				RESET

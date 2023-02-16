@@ -90,8 +90,8 @@ int	get_input(t_command *command)
 	// DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
 	// DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
 	tout_free(command->input);
-	big_free(command);
-	init_to_zero(command);
+	// big_free(command);
+	// init_to_zero(command);
 	return (1);
 }
 
@@ -110,7 +110,7 @@ void	big_free(t_command *command)
 		command->env = command->env->first;
 	while (command->env)
 	{
-		DEBUG("env : %p", command->env)
+		// DEBUG("env : %p", command->env)
 		temp = command->env;
 		tout_free(command->env->key);
 		tout_free(command->env->value);
@@ -120,16 +120,16 @@ void	big_free(t_command *command)
 	}
 	while (i < command->size_cmd_array)
 	{
-		DEBUG("i :%ld command->size_cmd_array :%ld", i, command->size_cmd_array)
+		// DEBUG("i :%ld command->size_cmd_array :%ld", i, command->size_cmd_array)
 		tout_free(command->cmd_array[i].the_cmd);
 		if (command->cmd_array[i].args)
 		{
-			DEBUG("arg : %p arg-first : %p", command->cmd_array[i].args, command->cmd_array[i].args->first)
+			// DEBUG("arg : %p arg-first : %p", command->cmd_array[i].args, command->cmd_array[i].args->first)
 			command->cmd_array[i].args = command->cmd_array[i].args->first;
 		}
 		while (command->cmd_array[i].args)
 		{
-			DEBUG("FREE ARG")
+			// DEBUG("FREE ARG")
 			targs = command->cmd_array[i].args;
 			tout_free(targs->arg);
 			command->cmd_array[i].args = command->cmd_array[i].args->next;
@@ -138,7 +138,7 @@ void	big_free(t_command *command)
 		}
 		while (j < command->cmd_array[i].redir_size)
 		{
-			DEBUG("j :%ld command->cmd_array[i].redir_size :%ld", j, command->cmd_array[i].redir_size)
+			// DEBUG("j :%ld command->cmd_array[i].redir_size :%ld", j, command->cmd_array[i].redir_size)
 			tout_free(command->cmd_array[i].redir_array[j].file_name);
 			j++;
 		}
@@ -148,7 +148,7 @@ void	big_free(t_command *command)
 	}
 	if (command->cmd_array)
 	{
-		DEBUG("free tableau cmd : %p", command->cmd_array)
+		// DEBUG("free tableau cmd : %p", command->cmd_array)
 		free (command->cmd_array);
 		command->cmd_array = NULL;
 	}
@@ -188,8 +188,6 @@ void init_to_zero(t_command *command)
 	command->env = NULL;
 	command->input = NULL;
 }
-
-
 
 // TODO add env if there is no env
 // TODO add HEREDOC
