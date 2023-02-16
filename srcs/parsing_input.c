@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/14 20:20:45 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/16 04:43:28 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,9 @@ int	count_arg_size(t_command *command, char *str, long i)
 		// DEBUG("quote : %d", command->quote)
 		// DEBUG("str[%ld] : %c", i, str[i]);
 		if (str[i] && str[i] == '$' && command->quote != e_little_quote)
-			counter += count_dollar_size(command, str, &i, &counter); // check $- $$ $?  $"" $ 
+			counter += count_dollar_size(command, str, &i, &counter); // check $- $$ $?  $"" $
+		else if (command->quote == e_no_quote && is_tilde_ok(command, str, &counter, i))
+			return (counter);
 		else if (str[i] && command->quote != e_no_quote && str[i] != (char)command->quote)
 		{
 			// DEBUG("str[%ld] : %c", i, str[i]);

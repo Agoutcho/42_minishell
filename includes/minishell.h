@@ -139,6 +139,8 @@ typedef struct s_command
     unsigned long size_cmd_array; // init a 0
     long     i_input;
     char    *input;
+    char	*hd_line;
+    t_heredoc *heredoc;
 }    t_command;
 
 // PARSING
@@ -155,6 +157,8 @@ char *add_command(t_command *command, char *str, long *i, int size);
 void parsing_input(t_command *command);
 int is_redir(char c);
 int count_arg_size(t_command *command, char *str, long i);
+int	fill_heredoc(t_command *command, char *heredoc);
+void	tout_free(char *input);
 
 
 // @INIT_TERM_C

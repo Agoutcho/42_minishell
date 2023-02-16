@@ -15,6 +15,7 @@ INC_DIR = ./includes/
 #	SRC
 SRC_NAME =	minishell.c	\
 			add_to_env.c \
+			fill_heredoc.c \
 			init_command.c \
 			init_env.c \
 			init_redir.c \
