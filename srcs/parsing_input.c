@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/16 04:43:28 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/17 06:09:06 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,33 @@ int	count_dollar_size(t_command *command, char *str, long *i, int *counter)
 	return (0);
 }
 
+int	count_tilde_size(t_command *command, char *str, long *i)
+{
+	int		ret_value;
+	int		temp_i;
+
+	DEBUG("*i : %ld", *i)
+	(*i)++;
+	temp_i = *i;
+	if (str[*i] == '-' || str[*i] == '+')
+		(*i)++;
+	DEBUG("str[%ld] : %c", *i, str[*i]);
+	if (str[temp_i] == '+')
+		ret_value = find_lenght_in_env(command, "PWD=");
+	else if (str[temp_i] == '-')
+		ret_value = find_lenght_in_env(command, "OLDPWD=");
+	else
+		ret_value = find_lenght_in_env(command, "HOME=");
+	if (ret_value == 0 && (str[temp_i] == '-' || str[temp_i] == '+'))
+		ret_value = 2;
+	else if (ret_value == 0)
+		ret_value = 1;
+	DEBUG("str[%ld] : %c", *i, str[*i]);
+	DEBUG("str[%ld] : %c", *i - 1, str[*i - 1]);
+	DEBUG("ret_value : %d", ret_value)
+	return (ret_value);
+}
+
 int	is_stop_char(t_command *command, char c)
 {
 	// DEBUG("c : %c", c);
@@ -180,40 +207,21 @@ int	is_stop_char(t_command *command, char c)
 	return (1);
 }
 
-int	is_tilde_ok(t_command *command, char *str, int *counter, long i)
+// check_special => '~' // TODO check ~/ ~+ ~-
+int	is_tilde_ok(char *str, long i)
 {
-	int 	ret_value;
-
-	PURPLE
-	if (str[i - 1])
-		DEBUG("str[%ld] : %c", i - 1, str[i - 1])
-	DEBUG("str[%ld] : %c", i, str[i])
-	if (str[i + 1])
-		DEBUG("str[%ld] : %c", i + 1, str[i + 1])
 	i++;
-	if (str[i - 1] != '~' || (str[i] && str[i] != ' ' && str[i] != '/' \
-		&& str[i] != ':' && str[i] != '+' && str[i] != '-' && str[i] != '<' \
-		&& str[i] != '>' && str[i] != '|'))
-		return (0);
-	DEBUG("str[%ld] : %c", i, str[i]);
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	if (str[i - 1] == '+' && (!str[i] || str[i] == ' ' \
-		|| str[i] == '/' || str[i] == ':' || str[i] == '<' \
+	if ((i == 1 || str[i - 2] == ' ') && (!str[i] || str[i] == ' ' || str[i] == '/' \
+		|| str[i] == ':' || str[i] == '+' || str[i] == '-' || str[i] == '<' \
 		|| str[i] == '>' || str[i] == '|'))
-		ret_value = find_lenght_in_env(command, "PWD=");
-	if (str[i - 1] == '-' && (!str[i] || str[i] == ' ' \
-		|| str[i] == '/' || str[i] == ':' || str[i] == '<' \
-		|| str[i] == '>' || str[i] == '|'))
-		ret_value = find_lenght_in_env(command, "OLDPWD=");
-	if (!str[i] || str[i] == ' ' || str[i] == '/' || str[i] == ':')
-		ret_value = find_lenght_in_env(command, "HOME=");
-	DEBUG("str[%ld] : %c", i, str[i]);
-	if (str[i] == '/' || str[i] == ':')
-		ret_value += count_arg_size(command, command->input, i);
-	*counter = *counter + ret_value;
-	DEBUG("counter : %d", *counter);
-	return (ret_value);
+	{
+		if((str[i] == '+' || str[i] == '-') && (str[i] && str[i + 1] != ' ' \
+		&& str[i + 1] != '/' && str[i + 1] != ':' && str[i + 1] != '<' \
+		&& str[i + 1] != '>' && str[i + 1] != '|'))
+			return (0);
+		return (1);
+	}
+	return (0);
 }
 
 int	count_arg_size(t_command *command, char *str, long i)
@@ -225,8 +233,6 @@ int	count_arg_size(t_command *command, char *str, long i)
 	if (command->quote != e_no_quote && str[i] == (char)command->quote)
 		command->quote = e_no_quote;
 	// check_special => '~' // TODO check ~/ ~+ ~-
-	if (command->quote == e_no_quote && is_tilde_ok(command, str, &counter, i))
-		return (counter);
 	while (str[i] && !is_stop_char(command, str[i]))
 	{
 		// RED
@@ -237,8 +243,8 @@ int	count_arg_size(t_command *command, char *str, long i)
 		// DEBUG("str[%ld] : %c", i, str[i]);
 		if (str[i] && str[i] == '$' && command->quote != e_little_quote)
 			counter += count_dollar_size(command, str, &i, &counter); // check $- $$ $?  $"" $
-		else if (command->quote == e_no_quote && is_tilde_ok(command, str, &counter, i))
-			return (counter);
+		else if (str[i] && command->quote == e_no_quote && is_tilde_ok(str, i))
+			counter += count_tilde_size(command, str, &i);
 		else if (str[i] && command->quote != e_no_quote && str[i] != (char)command->quote)
 		{
 			// DEBUG("str[%ld] : %c", i, str[i]);
@@ -380,14 +386,14 @@ void	adding_hyphen(t_command *command, long *i, char *parsed, long *index)
 		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
 		{
 			DEBUG("value : %s", tenv->value)
-				DEBUG("len : %zu", ft_strlen(tenv->value))
-				while (tenv->value[i_val])
-				{
-					DEBUG("tenv->value[i_val] : %c", tenv->value[i_val])
-						parsed[*index] = tenv->value[i_val];
-					(*index)++;
-					i_val++;
-				}
+			DEBUG("len : %zu", ft_strlen(tenv->value))
+			while (tenv->value[i_val])
+			{
+				DEBUG("tenv->value[i_val] : %c", tenv->value[i_val])
+				parsed[*index] = tenv->value[i_val];
+				(*index)++;
+				i_val++;
+			}
 			break ;
 		}
 		tenv = tenv->next;
@@ -423,6 +429,142 @@ void	add_dollar(t_command *command, char *str, long *i, char *temp, long *index)
 		adding_qmark(command, i, temp, index);
 	else
 		adding_dollar_env(command, str, i, temp, index);
+}
+
+int	add_tilde_home(t_command *command, long *i, char *parsed, long *index)
+{
+	char	*temp;
+	int		i_val;
+	t_env	*tenv;
+
+	i_val = 0;
+	tenv = command->env->first; 
+	temp = ft_strdup("HOME=");
+	if (!temp)
+		big_free(command);
+	while (tenv)
+	{
+		DEBUG("key : %s", tenv->key);
+		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
+		{
+			DEBUG("value : %s", tenv->value)
+			DEBUG("len : %zu", ft_strlen(tenv->value))
+			while (tenv->value[i_val])
+			{
+				DEBUG("tenv->value[i_val] : %c", tenv->value[i_val])
+				parsed[*index] = tenv->value[i_val];
+				(*index)++;
+				i_val++;
+			}
+			i_val = 1;
+			break ;
+		}
+		tenv = tenv->next;
+	}
+	(*i)++;
+	free(temp);
+	return (i_val);
+}
+
+int	add_tilde_plus(t_command *command, long *i, char *parsed, long *index)
+{
+	char	*temp;
+	int		i_val;
+	t_env	*tenv;
+
+	i_val = 0;
+	tenv = command->env->first; 
+	temp = ft_strdup("PWD=");
+	if (!temp)
+		big_free(command);
+	while (tenv)
+	{
+		DEBUG("key : %s", tenv->key);
+		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
+		{
+			DEBUG("value : %s", tenv->value)
+			DEBUG("len : %zu", ft_strlen(tenv->value))
+			while (tenv->value[i_val])
+			{
+				DEBUG("tenv->value[i_val] : %c", tenv->value[i_val])
+				parsed[*index] = tenv->value[i_val];
+				(*index)++;
+				i_val++;
+			}
+			i_val = 1;
+			break ;
+		}
+		tenv = tenv->next;
+	}
+	(*i)++;
+	free(temp);
+	return (i_val);
+}
+
+int	add_tilde_hyphen(t_command *command, long *i, char *parsed, long *index)
+{
+	char	*temp;
+	int		i_val;
+	t_env	*tenv;
+
+	i_val = 0;
+	tenv = command->env->first; 
+	temp = ft_strdup("OLDPWD=");
+	if (!temp)
+		big_free(command);
+	while (tenv)
+	{
+		DEBUG("key : %s", tenv->key);
+		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
+		{
+			DEBUG("value : %s", tenv->value)
+			DEBUG("len : %zu", ft_strlen(tenv->value))
+			while (tenv->value[i_val])
+			{
+				DEBUG("tenv->value[i_val] : %c", tenv->value[i_val])
+				parsed[*index] = tenv->value[i_val];
+				(*index)++;
+				i_val++;
+			}
+			i_val = 1;
+			break ;
+		}
+		tenv = tenv->next;
+	}
+	(*i)++;
+	free(temp);
+	return (i_val);
+}
+
+void	add_tilde(t_command *command, char *str, long *i, char *temp, long *i_temp)
+{
+	int		ret_value;
+	int		temp_i;
+	
+	DEBUG("*i : %ld", *i)
+	temp_i = *i;
+	temp_i++;
+	if (str[*i] == '-' || str[*i] == '+')
+		temp_i++;
+	DEBUG("str[%ld] : %c", *i, str[*i]);
+	if (str[temp_i] == '+')
+		ret_value = add_tilde_plus(command, i, temp, i_temp);
+	else if (str[temp_i] == '-')
+		ret_value = add_tilde_hyphen(command, i, temp, i_temp);
+	else
+		ret_value = add_tilde_home(command, i, temp, i_temp);
+	if (ret_value == 0 && (str[temp_i - 1] == '-' || str[temp_i - 1] == '+'))
+	{
+		temp[*i_temp] = str[temp_i - 2];
+		(*i_temp)++;
+		temp[*i_temp] = str[temp_i - 1];
+		(*i_temp)++;
+	}
+	else if (ret_value == 0)
+	{
+		temp[*i_temp] = str[temp_i - 1];
+		(*i_temp)++;
+	}
 }
 
 int	is_dollar_quoted(t_quote quote, char c)
@@ -534,6 +676,8 @@ char	*add_command(t_command *command, char *str, long *i, int size)
 		// DEBUG("str[%ld] : %c %d", *i, str[*i],str[*i]);
 		if (str[*i] && str[*i] == '$' && command->quote != e_little_quote)
 			add_dollar(command, str, i, temp, &index); // check $- $$ $?  $"" $
+		else if (str[*i] && command->quote == e_no_quote && is_tilde_ok(str, *i))
+			add_tilde(command, str, i, temp, &index);
 		else if (str[*i] && command->quote != e_no_quote && str[*i] != (char)command->quote)
 		{
 			// DEBUG()

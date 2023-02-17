@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/16 19:45:39 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/16 23:32:56 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ int	fill_heredoc(t_command *command, char *heredoc)
         command->hd_line = readline("> ");
         if (!command->hd_line)
         {
-            ft_putstr_fd("-Rachele: warning: here-document delimited by end-of-file (wanted `", 1);
+            ft_putstr_fd("-Rachele: warning: here-document delimited ", 1);
+            ft_putstr_fd("by end-of-file (wanted `", 1);
             ft_putstr_fd(heredoc, 1);
             ft_putstr_fd("')\n", 1);
             tout_free(command->hd_line);
             return (0);
         }
-        if (command->hd_line && *command->hd_line)
-            add_history(command->hd_line);
         DEBUG("%s", command->hd_line);
         if (ft_strncmp(command->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0)
             break ;

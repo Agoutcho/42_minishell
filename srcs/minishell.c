@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/16 19:42:41 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/17 06:10:25 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,15 +215,15 @@ int	main(int argc, char **argv, char **env)
 		init_env(&command, environ); // utiliser __environ au lieu de envp ou env
 		// temp = find_env_value(&command, "PATH=");
 		// DEBUG("PATH=%s",temp->value)
-		// prompt(&command);
-		fill_heredoc(&command, "heredoc");
-		if (command.heredoc)
-			command.heredoc = command.heredoc->first;
-		while (command.heredoc)
-		{
-			DEBUG("heredoc : %s", command.heredoc->line);
-			command.heredoc = command.heredoc->next;
-		}
+		prompt(&command);
+		// fill_heredoc(&command, "heredoc");
+		// if (command.heredoc)
+		// 	command.heredoc = command.heredoc->first;
+		// while (command.heredoc)
+		// {
+		// 	DEBUG("heredoc : %s", command.heredoc->line);
+		// 	command.heredoc = command.heredoc->next;
+		// }
 	}
 	return (0);
 }
