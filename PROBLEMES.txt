@@ -1,0 +1,4 @@
+Liste des problemes :
+1 - free la grosse struct data
+2 - cd -
+3 - cd OLDPWD home not set
