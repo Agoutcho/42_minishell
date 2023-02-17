@@ -48,3 +48,5 @@ $: $? $- $a
 export yo=ho
 ec"$yo"
 export yo+=to => hoto
+
+"echo" cat lol '$mdr''$SHELL'"$SHELL" > fichier.txt | echo lol | cat | lol | tr < infile > outfile >> outappend | ls -l

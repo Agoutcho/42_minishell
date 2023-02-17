@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/14 20:14:44 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/18 00:55:24 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ void	init_cmd_filled(t_command *command)
 	i = 0;
 	while (i < command->size_cmd_array)
 	{
+		command->cmd_array[i].the_cmd = NULL;
+		command->cmd_array[i].args = NULL;
 		command->cmd_array[i].is_cmd_filled = 0;
+		command->cmd_array[i].redir_size = 0;
+		command->cmd_array[i].redir_array = NULL;
 		i++;
 	}
 }
@@ -54,7 +58,9 @@ void	init_command(t_command *command)
 	command->quote = e_no_quote;
 	while (command->input[i])
 	{
-		set_quote(command, &i, 1);
+		DEBUG("command->input[%ld] : %c", i, command->input[i])
+		DEBUG("command->quote %d", command->quote)
+		set_quote(command, &i, 0);
 		if (command->quote == e_no_quote && command->input[i] == '|')
 			counter_command++;
 		i++;
@@ -63,5 +69,4 @@ void	init_command(t_command *command)
 	temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
 	command->cmd_array = temp;
 	init_cmd_filled(command);
-	DEBUG("counter : %d", counter_command)
 }

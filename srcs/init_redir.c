@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/14 20:16:00 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/17 20:53:02 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	is_redir(char c)
 {
-    // DEBUG()
     if (c == '<' || c == '>')
         return (1);
     else 
@@ -32,17 +31,13 @@ void	init_redir(t_command *command)
     counter_redir = 0;
     command->cmd_array[j].redir_size = 0;
     command->quote = e_no_quote;
-    GREEN
-    DEBUG()
     while (command->input[i])
     {
-        // DEBUG("input[%ld] : %c", i, command->input[i]);
         set_quote(command, &i, 1);
         if (command->input[i] && command->quote == e_no_quote && is_redir(command->input[i]))
             counter_redir++;
         if (command->input[i] && command->quote == e_no_quote && command->input[i] == '|')
         {
-            DEBUG("j : %d counter_redir : %d", j, counter_redir);
             command->cmd_array[j].redir_size = counter_redir;
             command->cmd_array[j].redir_array = \
             (t_redirect *)malloc(sizeof(t_redirect) * counter_redir);
@@ -55,9 +50,7 @@ void	init_redir(t_command *command)
         if (command->input[i])
             i++;
     }
-    DEBUG("j : %d counter_redir : %d", j, counter_redir);
     command->cmd_array[j].redir_size = counter_redir;
     command->cmd_array[j].redir_array = \
     (t_redirect *)malloc(sizeof(t_redirect) * counter_redir);
-    RESET
 }
