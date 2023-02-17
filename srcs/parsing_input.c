@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/17 06:09:06 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/17 06:33:21 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,12 +210,18 @@ int	is_stop_char(t_command *command, char c)
 // check_special => '~' // TODO check ~/ ~+ ~-
 int	is_tilde_ok(char *str, long i)
 {
+	if (str[i] != '~')
+		return (0);
+	DEBUG("str[%ld] : %c", i, str[i]);
 	i++;
+	DEBUG("str[%ld] : %c", i, str[i]);
 	if ((i == 1 || str[i - 2] == ' ') && (!str[i] || str[i] == ' ' || str[i] == '/' \
 		|| str[i] == ':' || str[i] == '+' || str[i] == '-' || str[i] == '<' \
 		|| str[i] == '>' || str[i] == '|'))
 	{
-		if((str[i] == '+' || str[i] == '-') && (str[i] && str[i + 1] != ' ' \
+		DEBUG("str[%ld] : %c", i, str[i]);
+		DEBUG("str[%ld] : %c", i + 1, str[i + 1]);
+		if((str[i] == '+' || str[i] == '-') && (str[i + 1] && str[i + 1] != ' ' \
 		&& str[i + 1] != '/' && str[i + 1] != ':' && str[i + 1] != '<' \
 		&& str[i + 1] != '>' && str[i + 1] != '|'))
 			return (0);
@@ -496,7 +502,7 @@ int	add_tilde_plus(t_command *command, long *i, char *parsed, long *index)
 		}
 		tenv = tenv->next;
 	}
-	(*i)++;
+	(*i) = (*i) + 2;
 	free(temp);
 	return (i_val);
 }
@@ -531,7 +537,7 @@ int	add_tilde_hyphen(t_command *command, long *i, char *parsed, long *index)
 		}
 		tenv = tenv->next;
 	}
-	(*i)++;
+	(*i) = (*i) + 2;
 	free(temp);
 	return (i_val);
 }
@@ -544,12 +550,14 @@ void	add_tilde(t_command *command, char *str, long *i, char *temp, long *i_temp)
 	DEBUG("*i : %ld", *i)
 	temp_i = *i;
 	temp_i++;
-	if (str[*i] == '-' || str[*i] == '+')
+	if (str[temp_i] == '-' || str[temp_i] == '+')
 		temp_i++;
 	DEBUG("str[%ld] : %c", *i, str[*i]);
-	if (str[temp_i] == '+')
+	DEBUG("str[%d] : %c", temp_i, str[temp_i]);
+	DEBUG("str[%d] : %c", temp_i - 1, str[temp_i - 1]);
+	if (str[temp_i - 1] == '+')
 		ret_value = add_tilde_plus(command, i, temp, i_temp);
-	else if (str[temp_i] == '-')
+	else if (str[temp_i - 1] == '-')
 		ret_value = add_tilde_hyphen(command, i, temp, i_temp);
 	else
 		ret_value = add_tilde_home(command, i, temp, i_temp);
@@ -559,11 +567,13 @@ void	add_tilde(t_command *command, char *str, long *i, char *temp, long *i_temp)
 		(*i_temp)++;
 		temp[*i_temp] = str[temp_i - 1];
 		(*i_temp)++;
+		(*i) = (*i) + 2;
 	}
 	else if (ret_value == 0)
 	{
 		temp[*i_temp] = str[temp_i - 1];
 		(*i_temp)++;
+		(*i)++;
 	}
 }
 
@@ -605,55 +615,6 @@ int	find_til_in_env(t_command *command, char *t_key, char *parsed, long *idex)
 	return (0);
 }
 
-int	add_tild(t_command *command, char *str, long *i, char **parsed, long arg_size)
-{
-	char	*new_com;
-	char	*join;
-	int		ret_value;
-	long	index;
-
-	index = 0;
-	ret_value = 0;
-	PURPLE
-	if (str[*i - 1])
-		DEBUG("str[%ld] : %c", *i - 1, str[*i - 1])
-	DEBUG("str[%ld] : %c", *i, str[*i])
-	if (str[*i + 1])
-		DEBUG("str[%ld] : %c", *i + 1, str[*i + 1])
-	if (str[*i] != '~' || (str[*i + 1] && str[*i + 1] != ' ' && str[*i + 1] != '/' \
-		&& str[*i + 1] != ':' && str[*i + 1] != '+' && str[*i + 1] != '-' && str[*i + 1] != '<' \
-		&& str[*i + 1] != '>' && str[*i + 1] != '|'))
-		return (ret_value);
-	(*i)++;
-	if (str[*i] == '-' || str[*i] == '+')
-		(*i)++;
-	DEBUG("str[%ld] : %c", *i, str[*i])
-	if (str[*i - 1] == '+' && (!str[*i] || str[*i] == ' ' \
-		|| str[*i] == '/' || str[*i] == ':' || str[*i] == '<' \
-		|| str[*i] == '>' || str[*i] == '|'))
-		ret_value = find_til_in_env(command, "PWD=", *parsed, &index);
-	if (str[*i - 1] == '-' && (!str[*i] || str[*i] == ' ' \
-		|| str[*i] == '/' || str[*i] == ':' || str[*i] == '<' \
-		|| str[*i] == '>' || str[*i] == '|'))
-		ret_value = find_til_in_env(command, "OLDPWD=", *parsed, &index);
-	if (!str[*i] || str[*i] == ' ' || str[*i] == '/' || str[*i] == ':')
-		ret_value = find_til_in_env(command, "HOME=", *parsed, &index);
-	if (str[*i] == '/' || str[*i] == ':')
-	{
-		DEBUG()
-		new_com = add_command(command, command->input, i, arg_size - index);
-		DEBUG("new_com : %s", new_com)
-		join = ft_strjoin(*parsed, new_com);
-		DEBUG("join : %s", join)
-		free (*parsed);
-		DEBUG("Before parsed : %s", *parsed)
-		*parsed = join;
-		DEBUG("After parsed : %s", *parsed)
-		free (new_com);
-	}
-	return (ret_value);
-}
-
 char	*add_command(t_command *command, char *str, long *i, int size)
 {
 	char *temp;
@@ -667,8 +628,6 @@ char	*add_command(t_command *command, char *str, long *i, int size)
 		big_free(command);
 	if (command->quote != e_no_quote && str[*i] == (char)command->quote)
 		command->quote = e_no_quote;
-	if (command->quote == e_no_quote && add_tild(command, str, i, &temp, size))
-		return (temp);
 	while (str[*i] && !is_stop_char(command, str[*i]))
 	{
 		// DEBUG("str[%ld] : %c %d", *i, str[*i],str[*i]);
