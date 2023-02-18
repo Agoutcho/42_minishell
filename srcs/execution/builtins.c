@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 16:58:32 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/18 13:21:57 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtins_handler(t_data *data, int i)
 		if (data->size_cmd_array == 1 && ft_exit(data->cmd[i].args) == 0)
 		{
 			free_data(data);
-			exit_shell(g_exit_code);
+			exit_shell();
 		}
 	}
 	return (1);

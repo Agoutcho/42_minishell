@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 16:59:51 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 17:06:43 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/18 13:32:07 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	**sort_strs(char **strs);
 //	@CD_C
 int		ft_cd(t_cmd_array *cmd, t_env *env);
 int		change_pwd(t_env *env, char *pwd_oldpwd_flag);
+int		cd_home(t_cmd_array *cmd, t_env *env);
 int		cd_oldpwd(t_cmd_array *cmd, t_env *env);
 //	@ECHO_C
 int		ft_echo(char **args);

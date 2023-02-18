@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 16:00:02 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/18 13:41:20 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	ft_cd(t_cmd_array *cmd, t_env *env)
 {
-	if (cmd->args[1] != NULL)
+	if (!cmd->args[0])
+		return (cd_home(cmd, env));
+	if (cmd->args[1])
 	{
 		ft_putendl_fd("cd: string not in pwd", 2);
 		return (1);
@@ -38,17 +40,42 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 	return (1);
 }
 
+int	cd_home(t_cmd_array *cmd, t_env *env)
+{
+	t_env	*temp;
+
+	temp = search_key("HOME=", env);
+	env = env->first;
+	if (temp)
+	{
+		if (access(temp->value, F_OK) == 0)
+		{
+			if (!change_pwd(env, "OLDPWD="))
+				return (0);
+			if (chdir(temp->value) != 0)
+			{
+				perror("chdir");
+				return (0);
+			}
+			if (!change_pwd(env, "PWD="))
+				return (0);
+		}
+	}
+	else
+		ft_putendl_fd("cd : HOME not set", 2);
+	return (1);
+}
+
 int	cd_oldpwd(t_cmd_array *cmd, t_env *env)
 {
 	t_env	*temp;
 	char	*path;
 
 	temp = search_key("OLDPWD=", env);
+	env = env->first;
 	if (temp)
 	{
-		env = env->first;
-		path = temp->value;
-		ft_putendl_fd(path, 2);
+		path = ft_strdup(temp->value);
 		if (access(path, F_OK) == 0)
 		{
 			if (!change_pwd(env, "OLDPWD="))
@@ -61,9 +88,10 @@ int	cd_oldpwd(t_cmd_array *cmd, t_env *env)
 			if (!change_pwd(env, "PWD="))
 				return (0);
 		}
+		free(path);
 	}
 	else
-		ft_putendl_fd("cd: no such a file or directory", 2);
+		ft_putendl_fd("cd : OLDPWD not set", 2);
 	return (1);
 }
 
@@ -80,7 +108,7 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 		if (!pwd)
 			return (0);
 		replace_node(env, pwd);
-		env = env->first;
 	}
+	env = env->first;
 	return (1);
 }
