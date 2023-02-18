@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/18 00:55:24 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/18 00:57:21 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	init_command(t_command *command)
 	command->quote = e_no_quote;
 	while (command->input[i])
 	{
-		DEBUG("command->input[%ld] : %c", i, command->input[i])
-		DEBUG("command->quote %d", command->quote)
 		set_quote(command, &i, 0);
 		if (command->quote == e_no_quote && command->input[i] == '|')
 			counter_command++;
