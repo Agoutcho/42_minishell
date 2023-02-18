@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 06:10:25 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/18 04:14:50 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void init_to_zero(t_command *command);
 
+// TODO changer le nom de tout_free
 void	tout_free(char *input)
 {
 	if (input)

@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:53:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/14 20:05:54 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:57:44 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_printable(char *str)
+static int	check_printable(char *str)
 {
 	int	i;
 
@@ -26,6 +26,46 @@ int	check_printable(char *str)
 	return (0);
 }
 
+static int	add_printable(char *str, t_env *env)
+{
+	int		key_len;
+	int		value_len;
+	
+	key_len = 0;
+	value_len = 0;
+	DEBUG("%s", str);
+	while (str[key_len] != '=')
+		key_len++;
+	while (str[value_len + key_len])
+		value_len++;
+	env->key = (char *)malloc(sizeof(char) * key_len + 1);
+	if (!env->key)
+		return (0);
+	env->value = (char *)malloc(sizeof(char) * value_len + 1);
+	if (!env->value)
+		return (0);
+	ft_strlcat(env->key, str, key_len + 2);
+	ft_strlcpy(env->value, str + key_len + 1, value_len + 2);
+	env->affiche_env = check_printable(str);
+	return (1);
+}
+
+static int	add_not_printable(char *str, t_env *env)
+{
+	int		key_len;
+
+	key_len = 0;
+	DEBUG("%s", str);
+	while (str[key_len])
+		key_len++;
+	env->key = (char *)malloc(sizeof(char) * key_len + 1);
+	if (!env->key)
+		return (0);
+	ft_strlcat(env->key, str, key_len + 2);
+	env->affiche_env = check_printable(str);
+	return (1);
+}
+
 /**
  * @brief Add a new element in env list at the end 
  * 
@@ -37,51 +77,24 @@ int	add_to_env(t_command *command, char *str)
 {
 	t_env	*new;
 	t_env	*temp;
-	int	key_len;
-	int	value_len;
 
-	// DEBUG("command->first key : %s", command->env->first->key);
 	temp = command->env;
-	// DEBUG("temp->first key : %s", temp->first->key);
+	DEBUG("temp : %p", temp)
 	while (temp->next)
 		temp = temp->next;
-	// DEBUG("last temp->key : %s", temp->key);
+	DEBUG("temp : %p temp->next : %p", temp, temp->next)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (0);
 	new->first = temp->first;
-	// DEBUG("new->first key : %s", new->first->key);
 	new->next = NULL;
+	DEBUG("temp : %p temp->next : %p", temp, temp->next)
+	DEBUG("new : %p new->first : %p", new, new->first)
 	temp->next = new;
 	if (check_printable(str))
-	{
-		key_len = 0;
-		value_len = 0;
-		while (str[key_len] != '=')
-			key_len++;
-		while (str[value_len + key_len])
-			value_len++;
-		command->env->key = (char *)malloc(sizeof(char) * key_len + 1);
-		if (!command->env->key)
-			return (0);
-		command->env->value = (char *)malloc(sizeof(char) * value_len + 1);
-		if (!command->env->value)
-			return (0);
-		ft_strlcat(command->env->key, str, key_len + 2);
-		ft_strlcpy(command->env->value, str + key_len + 1, value_len + 2);
-	}
+		return (add_printable(str, new));
 	else
-	{
-		key_len = 0;
-		while (str[key_len])
-			key_len++;
-		command->env->key = (char *)malloc(sizeof(char) * key_len + 1);
-		if (!command->env->key)
-			return (0);
-		ft_strlcat(command->env->key, str, key_len + 2);
-	}
-	command->env->affiche_env = check_printable(str);
-	return (1);
+		return (add_not_printable(str, new));
 }
 
 t_env	*find_env_value(t_command *command, char *key)

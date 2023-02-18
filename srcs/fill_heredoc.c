@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/16 23:32:56 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/18 04:15:28 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	add_heredoc(t_command *command)
 {
-    t_heredoc *new;
+    t_heredoc	*new;
 
     new = (t_heredoc *)malloc(sizeof(t_heredoc));
     new->line = ft_strdup(command->hd_line);
@@ -48,7 +48,6 @@ int	fill_heredoc(t_command *command, char *heredoc)
             tout_free(command->hd_line);
             return (0);
         }
-        DEBUG("%s", command->hd_line);
         if (ft_strncmp(command->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0)
             break ;
         add_heredoc(command);

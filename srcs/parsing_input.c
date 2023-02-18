@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/18 01:09:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:46:29 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,14 @@ int	find_lenght_in_env(t_command *command, char *str)
 {
 	t_env	*temp;
 
+	DEBUG("command->env : %p command->env->first : %p", command->env, command->env->first)
 	temp = command->env->first;
 	if (!*str)
 		return (0);
 	while (temp)
 	{
+		DEBUG("temp : %p temp->next : %p", temp, temp->next)
+		DEBUG("temp->key : %s temp->value : %s", temp->key, temp->value)
 		if (ft_strncmp(temp->key, str, ft_strlen(str) + 1) == 0)
 				return (ft_strlen(temp->value));
 		temp = temp->next;
@@ -104,7 +107,7 @@ int	count_dollar_size(t_command *command, char *str, long *i, int *counter)
 	int		temp_i;
 	char	*temp;
 
-	
+	DEBUG("str[%ld] : %c", *i, str[*i]);
 	if (!is_dollar_ok(str, i, 1))
 		return (1);
 	(*i)++;
@@ -121,6 +124,7 @@ int	count_dollar_size(t_command *command, char *str, long *i, int *counter)
 	temp[--size_dollar] = '=';
 	while (size_dollar-- > 0)
 		temp[size_dollar] = str[(*i) + size_dollar];
+	DEBUG("size_dollar : %d",size_dollar)
 	*counter = (*counter) + find_lenght_in_env(command, temp);
 	(*i) += temp_i - *i;
 	free(temp);
@@ -186,6 +190,7 @@ int	count_arg_size(t_command *command, char *str, long i)
 	if (command->quote != e_no_quote && str[i] == (char)command->quote)
 		command->quote = e_no_quote;
 	// check_special => '~' // TODO check ~/ ~+ ~-
+	DEBUG()
 	while (str[i] && !is_stop_char(command, str[i]))
 	{
 		set_quote(command, &i, 1);
@@ -547,7 +552,7 @@ char	*add_command(t_command *command, char *str, long *i, int size)
 void	do_command(t_command *command, unsigned long i_cmd, long *i)
 {
 	int	arg_size;
-
+	DEBUG()
 	arg_size = count_arg_size(command, command->input, *i);
 	if (command->cmd_array[i_cmd].is_cmd_filled == 0)
 	{
@@ -587,6 +592,7 @@ void	parsing_input(t_command *command)
 	k = 0;
 	command->quote = e_no_quote;
 	command->cmd_array[0].args = NULL;
+	DEBUG("%s",command->input);
 	while (j < command->size_cmd_array && command->input[i])
 	{
 		if (command->quote == e_no_quote)

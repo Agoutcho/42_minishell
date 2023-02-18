@@ -144,21 +144,22 @@ typedef struct s_command
 }    t_command;
 
 // PARSING
-void parsing(t_command *command);
-void check_parse_error(t_command *command);
-void init_command(t_command *command);
-void init_redir(t_command *command);
-int init_env(t_command *command, char **env);
-t_env *find_env_value(t_command *command, char *key);
-void big_free(t_command *command);
-void set_quote(t_command *command, long *i, int change_i);
-long move_space(char *str, long *i);
-char *add_command(t_command *command, char *str, long *i, int size);
-void parsing_input(t_command *command);
-int is_redir(char c);
-int count_arg_size(t_command *command, char *str, long i);
-int	fill_heredoc(t_command *command, char *heredoc);
+void	parsing(t_command *command);
+void	check_parse_error(t_command *command);
+void	init_command(t_command *command);
+void	init_redir(t_command *command);
+int		init_env(t_command *command, char **env);
+t_env	*find_env_value(t_command *command, char *key);
+void	big_free(t_command *command);
+void	set_quote(t_command *command, long *i, int change_i);
+long	move_space(char *str, long *i);
+char	*add_command(t_command *command, char *str, long *i, int size);
+void	parsing_input(t_command *command);
+int		is_redir(char c);
+int		count_arg_size(t_command *command, char *str, long i);
+int		fill_heredoc(t_command *command, char *heredoc);
 void	tout_free(char *input);
+int		add_to_env(t_command *command, char *str);
 
 
 // @INIT_TERM_C
