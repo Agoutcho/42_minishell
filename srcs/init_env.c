@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/18 14:48:12 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/20 04:06:13 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	lst_add_env_value(char *envp, t_env *env)
 
 	key_len = 0;
 	value_len = 0;
-	DEBUG("%s", envp)
-	DEBUG("env : %p", env);
 	if (!envp)
 		return (0);
 	while (envp[key_len] != '=')
@@ -92,6 +90,14 @@ int	copy_env(t_command *command, char **env)
 	return (1);
 }
 
+static int	free_create_env(char *pwd, char *join, char *temp, int v)
+{
+	tout_free(pwd);
+	tout_free(join);
+	tout_free(temp);
+	return (v);
+}
+
 int create_env(t_command *command)
 {
     t_env	*first;
@@ -112,18 +118,9 @@ int create_env(t_command *command)
 	pwd = ft_strdup("PWD=");
 	temp = getcwd(NULL, 0);
 	join = ft_strjoin(pwd, temp);
-	DEBUG("%s", join);
 	if (!add_to_env(command, join))
-	{
-		free (pwd);
-		free (join);
-		free (temp);
-		return (0);
-	}
-	free (pwd);
-	free (join);
-	free (temp);
-	return (1);
+		return (free_create_env(pwd, join, temp, 0));
+	return (free_create_env(pwd, join, temp, 1));
 }
 
 int	init_env(t_command *command, char **env)

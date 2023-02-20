@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/18 04:16:08 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/19 23:11:54 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	set_quote(t_command *command, long *i, int change_i)
 		(*i)++;
 }
 
-// command->input est malloc 
-// command->env est malloc
 void	init_command(t_command *command)
 {
 	long		i;
