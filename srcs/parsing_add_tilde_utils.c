@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:22:23 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:34:59 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/20 23:17:17 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	find_til_in_env(t_command *command, char *t_key, char *parsed, long *idex)
 static int	ret_val(long *i, char *temp, int i_val, int value)
 {
 	(*i) = (*i) + value;
-	if (!temp)
+	if (temp)
 	{
 		free(temp);
 		temp = NULL;

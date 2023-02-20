@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/20 19:52:12 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/20 23:03:42 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,12 @@
 
 void init_to_zero(t_command *command);
 
-// TODO changer le nom de tout_free
-void	tout_free(char *input)
-{
-	if (input)
-	{
-		free (input);
-		input = NULL;
-	}
-}
-
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void	affiche(t_command *command)
 {
 	t_args			*targs;
 	long	i;
-	unsigned long	j;
+	long	j;
 
 	j = 0;
 	i = 0;
@@ -75,12 +65,12 @@ int	get_input(t_command *command)
 	command->input = readline("Rachele ═> ");
 	if (!command->input)
 	{
-		tout_free(command->input);
+		secure_char_free(command->input);
 		return (0);
 	}
 	if (!ft_strlen(command->input))
 	{
-		tout_free(command->input);
+		secure_char_free(command->input);
 		return (1);
 	}
 	if (command->input && *command->input && command->input[0] != ' ')
@@ -90,70 +80,17 @@ int	get_input(t_command *command)
 	// affiche(command);
 	// DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
 	// DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
-	tout_free(command->input);
+	secure_char_free(command->input);
+	free_cmd(command);
 	// big_free(command);
-	// init_to_zero(command);
+	init_to_zero(command);
 	return (1);
 }
 
-// TODO free command args and redirections
 void	big_free(t_command *command)
 {
-	t_env				*temp;
-	t_args				*targs;
-	long		i;
-	unsigned long		j;
-
-	j = 0;
-	i = 0;
-	DEBUG("DEBUT FREE")
-	if (command->env)
-		command->env = command->env->first;
-	while (command->env)
-	{
-		// DEBUG("env : %p", command->env)
-		temp = command->env;
-		tout_free(command->env->key);
-		tout_free(command->env->value);
-		command->env = command->env->next;
-		free (temp);
-		temp = NULL;
-	}
-	while (i < command->size_cmd_array)
-	{
-		// DEBUG("i :%ld command->size_cmd_array :%ld", i, command->size_cmd_array)
-		tout_free(command->cmd_array[i].the_cmd);
-		if (command->cmd_array[i].args)
-		{
-			// DEBUG("arg : %p arg-first : %p", command->cmd_array[i].args, command->cmd_array[i].args->first)
-			command->cmd_array[i].args = command->cmd_array[i].args->first;
-		}
-		while (command->cmd_array[i].args)
-		{
-			// DEBUG("FREE ARG")
-			targs = command->cmd_array[i].args;
-			tout_free(targs->arg);
-			command->cmd_array[i].args = command->cmd_array[i].args->next;
-			free (targs);
-			targs = NULL;
-		}
-		while (j < command->cmd_array[i].redir_size)
-		{
-			// DEBUG("j :%ld command->cmd_array[i].redir_size :%ld", j, command->cmd_array[i].redir_size)
-			tout_free(command->cmd_array[i].redir_array[j].file_name);
-			j++;
-		}
-		free (command->cmd_array[i].redir_array);
-		command->cmd_array[i].redir_array = NULL;
-		i++;
-	}
-	if (command->cmd_array)
-	{
-		// DEBUG("free tableau cmd : %p", command->cmd_array)
-		free (command->cmd_array);
-		command->cmd_array = NULL;
-	}
-	DEBUG("FIN FREE")
+	free_env(command);
+	free_cmd(command);
 }
 
 /**
@@ -186,19 +123,16 @@ void init_to_zero(t_command *command)
 {
 	command->size_cmd_array = 0;
 	command->cmd_array = NULL;
-	command->env = NULL;
+	// command->env = NULL;
 	command->input = NULL;
 }
 
 // TODO add env if there is no env
 // TODO add HEREDOC
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv)
 {
 	t_command command;
-	// t_env *temp;
-	// char **envp;
 
-	(void)env;
 	(void)argv;
 	g_exit_code = 0;
 	YELLOW

@@ -39,9 +39,7 @@
 # define RESET  printf("\033[0m");
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
-/* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full 
---show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes 
---read-var-info=yes */
+/* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes */
 extern char **environ;
 int g_exit_code;
 
@@ -94,7 +92,7 @@ typedef struct s_heredoc
 typedef struct s_redirect 
 {
     t_redir type;
-    char *file_name;
+    char *file_name; // malloc
     int file_fd;
 }   t_redirect;
 
@@ -121,8 +119,8 @@ typedef struct s_cmd_array
     char *the_cmd; //malloc
     t_args *args; // malloc liste chainee
     int is_cmd_filled;
-    unsigned long redir_size;
-    t_redirect *redir_array;
+    long redir_size;
+    t_redirect *redir_array; //malloc 
 }   t_cmd_array;
 
 /**
@@ -133,14 +131,14 @@ typedef struct s_cmd_array
  */
 typedef struct s_command 
 {
-    t_env    *env; //malloc
+    t_env    *env; // malloc liste chainee
     t_quote  quote;
     t_cmd_array *cmd_array; //malloc
-    long size_cmd_array; // init a 0
-    long     i_input;
+    long    size_cmd_array; // init a 0
+    long    i_input;
     char    *input;
     char	*hd_line;
-    t_heredoc *heredoc;
+	t_heredoc	*heredoc; // malloc liste chainee
 }    t_command;
 
 
@@ -190,8 +188,14 @@ t_env	*find_env_value(t_command *command, char *key);
 void	big_free(t_command *command);
 long	move_space(char *str, long *i);
 int		fill_heredoc(t_command *command, char *heredoc);
-void	tout_free(char *input);
 int		add_to_env(t_command *command, char *str);
+
+// Free fonctions
+void	free_env(t_command *command);
+void	free_cmd(t_command *command);
+void	free_heredoc(t_command *command);
+void	secure_char_free(char *input);
+
 
 
 // @INIT_TERM_C
