@@ -18,11 +18,24 @@ SRC_NAME =	minishell.c	\
 			fill_heredoc.c \
 			init_command.c \
 			init_env.c \
+			init_env_creation.c \
 			init_redir.c \
 			init_term.c	\
 			parse_error.c \
+			parse_error_pipe.c \
+			parse_error_quote.c \
+			parse_error_redir.c \
 			parsing.c \
 			parsing_input.c \
+			parsing_add_command.c \
+			parsing_add_dollar.c \
+			parsing_add_tilde.c \
+			parsing_add_tilde_utils.c \
+			parsing_arg_size.c \
+			parsing_count_dollar.c \
+			parsing_command.c \
+			parsing_redirection.c \
+			parsing_tilde_size.c \
 
 # signal_handler.c	\
 			

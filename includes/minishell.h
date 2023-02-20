@@ -136,27 +136,59 @@ typedef struct s_command
     t_env    *env; //malloc
     t_quote  quote;
     t_cmd_array *cmd_array; //malloc
-    unsigned long size_cmd_array; // init a 0
+    long size_cmd_array; // init a 0
     long     i_input;
     char    *input;
     char	*hd_line;
     t_heredoc *heredoc;
 }    t_command;
 
+
+// PARSE ERROR SYNTAX ERROR
+void	check_parse_error(t_command *command);
+void	check_redir(t_command *command);
+void	check_pipe(t_command *command);
+void	check_quotes(t_command *command);
+void	exit_error(char c, char *input, t_command *command);
+
+// INIT ENV
+int		init_env(t_command *command, char **env);
+int 	lst_add_back_env(t_command *command, char **env, int j);
+int 	lst_add_env_value(char *envp, t_env *env);
+
+// INIT REDIR
+void	init_redir(t_command *command);
+int		is_redir(char c);
+
+//INIT COMMAND
+void	init_command(t_command *command);
+void	set_quote(t_command *command, long *i, int change_i);
+
 // PARSING
 void	parsing(t_command *command);
-void	check_parse_error(t_command *command);
-void	init_command(t_command *command);
-void	init_redir(t_command *command);
-int		init_env(t_command *command, char **env);
+void	parsing_input(t_command *command);
+void	do_redirection(t_command *command, long ic, long *i, long *k);
+void	do_command(t_command *command, long i_cmd, long *i);
+int		count_arg_size(t_command *command, char *str, long i);
+int		count_dollar_size(t_command *command, char *str, long *i, int *counter);
+int		count_tilde_size(t_command *command, char *str, long *i);
+int		is_tilde_ok(char *str, long i);
+void	add_dollar(t_command *command, long *i, char *temp, long *index);
+void	add_tilde(t_command *command, long *i, char *temp, long *i_temp);
+int		add_tilde_home(t_command *command, long *i, char *parsed, long *index);
+int		add_tilde_plus(t_command *command, long *i, char *parsed, long *index);
+int		add_tilde_hyphen(t_command *command, long *i, char *parsed, long *index);
+
+int		is_stop_char(t_command *command, char c);
+int		is_dollar_ok(char *str, long *i, int change_i);
+
+char	*add_command(t_command *command, char *str, long *i, int size);
+void	find_val_in_env(t_command *command, char *t_key, char *parsed, long *idex);
+int		find_lenght_in_env(t_command *command, char *str);
+
 t_env	*find_env_value(t_command *command, char *key);
 void	big_free(t_command *command);
-void	set_quote(t_command *command, long *i, int change_i);
 long	move_space(char *str, long *i);
-char	*add_command(t_command *command, char *str, long *i, int size);
-void	parsing_input(t_command *command);
-int		is_redir(char c);
-int		count_arg_size(t_command *command, char *str, long i);
 int		fill_heredoc(t_command *command, char *heredoc);
 void	tout_free(char *input);
 int		add_to_env(t_command *command, char *str);

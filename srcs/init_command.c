@@ -6,15 +6,15 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/19 23:11:54 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:52:28 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	init_cmd_filled(t_command *command)
+static void	init_cmd_filled(t_command *command)
 {
-	unsigned long	i;
+	long	i;
 
 	i = 0;
 	while (i < command->size_cmd_array)
@@ -41,7 +41,7 @@ void	set_quote(t_command *command, long *i, int change_i)
 		command->quote = e_little_quote;
 	else if (command->input[*i] == '\'' && command->quote == e_little_quote)
 		command->quote = e_no_quote;
-	if(change_i && previous_quote != (int)command->quote)
+	if (change_i && previous_quote != (int)command->quote)
 		(*i)++;
 }
 

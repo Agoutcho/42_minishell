@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/18 04:14:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:52:12 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	tout_free(char *input)
 void	affiche(t_command *command)
 {
 	t_args			*targs;
-	unsigned long	i;
+	long	i;
 	unsigned long	j;
 
 	j = 0;
@@ -101,7 +101,7 @@ void	big_free(t_command *command)
 {
 	t_env				*temp;
 	t_args				*targs;
-	unsigned long		i;
+	long		i;
 	unsigned long		j;
 
 	j = 0;

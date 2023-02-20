@@ -30,10 +30,9 @@ static int	add_printable(char *str, t_env *env)
 {
 	int		key_len;
 	int		value_len;
-	
+
 	key_len = 0;
 	value_len = 0;
-	DEBUG("%s", str);
 	while (str[key_len] != '=')
 		key_len++;
 	while (str[value_len + key_len])
@@ -55,7 +54,6 @@ static int	add_not_printable(char *str, t_env *env)
 	int		key_len;
 
 	key_len = 0;
-	DEBUG("%s", str);
 	while (str[key_len])
 		key_len++;
 	env->key = (char *)malloc(sizeof(char) * key_len + 1);
@@ -79,17 +77,13 @@ int	add_to_env(t_command *command, char *str)
 	t_env	*temp;
 
 	temp = command->env;
-	DEBUG("temp : %p", temp)
 	while (temp->next)
 		temp = temp->next;
-	DEBUG("temp : %p temp->next : %p", temp, temp->next)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (0);
 	new->first = temp->first;
 	new->next = NULL;
-	DEBUG("temp : %p temp->next : %p", temp, temp->next)
-	DEBUG("new : %p new->first : %p", new, new->first)
 	temp->next = new;
 	if (check_printable(str))
 		return (add_printable(str, new));
