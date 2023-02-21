@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:41:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:36:00 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 01:39:32 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	add_qtd_value(t_command *command, char *temp, long *i, long *index)
 	}
 }
 
-// TODO check $- $$ $?  $"" $
 char	*add_command(t_command *c, char *str, long *i, int size)
 {
 	char	*temp;

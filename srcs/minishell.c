@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/20 23:03:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 02:31:07 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,8 @@ int	get_input(t_command *command)
 	DEBUG("%s", command->input);
 	parsing(command);
 	// affiche(command);
-	// DEBUG("command : |%s|", command->cmd_array[0].the_cmd)
-	// DEBUG("arg : |%s|", command->cmd_array[0].args->first->arg)
 	secure_char_free(command->input);
 	free_cmd(command);
-	// big_free(command);
 	init_to_zero(command);
 	return (1);
 }
@@ -110,11 +107,6 @@ void	prompt(t_command *command)
 			big_free(command);
 			exit(1);// EXIT car ctrl + D
 		}
-		else 
-		{
-
-		}
-		// else if (ret == ???) Voir apres ce qu'il faudrait rajouter pour gerer tous les cas.
 	}
 	return ;
 }
@@ -127,30 +119,20 @@ void init_to_zero(t_command *command)
 	command->input = NULL;
 }
 
-// TODO add env if there is no env
 // TODO add HEREDOC
-int	main(int argc, char **argv)
+int	main(int argc)
 {
 	t_command command;
 
-	(void)argv;
 	g_exit_code = 0;
-	YELLOW
-	printf("\n|------------------------------------------------------------|\n");
-	printf("\n|------------------------MINISHELL---------------------------|\n");
-	printf("\n|------------------------------------------------------------|\n\n");
-	RESET
 	if (argc == 1)
 	{
-		// envp = env;
 		init_term(0);
-		// signal(SIGINT, sig_handler);
-		// signal(SIGQUIT, sig_handler);
-		DEBUG("INIT ENV");
-		init_env(&command, environ); // utiliser __environ au lieu de envp ou env
-		// temp = find_env_value(&command, "PATH=");
-		// DEBUG("PATH=%s",temp->value)
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, sig_handler);
+		init_env(&command, environ);
 		prompt(&command);
+		/** HEREDOC */
 		// fill_heredoc(&command, "heredoc");
 		// if (command.heredoc)
 		// 	command.heredoc = command.heredoc->first;

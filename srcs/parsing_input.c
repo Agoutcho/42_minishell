@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:05:37 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 01:41:19 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,6 @@ void	find_val_in_env(t_command *com, char *t_key, char *parsed, long *idex)
 	}
 }
 
-// TODO ~ et ~/ et ~:    https://abs.traduc.org/abs-5.3-fr/ch03.html#tilde
-// ~ = $HOME
-// ~+ = $PWD
-// ~- = $OLDPWD
-
-// command->input est malloc 
-// command->env est malloc
-// command->cmd.cmd_array est malloc
-// TODO add tilde management
 void	parsing_input(t_command *command)
 {
 	long			i;

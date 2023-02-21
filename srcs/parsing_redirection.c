@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:45:25 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:41:17 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 01:34:05 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	add_type(t_command *command, long i_cmd, long *i, long *k)
 		command->cmd_array[i_cmd].redir_array[*k].type = e_heredoc;
 	else if (command->input[*i] == '<' && command->input[(*i) + 1] != '<')
 		command->cmd_array[i_cmd].redir_array[*k].type = e_in;
-	// GREEN
-	// DEBUG("type : %d", command->cmd_array[i_cmd].redir_array[*k].type)
-	// RESET
+	GREEN
+	DEBUG("type : %d", command->cmd_array[i_cmd].redir_array[*k].type)
+	RESET
 	if (command->cmd_array[i_cmd].redir_array[*k].type == e_append \
 			|| command->cmd_array[i_cmd].redir_array[*k].type == e_heredoc)
 		(*i) = (*i) + 2;
@@ -42,8 +42,8 @@ void	do_redirection(t_command *command, long ic, long *i, long *k)
 	arg_size = count_arg_size(command, command->input, *i);
 	command->cmd_array[ic].redir_array[*k].file_name = add_command(command, \
 			command->input, i, arg_size);
-	// GREEN
-	// DEBUG("command->cmd_array[%ld].redir_array[%ld].file_name : %s", ic, *k, command->cmd_array[ic].redir_array[*k].file_name)
-	// RESET
+	GREEN
+	DEBUG("command->cmd_array[%ld].redir_array[%ld].file_name : %s", ic, *k, command->cmd_array[ic].redir_array[*k].file_name)
+	RESET
 	(*k)++;
 }

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:00:31 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:40:33 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 01:40:25 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	count_dollar_special(t_command *command, char *str, long *i)
 	return (result);
 }
 
-// TODO check for  $- $$ $?  $"" $ if i+1 != alphanum && ? && -
 int	count_dollar_size(t_command *command, char *str, long *i, int *counter)
 {
 	int		size_dollar;

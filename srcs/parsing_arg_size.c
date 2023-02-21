@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 19:57:23 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:38:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 01:40:11 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	find_lenght_in_env(t_command *command, char *str)
 	return (0);
 }
 
-// check_special => '~' // TODO check ~/ ~+ ~-
-// check $- $$ $?  $"" $
 int	count_arg_size(t_command *c, char *str, long i)
 {
 	int	counter;

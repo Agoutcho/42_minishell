@@ -50,3 +50,10 @@ ec"$yo"
 export yo+=to => hoto
 
 "echo" cat lol '$mdr''$SHELL'"$SHELL" > fichier.txt | echo lol | cat | lol | tr < infile > outfile >> outappend | ls -l
+
+// TODO check $- $$ $?  $"" $
+// TODO check ~/ ~+ ~-
+// TODO ~ et ~/ et ~:    https://abs.traduc.org/abs-5.3-fr/ch03.html#tilde
+// ~ = $HOME
+// ~+ = $PWD
+// ~- = $OLDPWD

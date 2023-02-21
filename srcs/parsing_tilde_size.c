@@ -6,13 +6,12 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:03:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:42:28 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/21 01:40:50 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// check_special => '~' // TODO check ~/ ~+ ~-
 int	is_tilde_ok(char *str, long i)
 {
 	if (str[i] != '~')
