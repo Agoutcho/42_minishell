@@ -92,6 +92,7 @@ typedef struct s_heredoc
 typedef struct s_redirect 
 {
     t_redir type;
+	t_heredoc	*heredoc;
     char *file_name; // malloc
     int file_fd;
 }   t_redirect;
@@ -117,6 +118,7 @@ typedef struct s_args
 typedef struct s_cmd_array 
 {
     char *the_cmd; //malloc
+	char		**args;
     t_args *args; // malloc liste chainee
     int is_cmd_filled;
     long redir_size;

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:20:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 19:55:43 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static void	init_to_zero(long *a, int *b, int *c)
 
 static int	malloc_r_array(t_command *command, int j, int *counter_redir)
 {
+	int i;
+
+	i = 0;
 	command->cmd_array[j].redir_size = *counter_redir;
 	command->cmd_array[j].redir_array = \
 		(t_redirect *)malloc(sizeof(t_redirect) * (*counter_redir));
@@ -36,6 +39,14 @@ static int	malloc_r_array(t_command *command, int j, int *counter_redir)
 	{
 		big_free(command);
 		exit(2);
+	}
+	while (i < *counter_redir)
+	{
+		command->cmd_array[j].redir_array[i].file_name = NULL;
+		command->cmd_array[j].redir_array[i].heredoc = NULL;
+		command->cmd_array[j].redir_array[i].file_fd = 0;
+		command->cmd_array[j].redir_array[i].type = 0;
+		i++;
 	}
 	*counter_redir = 0;
 	return (1);
