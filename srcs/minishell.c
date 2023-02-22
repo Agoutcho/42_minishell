@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	affiche(t_data *data)
 		{
 			DEBUG("-----------------------------------")
 				DEBUG("Commande : %ld", i + 1)
-				if (data->cmd_array[i].args)
-					targs = data->cmd_array[i].args->first;
+				if (data->cmd_array[i].arg)
+					targs = data->cmd_array[i].arg->first;
 			CYAN
 				DEBUG("data : |%s|", data->cmd_array[i].the_cmd)
 				RESET
@@ -48,7 +48,7 @@ void	affiche(t_data *data)
 			while (targs)
 			{
 				YELLOW
-					DEBUG("arg : |%s|", data->cmd_array[i].args->arg)
+					DEBUG("arg : |%s|", data->cmd_array[i].arg->arg)
 					targs = targs->next;
 				RESET
 			}

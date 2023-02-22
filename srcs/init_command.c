@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	init_cmd_filled(t_data *data)
 	while (i < data->size_cmd_array)
 	{
 		data->cmd_array[i].the_cmd = NULL;
-		data->cmd_array[i].args = NULL;
+		data->cmd_array[i].arg = NULL;
 		data->cmd_array[i].is_cmd_filled = 0;
 		data->cmd_array[i].redir_size = 0;
 		data->cmd_array[i].redir_array = NULL;

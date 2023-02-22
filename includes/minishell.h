@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct	s_cmd_array
 {
 	char		*the_cmd; //malloc
 	char		**args;
-	t_args		*args; // malloc liste chainee
+	t_args		*arg; // malloc liste chainee
 	int			is_cmd_filled;
 	int			pipe_fd[2];
 	int			multiple_pipe;

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	free_cmd(t_data *data)
 	while (i < data->size_cmd_array)
 	{
 		secure_char_free(data->cmd_array[i].the_cmd);
-		if (data->cmd_array[i].args && data->cmd_array[i].args->first)
-			data->cmd_array[i].args = data->cmd_array[i].args->first;
-		while (data->cmd_array[i].args)
+		if (data->cmd_array[i].arg && data->cmd_array[i].arg->first)
+			data->cmd_array[i].arg = data->cmd_array[i].arg->first;
+		while (data->cmd_array[i].arg)
 		{
-			targs = data->cmd_array[i].args;
+			targs = data->cmd_array[i].arg;
 			secure_char_free(targs->arg);
-			data->cmd_array[i].args = data->cmd_array[i].args->next;
+			data->cmd_array[i].arg = data->cmd_array[i].arg->next;
 			free(targs);
 			targs = NULL;
 		}
