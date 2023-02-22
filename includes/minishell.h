@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 02:06:43 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:57:27 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,8 @@ void	free_env(t_data *data);
 void	free_cmd(t_data *data);
 void	free_heredoc(t_data *data);
 void	secure_char_free(char *input);
+void	free_args_char(t_data *data, long i);
+void	free_arg_lst(t_data *data, long i);
 
 // @INIT_TERM_C
 void	set_term(struct termios *term, bool mode);
