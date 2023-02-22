@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:53:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:27:33 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int	add_to_env(t_data *data, char *str)
 		return (0);
 	new->first = temp->first;
 	new->next = NULL;
+	new->key = NULL;
+	new->value = NULL;
+	new->affiche_env = 0;
 	temp->next = new;
 	if (check_printable(str))
 		return (add_printable(str, new));

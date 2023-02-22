@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:44:38 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ static int	copy_env(t_data *data, char **env)
 	data->env = first;
 	data->env->first = first;
 	data->env->next = NULL;
+	data->env->key = NULL;
+	data->env->value = NULL;
+	data->env->affiche_env = 0;
 	if (!lst_add_env_value(env[0], data->env))
 		return (0);
 	j = 1;
@@ -56,6 +59,9 @@ static int	create_env(t_data *data)
 	data->env = first;
 	data->env->first = first;
 	data->env->next = NULL;
+	data->env->key = NULL;
+	data->env->value = NULL;
+	data->env->affiche_env = 0;
 	if (!lst_add_env_value("SHLVL=0", data->env))
 		return (0);
 	if (!add_to_env(data, "OLDPWD"))

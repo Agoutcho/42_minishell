@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:09:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:37:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ int	lst_add_back_env(t_data *data, char **env, int j)
 		return (0);
 	new->first = temp->first;
 	new->next = NULL;
+	new->key = NULL;
+	new->value = NULL;
+	new->affiche_env = 0;
 	temp->next = new;
 	if (!lst_add_env_value(env[j], new))
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_create_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:24:22 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 13:28:21 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/22 18:53:47 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_env	*init_new_node(void)
 	node->key = NULL;
 	node->value = NULL;
 	node->affiche_env = 0;
+	node->next = NULL;
 	return (node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 03:21:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:47:29 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	malloc_r_array(t_data *data, int j, int *counter_redir)
 	{
 		data->cmd[j].redir_array[i].file_name = NULL;
 		data->cmd[j].redir_array[i].heredoc = NULL;
+		data->cmd[j].redir_array[i].file_fd = 0;
+		data->cmd[j].redir_array[i].type = 0;
 		i++;
 	}
 	*counter_redir = 0;
