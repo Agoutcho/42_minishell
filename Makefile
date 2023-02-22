@@ -37,6 +37,7 @@ SRC_NAME =	minishell.c	\
 			parsing_command.c \
 			parsing_redirection.c \
 			parsing_tilde_size.c \
+			transform_args.c \
 
 # signal_handler.c	\
 			

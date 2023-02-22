@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 02:05:09 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 02:17:12 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 02:28:18 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	from_list_to_char(t_data *data, long j)
 		temp = temp->next;
         i++;
 	}
-    data->cmd[j].args[i] = 0;
+    data->cmd[j].args[i] = NULL;
 }
 
 void	transform_args(t_data *data)
