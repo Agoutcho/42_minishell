@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 15:28:21 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/22 03:10:20 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	execution(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->cmd[i].the_cmd != NULL)
+	// while (data->cmd[i].the_cmd != NULL)
+	while (i < data->size_cmd_array)
 	{
 		if (!pipe_handler(data, i))
 		{
