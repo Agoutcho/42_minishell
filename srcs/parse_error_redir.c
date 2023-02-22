@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:26:16 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:30:30 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	find_the_redir(t_command *command, char *str, long i)
+static void	find_the_redir(t_data *command, char *str, long i)
 {
 	while (str[i] && str[i] == ' ')
 		i++;
@@ -20,7 +20,7 @@ static void	find_the_redir(t_command *command, char *str, long i)
 		exit_error(str[i], str, command);
 }
 
-static int	is_redir_ok(char *str, long i, t_command *command)
+static int	is_redir_ok(char *str, long i, t_data *command)
 {
 	if (str[i] != '>' && str[i] != '<')
 		return (1);
@@ -42,7 +42,7 @@ static int	is_redir_ok(char *str, long i, t_command *command)
 	return (1);
 }
 
-void	check_redir(t_command *command)
+void	check_redir(t_data *command)
 {
 	long	i;
 

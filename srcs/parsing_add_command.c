@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:41:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/21 01:39:32 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*sec_malloc(t_command *command, char *str, long *i, int size)
+static char	*sec_malloc(t_data *command, char *str, long *i, int size)
 {
 	char	*temp;
 
@@ -34,7 +34,7 @@ static int	is_dollar_quoted(t_quote quote, char c)
 	return (1);
 }
 
-static void	add_qtd_value(t_command *command, char *temp, long *i, long *index)
+static void	add_qtd_value(t_data *command, char *temp, long *i, long *index)
 {
 	char	*str;
 
@@ -48,7 +48,7 @@ static void	add_qtd_value(t_command *command, char *temp, long *i, long *index)
 	}
 }
 
-char	*add_command(t_command *c, char *str, long *i, int size)
+char	*add_command(t_data *c, char *str, long *i, int size)
 {
 	char	*temp;
 	long	index;

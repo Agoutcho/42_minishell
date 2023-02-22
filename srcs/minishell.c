@@ -6,16 +6,16 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/21 02:31:07 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void init_to_zero(t_command *command);
+void init_to_zero(t_data *command);
 
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
-void	affiche(t_command *command)
+void	affiche(t_data *command)
 {
 	t_args			*targs;
 	long	i;
@@ -59,7 +59,7 @@ void	affiche(t_command *command)
 /**
  * @brief	Displays the prompt and calls a new function "parsing" which returns an int (ret) and takes input and t_cmd struct as arguments
  */
-int	get_input(t_command *command)
+int	get_input(t_data *command)
 {
 	command->i_input = 0;
 	command->input = readline("Rachele ═> ");
@@ -84,7 +84,7 @@ int	get_input(t_command *command)
 	return (1);
 }
 
-void	big_free(t_command *command)
+void	big_free(t_data *command)
 {
 	free_env(command);
 	free_cmd(command);
@@ -93,7 +93,7 @@ void	big_free(t_command *command)
 /**
  * @brief	Handle get_input returns
  */
-void	prompt(t_command *command)
+void	prompt(t_data *command)
 {
 	int	ret;
 
@@ -111,7 +111,7 @@ void	prompt(t_command *command)
 	return ;
 }
 
-void init_to_zero(t_command *command)
+void init_to_zero(t_data *command)
 {
 	command->size_cmd_array = 0;
 	command->cmd_array = NULL;
@@ -122,7 +122,7 @@ void init_to_zero(t_command *command)
 // TODO add HEREDOC
 int	main(int argc)
 {
-	t_command command;
+	t_data command;
 
 	g_exit_code = 0;
 	if (argc == 1)

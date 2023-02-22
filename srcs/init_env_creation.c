@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:09:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:14:59 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	lst_add_env_value(char *envp, t_env *env)
 	return (1);
 }
 
-int	lst_add_back_env(t_command *command, char **env, int j)
+int	lst_add_back_env(t_data *command, char **env, int j)
 {
 	t_env	*new;
 	t_env	*temp;

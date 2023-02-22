@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:20:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_to_zero(long *a, int *b, int *c)
 	*c = 0;
 }
 
-static int	malloc_r_array(t_command *command, int j, int *counter_redir)
+static int	malloc_r_array(t_data *command, int j, int *counter_redir)
 {
 	command->cmd_array[j].redir_size = *counter_redir;
 	command->cmd_array[j].redir_array = \
@@ -41,14 +41,14 @@ static int	malloc_r_array(t_command *command, int j, int *counter_redir)
 	return (1);
 }
 
-static int	is_no_quote(t_command *command, long i)
+static int	is_no_quote(t_data *command, long i)
 {
 	if (command->input[i] && command->quote == e_no_quote)
 		return (1);
 	return (0);
 }
 
-void	init_redir(t_command *command)
+void	init_redir(t_data *command)
 {
 	long	i;
 	int		j;

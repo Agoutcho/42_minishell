@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/20 22:03:30 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	copy_env(t_command *command, char **env)
+static int	copy_env(t_data *command, char **env)
 {
 	int		j;
 	t_env	*first;
@@ -43,7 +43,7 @@ static int	free_create_env(char *pwd, char *join, char *temp, int v)
 	return (v);
 }
 
-static int	create_env(t_command *command)
+static int	create_env(t_data *command)
 {
 	t_env	*first;
 	char	*temp;
@@ -68,7 +68,7 @@ static int	create_env(t_command *command)
 	return (free_create_env(pwd, join, temp, 1));
 }
 
-int	init_env(t_command *command, char **env)
+int	init_env(t_data *command, char **env)
 {
 	if (env[0] != NULL && !copy_env(command, env))
 		return (0);

@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 22:03:30 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	add_heredoc(t_command *command)
+void	add_heredoc(t_data *command)
 {
 	t_heredoc	*new;
 
@@ -33,7 +33,7 @@ void	add_heredoc(t_command *command)
 	}
 }
 
-int	fill_heredoc(t_command *command, char *heredoc)
+int	fill_heredoc(t_data *command, char *heredoc)
 {
 	command->heredoc = NULL;
 	while (1)

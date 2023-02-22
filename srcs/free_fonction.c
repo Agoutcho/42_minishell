@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 22:58:16 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	secure_char_free(char *input)
 	}
 }
 
-void	free_env(t_command *command)
+void	free_env(t_data *command)
 {
 	t_env	*temp;
 
@@ -38,7 +38,7 @@ void	free_env(t_command *command)
 	}
 }
 
-void	free_heredoc(t_command *command)
+void	free_heredoc(t_data *command)
 {
 	t_heredoc	*temp;
 
@@ -54,7 +54,7 @@ void	free_heredoc(t_command *command)
 	}
 }
 
-static void	free_redir(t_command *command, long i)
+static void	free_redir(t_data *command, long i)
 {
 	long	j;
 
@@ -69,7 +69,7 @@ static void	free_redir(t_command *command, long i)
 	command->cmd_array[i].redir_array = NULL;
 }
 
-void	free_cmd(t_command *command)
+void	free_cmd(t_data *command)
 {
 	t_args	*targs;
 	long	i;

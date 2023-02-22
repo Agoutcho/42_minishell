@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:03:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/21 01:40:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_tilde_ok(char *str, long i)
 	return (0);
 }
 
-int	count_tilde_size(t_command *command, char *str, long *i)
+int	count_tilde_size(t_data *command, char *str, long *i)
 {
 	int	ret_value;
 	int	temp_i;

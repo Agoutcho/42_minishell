@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:29:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:30:43 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	is_last_value_ok(char *str, int i)
 	return (1);
 }
 
-static void	print_quote_error(t_command *command, char *str)
+static void	print_quote_error(t_data *command, char *str)
 {
 	int	fd;
 
@@ -49,7 +49,7 @@ static void	print_quote_error(t_command *command, char *str)
 	exit(2);
 }
 
-void	check_quotes(t_command *command)
+void	check_quotes(t_data *command)
 {
 	long	i;
 

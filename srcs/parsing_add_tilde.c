@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:35:21 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 21:33:51 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	change_val_one(int temp_i, char *temp, long *i_temp, char *str)
 	return (1);
 }
 
-void	add_tilde(t_command *command, long *i, char *temp, long *i_temp)
+void	add_tilde(t_data *command, long *i, char *temp, long *i_temp)
 {
 	int		ret_value;
 	int		temp_i;

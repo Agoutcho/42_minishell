@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:22:23 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 23:17:17 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	find_til_in_env(t_command *command, char *t_key, char *parsed, long *idex)
+int	find_til_in_env(t_data *command, char *t_key, char *parsed, long *idex)
 {
 	t_env	*temp;
 	int		i;
@@ -48,7 +48,7 @@ static int	ret_val(long *i, char *temp, int i_val, int value)
 	return (i_val);
 }
 
-int	add_tilde_home(t_command *command, long *i, char *parsed, long *index)
+int	add_tilde_home(t_data *command, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
@@ -77,7 +77,7 @@ int	add_tilde_home(t_command *command, long *i, char *parsed, long *index)
 	return (ret_val(i, temp, i_val, 1));
 }
 
-int	add_tilde_plus(t_command *command, long *i, char *parsed, long *index)
+int	add_tilde_plus(t_data *command, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
@@ -106,7 +106,7 @@ int	add_tilde_plus(t_command *command, long *i, char *parsed, long *index)
 	return (ret_val(i, temp, i_val, 2));
 }
 
-int	add_tilde_hyphen(t_command *command, long *i, char *parsed, long *index)
+int	add_tilde_hyphen(t_data *command, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;

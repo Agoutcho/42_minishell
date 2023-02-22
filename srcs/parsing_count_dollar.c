@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:00:31 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/21 01:40:25 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_dollar_ok(char *str, long *i, int change_i)
 	return (1);
 }
 
-static int	count_dollar_special(t_command *command, char *str, long *i)
+static int	count_dollar_special(t_data *command, char *str, long *i)
 {
 	char	*temp;
 	int		result;
@@ -45,7 +45,7 @@ static int	count_dollar_special(t_command *command, char *str, long *i)
 	return (result);
 }
 
-int	count_dollar_size(t_command *command, char *str, long *i, int *counter)
+int	count_dollar_size(t_data *command, char *str, long *i, int *counter)
 {
 	int		size_dollar;
 	int		temp_i;

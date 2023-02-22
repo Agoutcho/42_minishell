@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:45:25 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/21 01:34:05 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	add_type(t_command *command, long i_cmd, long *i, long *k)
+static void	add_type(t_data *command, long i_cmd, long *i, long *k)
 {
 	if (command->input[*i] == '>' && command->input[(*i) + 1] == '>')
 		command->cmd_array[i_cmd].redir_array[*k].type = e_append;
@@ -32,7 +32,7 @@ static void	add_type(t_command *command, long i_cmd, long *i, long *k)
 		(*i)++;
 }
 
-void	do_redirection(t_command *command, long ic, long *i, long *k)
+void	do_redirection(t_data *command, long ic, long *i, long *k)
 {
 	int	arg_size;
 

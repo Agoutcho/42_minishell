@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 19:52:28 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	init_cmd_filled(t_command *command)
+static void	init_cmd_filled(t_data *command)
 {
 	long	i;
 
@@ -28,7 +28,7 @@ static void	init_cmd_filled(t_command *command)
 	}
 }
 
-void	set_quote(t_command *command, long *i, int change_i)
+void	set_quote(t_data *command, long *i, int change_i)
 {
 	int	previous_quote;
 
@@ -45,7 +45,7 @@ void	set_quote(t_command *command, long *i, int change_i)
 		(*i)++;
 }
 
-void	init_command(t_command *command)
+void	init_command(t_data *command)
 {
 	long		i;
 	int			counter_command;

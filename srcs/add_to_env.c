@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:53:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/18 14:57:44 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	add_not_printable(char *str, t_env *env)
  * @param str The string to add like "var=lol"
  * @return int 
  */
-int	add_to_env(t_command *command, char *str)
+int	add_to_env(t_data *command, char *str)
 {
 	t_env	*new;
 	t_env	*temp;
@@ -91,7 +91,7 @@ int	add_to_env(t_command *command, char *str)
 		return (add_not_printable(str, new));
 }
 
-t_env	*find_env_value(t_command *command, char *key)
+t_env	*find_env_value(t_data *command, char *key)
 {
 	char	*temp_key;
 	t_env	*temp;

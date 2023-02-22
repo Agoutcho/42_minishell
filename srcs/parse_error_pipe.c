@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:28:07 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:30:33 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_pipe_ok(char *str, long i, t_command *command)
+static int	is_pipe_ok(char *str, long i, t_data *command)
 {
 	if (str[i] == '|')
 	{
@@ -25,7 +25,7 @@ static int	is_pipe_ok(char *str, long i, t_command *command)
 	return (1);
 }
 
-void	check_pipe(t_command *command)
+void	check_pipe(t_data *command)
 {
 	long	i;
 

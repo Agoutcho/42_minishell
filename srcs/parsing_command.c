@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:52:34 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/21 01:34:01 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static t_args	*add_args(t_command *command, long *i, long i_cmd)
+static t_args	*add_args(t_data *command, long *i, long i_cmd)
 {
 	t_args	*temp;
 	int		arg_size;
@@ -33,7 +33,7 @@ static t_args	*add_args(t_command *command, long *i, long i_cmd)
 	return (temp);
 }
 
-void	do_command(t_command *command, long i_cmd, long *i)
+void	do_command(t_data *command, long i_cmd, long *i)
 {
 	int	arg_size;
 

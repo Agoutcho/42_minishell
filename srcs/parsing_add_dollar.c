@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:07:26 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/21 01:39:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	add_dol_env(t_command *command, long *i, char *parsed, long *index)
+void	add_dol_env(t_data *command, long *i, char *parsed, long *index)
 {
 	int		size_dollar;
 	int		temp_i;
@@ -36,7 +36,7 @@ void	add_dol_env(t_command *command, long *i, char *parsed, long *index)
 	free(temp_key);
 }
 
-void	adding_qmark(t_command *command, long *i, char *parsed, long *index)
+void	adding_qmark(t_data *command, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
@@ -55,7 +55,7 @@ void	adding_qmark(t_command *command, long *i, char *parsed, long *index)
 	free(temp);
 }
 
-void	adding_hyphen(t_command *command, long *i, char *parsed, long *index)
+void	adding_hyphen(t_data *command, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
@@ -85,7 +85,7 @@ void	adding_hyphen(t_command *command, long *i, char *parsed, long *index)
 }
 
 // TODO peut etre ajouter '$_' => la derniere variable connue  https://abs.traduc.org/abs-5.3-fr/ch09.html
-void	add_dollar(t_command *command, long *i, char *temp, long *index)
+void	add_dollar(t_data *command, long *i, char *temp, long *index)
 {
 	char	*str;
 

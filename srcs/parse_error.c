@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:34:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/20 18:30:20 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long	move_space(char *str, long *i)
 	return (*i);
 }
 
-void	exit_error(char c, char *input, t_command *command)
+void	exit_error(char c, char *input, t_data *command)
 {
 	int	fd;
 
@@ -34,7 +34,7 @@ void	exit_error(char c, char *input, t_command *command)
 	exit(2);
 }
 
-void	check_parse_error(t_command *command)
+void	check_parse_error(t_data *command)
 {
 	long	i;
 	int		fd;
