@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:34:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long	move_space(char *str, long *i)
 	return (*i);
 }
 
-void	exit_error(char c, char *input, t_data *command)
+void	exit_error(char c, char *input, t_data *data)
 {
 	int	fd;
 
@@ -30,28 +30,28 @@ void	exit_error(char c, char *input, t_data *command)
 	ft_putstr_fd("Rachele: syntax error near unexpected token `", fd);
 	ft_putchar_fd(c, fd);
 	ft_putstr_fd("'\n", fd);
-	big_free(command);
+	big_free(data);
 	exit(2);
 }
 
-void	check_parse_error(t_data *command)
+void	check_parse_error(t_data *data)
 {
 	long	i;
 	int		fd;
 
 	fd = STDERR_FILENO;
 	i = 0;
-	command->quote = e_no_quote;
-	check_redir(command);
-	check_pipe(command);
-	check_quotes(command);
-	if (move_space(command->input, &i) == -1)
+	data->quote = e_no_quote;
+	check_redir(data);
+	check_pipe(data);
+	check_quotes(data);
+	if (move_space(data->input, &i) == -1)
 		return ;
-	if (command->input[i] == '|')
+	if (data->input[i] == '|')
 	{
-		free(command->input);
+		free(data->input);
 		ft_putstr_fd("Rachele: syntax error near unexpected token `|'\n", fd);
-		big_free(command);
+		big_free(data);
 		exit(2);
 	}
 }

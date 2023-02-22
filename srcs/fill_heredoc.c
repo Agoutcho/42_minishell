@@ -6,53 +6,53 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	add_heredoc(t_data *command)
+void	add_heredoc(t_data *data)
 {
 	t_heredoc	*new;
 
 	new = (t_heredoc *)malloc(sizeof(t_heredoc));
-	new->line = ft_strdup(command->hd_line);
+	new->line = ft_strdup(data->hd_line);
 	new->next = NULL;
-	if (command->heredoc)
+	if (data->heredoc)
 	{
-		new->first = command->heredoc->first;
-		while (command->heredoc->next)
-			command->heredoc = command->heredoc->next;
-		command->heredoc->next = new;
+		new->first = data->heredoc->first;
+		while (data->heredoc->next)
+			data->heredoc = data->heredoc->next;
+		data->heredoc->next = new;
 	}
 	else
 	{
-		command->heredoc = new;
-		command->heredoc->first = new;
+		data->heredoc = new;
+		data->heredoc->first = new;
 	}
 }
 
-int	fill_heredoc(t_data *command, char *heredoc)
+int	fill_heredoc(t_data *data, char *heredoc)
 {
-	command->heredoc = NULL;
+	data->heredoc = NULL;
 	while (1)
 	{
-		command->hd_line = readline("> ");
-		if (!command->hd_line)
+		data->hd_line = readline("> ");
+		if (!data->hd_line)
 		{
 			ft_putstr_fd("-Rachele: warning: here-document delimited ", 1);
 			ft_putstr_fd("by end-of-file (wanted `", 1);
 			ft_putstr_fd(heredoc, 1);
 			ft_putstr_fd("')\n", 1);
-			secure_char_free(command->hd_line);
+			secure_char_free(data->hd_line);
 			return (0);
 		}
-		if (ft_strncmp(command->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0)
+		if (ft_strncmp(data->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0)
 			break ;
-		add_heredoc(command);
-		secure_char_free(command->hd_line);
+		add_heredoc(data);
+		secure_char_free(data->hd_line);
 	}
-	secure_char_free(command->hd_line);
+	secure_char_free(data->hd_line);
 	return (1);
 }

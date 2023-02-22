@@ -6,24 +6,24 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:41:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*sec_malloc(t_data *command, char *str, long *i, int size)
+static char	*sec_malloc(t_data *data, char *str, long *i, int size)
 {
 	char	*temp;
 
 	temp = (char *)malloc(sizeof(char) * size + 1);
 	if (!temp)
 	{
-		big_free(command);
+		big_free(data);
 		exit(2);
 	}
-	if (command->quote != e_no_quote && str[*i] == (char)command->quote)
-		command->quote = e_no_quote;
+	if (data->quote != e_no_quote && str[*i] == (char)data->quote)
+		data->quote = e_no_quote;
 	return (temp);
 }
 
@@ -34,13 +34,13 @@ static int	is_dollar_quoted(t_quote quote, char c)
 	return (1);
 }
 
-static void	add_qtd_value(t_data *command, char *temp, long *i, long *index)
+static void	add_qtd_value(t_data *data, char *temp, long *i, long *index)
 {
 	char	*str;
 
-	str = command->input;
-	while (str[*i] != (char)command->quote \
-			&& is_dollar_quoted(command->quote, str[*i]))
+	str = data->input;
+	while (str[*i] != (char)data->quote \
+			&& is_dollar_quoted(data->quote, str[*i]))
 	{
 		temp[*index] = str[*i];
 		(*index)++;

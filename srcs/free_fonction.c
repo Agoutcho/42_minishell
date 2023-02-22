@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,79 +21,79 @@ void	secure_char_free(char *input)
 	}
 }
 
-void	free_env(t_data *command)
+void	free_env(t_data *data)
 {
 	t_env	*temp;
 
-	if (command->env && command->env->first)
-		command->env = command->env->first;
-	while (command->env)
+	if (data->env && data->env->first)
+		data->env = data->env->first;
+	while (data->env)
 	{
-		temp = command->env;
-		secure_char_free(command->env->key);
-		secure_char_free(command->env->value);
-		command->env = command->env->next;
+		temp = data->env;
+		secure_char_free(data->env->key);
+		secure_char_free(data->env->value);
+		data->env = data->env->next;
 		free(temp);
 		temp = NULL;
 	}
 }
 
-void	free_heredoc(t_data *command)
+void	free_heredoc(t_data *data)
 {
 	t_heredoc	*temp;
 
-	if (command->heredoc && command->heredoc->first)
-		command->heredoc = command->heredoc->first;
-	while (command->heredoc)
+	if (data->heredoc && data->heredoc->first)
+		data->heredoc = data->heredoc->first;
+	while (data->heredoc)
 	{
-		temp = command->heredoc;
-		secure_char_free(command->heredoc->line);
-		command->heredoc = command->heredoc->next;
+		temp = data->heredoc;
+		secure_char_free(data->heredoc->line);
+		data->heredoc = data->heredoc->next;
 		free(temp);
 		temp = NULL;
 	}
 }
 
-static void	free_redir(t_data *command, long i)
+static void	free_redir(t_data *data, long i)
 {
 	long	j;
 
 	j = 0;
-	while (j < command->cmd_array[i].redir_size)
+	while (j < data->cmd_array[i].redir_size)
 	{
-		secure_char_free(command->cmd_array[i].redir_array[j].file_name);
+		secure_char_free(data->cmd_array[i].redir_array[j].file_name);
 		j++;
 	}
-	if (command->cmd_array[i].redir_array)
-		free(command->cmd_array[i].redir_array);
-	command->cmd_array[i].redir_array = NULL;
+	if (data->cmd_array[i].redir_array)
+		free(data->cmd_array[i].redir_array);
+	data->cmd_array[i].redir_array = NULL;
 }
 
-void	free_cmd(t_data *command)
+void	free_cmd(t_data *data)
 {
 	t_args	*targs;
 	long	i;
 
 	i = 0;
-	while (i < command->size_cmd_array)
+	while (i < data->size_cmd_array)
 	{
-		secure_char_free(command->cmd_array[i].the_cmd);
-		if (command->cmd_array[i].args && command->cmd_array[i].args->first)
-			command->cmd_array[i].args = command->cmd_array[i].args->first;
-		while (command->cmd_array[i].args)
+		secure_char_free(data->cmd_array[i].the_cmd);
+		if (data->cmd_array[i].args && data->cmd_array[i].args->first)
+			data->cmd_array[i].args = data->cmd_array[i].args->first;
+		while (data->cmd_array[i].args)
 		{
-			targs = command->cmd_array[i].args;
+			targs = data->cmd_array[i].args;
 			secure_char_free(targs->arg);
-			command->cmd_array[i].args = command->cmd_array[i].args->next;
+			data->cmd_array[i].args = data->cmd_array[i].args->next;
 			free(targs);
 			targs = NULL;
 		}
-		free_redir(command, i);
+		free_redir(data, i);
 		i++;
 	}
-	if (command->cmd_array)
+	if (data->cmd_array)
 	{
-		free(command->cmd_array);
-		command->cmd_array = NULL;
+		free(data->cmd_array);
+		data->cmd_array = NULL;
 	}
 }

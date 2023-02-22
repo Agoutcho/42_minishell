@@ -6,17 +6,17 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_stop_char(t_data *command, char c)
+int	is_stop_char(t_data *data, char c)
 {
-	if (command->quote != e_no_quote)
+	if (data->quote != e_no_quote)
 		return (0);
-	else if (command->quote == e_no_quote && !is_redir(c) && c != '|' \
+	else if (data->quote == e_no_quote && !is_redir(c) && c != '|' \
 			&& c != ' ' && c != '\t' && c != '\n' && c != '\r' && c)
 		return (0);
 	return (1);
@@ -45,7 +45,7 @@ void	find_val_in_env(t_data *com, char *t_key, char *parsed, long *idex)
 	}
 }
 
-void	parsing_input(t_data *command)
+void	parsing_input(t_data *data)
 {
 	long			i;
 	long			j;
@@ -54,22 +54,22 @@ void	parsing_input(t_data *command)
 	i = 0;
 	j = 0;
 	k = 0;
-	command->quote = e_no_quote;
-	command->cmd_array[0].args = NULL;
-	while (j < command->size_cmd_array && command->input[i])
+	data->quote = e_no_quote;
+	data->cmd_array[0].args = NULL;
+	while (j < data->size_cmd_array && data->input[i])
 	{
-		if (command->quote == e_no_quote)
-			move_space(command->input, &i);
-		set_quote(command, &i, 0);
-		if (command->quote == e_no_quote && command->input[i] == '|')
+		if (data->quote == e_no_quote)
+			move_space(data->input, &i);
+		set_quote(data, &i, 0);
+		if (data->quote == e_no_quote && data->input[i] == '|')
 		{
 			j++;
 			i++;
 			k = 0;
 		}
-		else if (command->quote == e_no_quote && is_redir(command->input[i]))
-			do_redirection(command, j, &i, &k);
-		else if (command->input[i])
-			do_command(command, j, &i);
+		else if (data->quote == e_no_quote && is_redir(data->input[i]))
+			do_redirection(data, j, &i, &k);
+		else if (data->input[i])
+			do_command(data, j, &i);
 	}
 }

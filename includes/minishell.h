@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:23:54 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,54 +158,54 @@ typedef struct	s_data
 }				t_data;
 
 // PARSE ERROR SYNTAX ERROR
-void	check_parse_error(t_data *command);
-void	check_redir(t_data *command);
-void	check_pipe(t_data *command);
-void	check_quotes(t_data *command);
-void	exit_error(char c, char *input, t_data *command);
+void	check_parse_error(t_data *data);
+void	check_redir(t_data *data);
+void	check_pipe(t_data *data);
+void	check_quotes(t_data *data);
+void	exit_error(char c, char *input, t_data *data);
 
 // INIT ENV
-int		init_env(t_data *command, char **env);
-int		lst_add_back_env(t_data *command, char **env, int j);
+int		init_env(t_data *data, char **env);
+int		lst_add_back_env(t_data *data, char **env, int j);
 int 	lst_add_env_value(char *envp, t_env *env);
 
 // INIT REDIR
-void	init_redir(t_data *command);
+void	init_redir(t_data *data);
 int		is_redir(char c);
 
 //INIT COMMAND
-void	init_command(t_data *command);
-void	set_quote(t_data *command, long *i, int change_i);
+void	init_command(t_data *data);
+void	set_quote(t_data *data, long *i, int change_i);
 
 // PARSING
-void	parsing(t_data *command);
-void	parsing_input(t_data *command);
-void	do_redirection(t_data *command, long ic, long *i, long *k);
-void	do_command(t_data *command, long i_cmd, long *i);
-int		count_arg_size(t_data *command, char *str, long i);
-int		count_dollar_size(t_data *command, char *str, long *i, int *counter);
-int		count_tilde_size(t_data *command, char *str, long *i);
+void	parsing(t_data *data);
+void	parsing_input(t_data *data);
+void	do_redirection(t_data *data, long ic, long *i, long *k);
+void	do_command(t_data *data, long i_cmd, long *i);
+int		count_arg_size(t_data *data, char *str, long i);
+int		count_dollar_size(t_data *data, char *str, long *i, int *counter);
+int		count_tilde_size(t_data *data, char *str, long *i);
 int		is_tilde_ok(char *str, long i);
-void	add_dollar(t_data *command, long *i, char *temp, long *index);
-void	add_tilde(t_data *command, long *i, char *temp, long *i_temp);
-int		add_tilde_home(t_data *command, long *i, char *parsed, long *index);
-int		add_tilde_plus(t_data *command, long *i, char *parsed, long *index);
-int 	add_tilde_hyphen(t_data *command, long *i, char *parsed, long *index);
-int		is_stop_char(t_data *command, char c);
+void	add_dollar(t_data *data, long *i, char *temp, long *index);
+void	add_tilde(t_data *data, long *i, char *temp, long *i_temp);
+int		add_tilde_home(t_data *data, long *i, char *parsed, long *index);
+int		add_tilde_plus(t_data *data, long *i, char *parsed, long *index);
+int 	add_tilde_hyphen(t_data *data, long *i, char *parsed, long *index);
+int		is_stop_char(t_data *data, char c);
 int		is_dollar_ok(char *str, long *i, int change_i);
-char	*add_command(t_data *command, char *str, long *i, int size);
-void	find_val_in_env(t_data *command, char *t_key, char *parsed, long *idex);
-int		find_lenght_in_env(t_data *command, char *str);
-t_env	*find_env_value(t_data *command, char *key);
-void	big_free(t_data *command);
+char	*add_command(t_data *data, char *str, long *i, int size);
+void	find_val_in_env(t_data *data, char *t_key, char *parsed, long *idex);
+int		find_lenght_in_env(t_data *data, char *str);
+t_env	*find_env_value(t_data *data, char *key);
+void	big_free(t_data *data);
 long	move_space(char *str, long *i);
-int		fill_heredoc(t_data *command, char *heredoc);
-int		add_to_env(t_data *command, char *str);
+int		fill_heredoc(t_data *data, char *heredoc);
+int		add_to_env(t_data *data, char *str);
 
 // Free fonctions
-void	free_env(t_data *command);
-void	free_cmd(t_data *command);
-void	free_heredoc(t_data *command);
+void	free_env(t_data *data);
+void	free_cmd(t_data *data);
+void	free_heredoc(t_data *data);
 void	secure_char_free(char *input);
 
 // @INIT_TERM_C

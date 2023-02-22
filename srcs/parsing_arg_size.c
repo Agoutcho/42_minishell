@@ -6,17 +6,17 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 19:57:23 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	find_lenght_in_env(t_data *command, char *str)
+int	find_lenght_in_env(t_data *data, char *str)
 {
 	t_env	*temp;
 
-	temp = command->env->first;
+	temp = data->env->first;
 	if (!*str)
 		return (0);
 	while (temp)

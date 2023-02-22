@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:53:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ static int	add_not_printable(char *str, t_env *env)
 /**
  * @brief Add a new element in env list at the end 
  * 
- * @param command 
+ * @param data 
  * @param str The string to add like "var=lol"
  * @return int 
  */
-int	add_to_env(t_data *command, char *str)
+int	add_to_env(t_data *data, char *str)
 {
 	t_env	*new;
 	t_env	*temp;
 
-	temp = command->env;
+	temp = data->env;
 	while (temp->next)
 		temp = temp->next;
 	new = (t_env *)malloc(sizeof(t_env));
@@ -91,12 +91,12 @@ int	add_to_env(t_data *command, char *str)
 		return (add_not_printable(str, new));
 }
 
-t_env	*find_env_value(t_data *command, char *key)
+t_env	*find_env_value(t_data *data, char *key)
 {
 	char	*temp_key;
 	t_env	*temp;
 
-	temp = command->env->first;
+	temp = data->env->first;
 	while (temp->next)
 	{
 		temp_key = temp->key;

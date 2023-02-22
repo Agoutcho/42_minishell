@@ -6,16 +6,16 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:03:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parsing(t_data *command)
+void	parsing(t_data *data)
 {
-	check_parse_error(command);
-	init_command(command);
-	init_redir(command);
-	parsing_input(command);
+	check_parse_error(data);
+	init_command(data);
+	init_redir(data);
+	parsing_input(data);
 }

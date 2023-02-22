@@ -6,52 +6,52 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:52:34 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static t_args	*add_args(t_data *command, long *i, long i_cmd)
+static t_args	*add_args(t_data *data, long *i, long i_cmd)
 {
 	t_args	*temp;
 	int		arg_size;
 
-	arg_size = count_arg_size(command, command->input, *i);
+	arg_size = count_arg_size(data, data->input, *i);
 	temp = (t_args *)malloc(sizeof(t_args));
 	if (!temp)
-		big_free(command);
+		big_free(data);
 	temp->next = NULL;
-	temp->arg = add_command(command, command->input, i, arg_size);
-	if (command->cmd_array[i_cmd].args)
+	temp->arg = add_command(data, data->input, i, arg_size);
+	if (data->cmd_array[i_cmd].args)
 	{
-		temp->first = command->cmd_array[i_cmd].args->first;
-		command->cmd_array[i_cmd].args->next = temp;
+		temp->first = data->cmd_array[i_cmd].args->first;
+		data->cmd_array[i_cmd].args->next = temp;
 	}
 	else
 		temp->first = temp;
 	return (temp);
 }
 
-void	do_command(t_data *command, long i_cmd, long *i)
+void	do_command(t_data *data, long i_cmd, long *i)
 {
 	int	arg_size;
 
-	arg_size = count_arg_size(command, command->input, *i);
-	if (command->cmd_array[i_cmd].is_cmd_filled == 0)
+	arg_size = count_arg_size(data, data->input, *i);
+	if (data->cmd_array[i_cmd].is_cmd_filled == 0)
 	{
-		command->cmd_array[i_cmd].is_cmd_filled = 1;
-		command->cmd_array[i_cmd].the_cmd = add_command(command, \
-				command->input, i, arg_size);
+		data->cmd_array[i_cmd].is_cmd_filled = 1;
+		data->cmd_array[i_cmd].the_cmd = add_command(data, \
+				data->input, i, arg_size);
 		RED
-		DEBUG("command->cmd_array[%ld].the_cmd : %s", i_cmd, command->cmd_array[i_cmd].the_cmd)
+		DEBUG("data->cmd_array[%ld].the_cmd : %s", i_cmd, data->cmd_array[i_cmd].the_cmd)
 		RESET
 	}
 	else
 	{
-		command->cmd_array[i_cmd].args = add_args(command, i, i_cmd);
+		data->cmd_array[i_cmd].args = add_args(data, i, i_cmd);
 		YELLOW
-		DEBUG("command->cmd_array[%ld].args : %s", i_cmd, command->cmd_array[i_cmd].args->arg)
+		DEBUG("data->cmd_array[%ld].args : %s", i_cmd, data->cmd_array[i_cmd].args->arg)
 		RESET
 	}
 }

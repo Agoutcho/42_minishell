@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	copy_env(t_data *command, char **env)
+static int	copy_env(t_data *data, char **env)
 {
 	int		j;
 	t_env	*first;
@@ -20,15 +20,15 @@ static int	copy_env(t_data *command, char **env)
 	first = (t_env *)malloc(sizeof(t_env));
 	if (!first)
 		return (0);
-	command->env = first;
-	command->env->first = first;
-	command->env->next = NULL;
-	if (!lst_add_env_value(env[0], command->env))
+	data->env = first;
+	data->env->first = first;
+	data->env->next = NULL;
+	if (!lst_add_env_value(env[0], data->env))
 		return (0);
 	j = 1;
 	while (env[j])
 	{
-		if (!lst_add_back_env(command, env, j))
+		if (!lst_add_back_env(data, env, j))
 			return (0);
 		j++;
 	}
@@ -43,7 +43,7 @@ static int	free_create_env(char *pwd, char *join, char *temp, int v)
 	return (v);
 }
 
-static int	create_env(t_data *command)
+static int	create_env(t_data *data)
 {
 	t_env	*first;
 	char	*temp;
@@ -53,26 +53,26 @@ static int	create_env(t_data *command)
 	first = (t_env *)malloc(sizeof(t_env));
 	if (!first)
 		return (0);
-	command->env = first;
-	command->env->first = first;
-	command->env->next = NULL;
-	if (!lst_add_env_value("SHLVL=0", command->env))
+	data->env = first;
+	data->env->first = first;
+	data->env->next = NULL;
+	if (!lst_add_env_value("SHLVL=0", data->env))
 		return (0);
-	if (!add_to_env(command, "OLDPWD"))
+	if (!add_to_env(data, "OLDPWD"))
 		return (0);
 	pwd = ft_strdup("PWD=");
 	temp = getcwd(NULL, 0);
 	join = ft_strjoin(pwd, temp);
-	if (!add_to_env(command, join))
+	if (!add_to_env(data, join))
 		return (free_create_env(pwd, join, temp, 0));
 	return (free_create_env(pwd, join, temp, 1));
 }
 
-int	init_env(t_data *command, char **env)
+int	init_env(t_data *data, char **env)
 {
-	if (env[0] != NULL && !copy_env(command, env))
+	if (env[0] != NULL && !copy_env(data, env))
 		return (0);
-	else if (env[0] == NULL && !create_env(command))
+	else if (env[0] == NULL && !create_env(data))
 		return (0);
 	return (1);
 }

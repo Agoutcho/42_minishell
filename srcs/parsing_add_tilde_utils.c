@@ -6,19 +6,19 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:22:23 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	find_til_in_env(t_data *command, char *t_key, char *parsed, long *idex)
+int	find_til_in_env(t_data *data, char *t_key, char *parsed, long *idex)
 {
 	t_env	*temp;
 	int		i;
 
 	i = 0;
-	temp = command->env->first;
+	temp = data->env->first;
 	while (temp)
 	{
 		if (ft_strncmp(temp->key, t_key, ft_strlen(t_key) + 1) == 0)
@@ -48,17 +48,17 @@ static int	ret_val(long *i, char *temp, int i_val, int value)
 	return (i_val);
 }
 
-int	add_tilde_home(t_data *command, long *i, char *parsed, long *index)
+int	add_tilde_home(t_data *data, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
 	t_env	*tenv;
 
 	i_val = 0;
-	tenv = command->env->first;
+	tenv = data->env->first;
 	temp = ft_strdup("HOME=");
 	if (!temp)
-		big_free(command);
+		big_free(data);
 	while (tenv)
 	{
 		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
@@ -77,17 +77,17 @@ int	add_tilde_home(t_data *command, long *i, char *parsed, long *index)
 	return (ret_val(i, temp, i_val, 1));
 }
 
-int	add_tilde_plus(t_data *command, long *i, char *parsed, long *index)
+int	add_tilde_plus(t_data *data, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
 	t_env	*tenv;
 
 	i_val = 0;
-	tenv = command->env->first;
+	tenv = data->env->first;
 	temp = ft_strdup("PWD=");
 	if (!temp)
-		big_free(command);
+		big_free(data);
 	while (tenv)
 	{
 		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)
@@ -106,17 +106,17 @@ int	add_tilde_plus(t_data *command, long *i, char *parsed, long *index)
 	return (ret_val(i, temp, i_val, 2));
 }
 
-int	add_tilde_hyphen(t_data *command, long *i, char *parsed, long *index)
+int	add_tilde_hyphen(t_data *data, long *i, char *parsed, long *index)
 {
 	char	*temp;
 	int		i_val;
 	t_env	*tenv;
 
 	i_val = 0;
-	tenv = command->env->first;
+	tenv = data->env->first;
 	temp = ft_strdup("OLDPWD=");
 	if (!temp)
-		big_free(command);
+		big_free(data);
 	while (tenv)
 	{
 		if (ft_strncmp(tenv->key, temp, ft_strlen(temp) + 1) == 0)

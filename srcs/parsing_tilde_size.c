@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:03:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_tilde_ok(char *str, long i)
 	return (0);
 }
 
-int	count_tilde_size(t_data *command, char *str, long *i)
+int	count_tilde_size(t_data *data, char *str, long *i)
 {
 	int	ret_value;
 	int	temp_i;
@@ -40,11 +40,11 @@ int	count_tilde_size(t_data *command, char *str, long *i)
 	if (str[*i] == '-' || str[*i] == '+')
 		(*i)++;
 	if (str[temp_i] == '+')
-		ret_value = find_lenght_in_env(command, "PWD=");
+		ret_value = find_lenght_in_env(data, "PWD=");
 	else if (str[temp_i] == '-')
-		ret_value = find_lenght_in_env(command, "OLDPWD=");
+		ret_value = find_lenght_in_env(data, "OLDPWD=");
 	else
-		ret_value = find_lenght_in_env(command, "HOME=");
+		ret_value = find_lenght_in_env(data, "HOME=");
 	if (ret_value == 0 && (str[temp_i] == '-' || str[temp_i] == '+'))
 		ret_value = 2;
 	else if (ret_value == 0)

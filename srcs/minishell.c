@@ -6,16 +6,16 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:22:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void init_to_zero(t_data *command);
+void init_to_zero(t_data *data);
 
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
-void	affiche(t_data *command)
+void	affiche(t_data *data)
 {
 	t_args			*targs;
 	long	i;
@@ -24,23 +24,23 @@ void	affiche(t_data *command)
 	j = 0;
 	i = 0;
 	DEBUG("\033[0;31m---------[AFFICHAGE]-----------\033[0m")
-		DEBUG("nombre de commande : %ld", command->size_cmd_array)
-		while (i < command->size_cmd_array)
+		DEBUG("nombre de commande : %ld", data->size_cmd_array)
+		while (i < data->size_cmd_array)
 		{
 			DEBUG("-----------------------------------")
 				DEBUG("Commande : %ld", i + 1)
-				if (command->cmd_array[i].args)
-					targs = command->cmd_array[i].args->first;
+				if (data->cmd_array[i].args)
+					targs = data->cmd_array[i].args->first;
 			CYAN
-				DEBUG("command : |%s|", command->cmd_array[i].the_cmd)
+				DEBUG("data : |%s|", data->cmd_array[i].the_cmd)
 				RESET
-				DEBUG("nombre de redirection : %ld", command->cmd_array[i].redir_size)
-				while (j < command->cmd_array[i].redir_size)
+				DEBUG("nombre de redirection : %ld", data->cmd_array[i].redir_size)
+				while (j < data->cmd_array[i].redir_size)
 				{
 					GREEN;
 						DEBUG("j : %ld", j)
-						DEBUG("type : %d", command->cmd_array[i].redir_array[j].type)
-						DEBUG("file : %s", command->cmd_array[i].redir_array[j].file_name)
+						DEBUG("type : %d", data->cmd_array[i].redir_array[j].type)
+						DEBUG("file : %s", data->cmd_array[i].redir_array[j].file_name)
 						RESET
 						j++;
 				}
@@ -48,7 +48,7 @@ void	affiche(t_data *command)
 			while (targs)
 			{
 				YELLOW
-					DEBUG("arg : |%s|", command->cmd_array[i].args->arg)
+					DEBUG("arg : |%s|", data->cmd_array[i].args->arg)
 					targs = targs->next;
 				RESET
 			}
@@ -59,70 +59,70 @@ void	affiche(t_data *command)
 /**
  * @brief	Displays the prompt and calls a new function "parsing" which returns an int (ret) and takes input and t_cmd struct as arguments
  */
-int	get_input(t_data *command)
+int	get_input(t_data *data)
 {
-	command->i_input = 0;
-	command->input = readline("Rachele ═> ");
-	if (!command->input)
+	data->i_input = 0;
+	data->input = readline("Rachele ═> ");
+	if (!data->input)
 	{
-		secure_char_free(command->input);
+		secure_char_free(data->input);
 		return (0);
 	}
-	if (!ft_strlen(command->input))
+	if (!ft_strlen(data->input))
 	{
-		secure_char_free(command->input);
+		secure_char_free(data->input);
 		return (1);
 	}
-	if (command->input && *command->input && command->input[0] != ' ')
-		add_history(command->input);
-	DEBUG("%s", command->input);
-	parsing(command);
-	// affiche(command);
-	secure_char_free(command->input);
-	free_cmd(command);
-	init_to_zero(command);
+	if (data->input && *data->input && data->input[0] != ' ')
+		add_history(data->input);
+	DEBUG("%s", data->input);
+	parsing(data);
+	// affiche(data);
+	secure_char_free(data->input);
+	free_cmd(data);
+	init_to_zero(data);
 	return (1);
 }
 
-void	big_free(t_data *command)
+void	big_free(t_data *data)
 {
-	free_env(command);
-	free_cmd(command);
+	free_env(data);
+	free_cmd(data);
 }
 
 /**
  * @brief	Handle get_input returns
  */
-void	prompt(t_data *command)
+void	prompt(t_data *data)
 {
 	int	ret;
 
 	ret = 0;
 	while (true)
 	{
-		ret = get_input(command);
+		ret = get_input(data);
 		if (ret == 0)
 		{
 			printf("CTRL+D = EXIT\n");
-			big_free(command);
+			big_free(data);
 			exit(1);// EXIT car ctrl + D
 		}
 	}
 	return ;
 }
 
-void init_to_zero(t_data *command)
+void init_to_zero(t_data *data)
 {
-	command->size_cmd_array = 0;
-	command->cmd_array = NULL;
-	// command->env = NULL;
-	command->input = NULL;
+	data->size_cmd_array = 0;
+	data->cmd_array = NULL;
+	// data->env = NULL;
+	data->input = NULL;
 }
 
 // TODO add HEREDOC
 int	main(int argc)
 {
-	t_data command;
+	t_data data;
 
 	g_exit_code = 0;
 	if (argc == 1)
@@ -130,16 +130,16 @@ int	main(int argc)
 		init_term(0);
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
-		init_env(&command, environ);
-		prompt(&command);
+		init_env(&data, environ);
+		prompt(&data);
 		/** HEREDOC */
-		// fill_heredoc(&command, "heredoc");
-		// if (command.heredoc)
-		// 	command.heredoc = command.heredoc->first;
-		// while (command.heredoc)
+		// fill_heredoc(&data, "heredoc");
+		// if (data.heredoc)
+		// 	data.heredoc = data.heredoc->first;
+		// while (data.heredoc)
 		// {
-		// 	DEBUG("heredoc : %s", command.heredoc->line);
-		// 	command.heredoc = command.heredoc->next;
+		// 	DEBUG("heredoc : %s", data.heredoc->line);
+		// 	data.heredoc = data.heredoc->next;
 		// }
 	}
 	return (0);
