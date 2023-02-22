@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 02:05:09 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 02:56:13 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 04:06:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	from_list_to_char(t_data *data, long j)
 {
 	t_args	*temp;
 	int		args_counter;
-	int		i;
 
-	i = 0;
 	args_counter = 0;
 	temp = data->cmd[j].arg->first;
 	while (temp)
@@ -33,13 +31,13 @@ void	from_list_to_char(t_data *data, long j)
 		exit(1);
 	}
 	temp = data->cmd[j].arg->first;
+	args_counter = 0;
 	while (temp)
 	{
-		data->cmd[j].args[i] = ft_strdup(temp->arg);
+		data->cmd[j].args[args_counter++] = ft_strdup(temp->arg);
 		temp = temp->next;
-		i++;
 	}
-	data->cmd[j].args[i] = NULL;
+	data->cmd[j].args[args_counter] = NULL;
 }
 
 void	transform_args(t_data *data)
