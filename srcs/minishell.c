@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 02:24:35 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 02:46:16 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int	get_input(t_data *data)
 	parsing(data);
 	// affiche(data);
 	secure_char_free(data->input);
-	free_cmd(data);
-	init_to_zero(data);
+	// free_cmd(data);
+	// init_to_zero(data);
 	return (1);
 }
 
@@ -107,13 +107,11 @@ void	prompt(t_data *data)
 			big_free(data);
 			exit(1);// EXIT car ctrl + D
 		}
-		DEBUG();
 		data->fd_saver.stdin = dup(0);
 		data->fd_saver.stdout = dup(1);
 		data->fd_saver.stderr = dup(2);
 		if (!execution(data))
 			free_data(data);
-		DEBUG();
 		close(data->fd_saver.stdin);
 		close(data->fd_saver.stdout);
 		close(data->fd_saver.stderr);
