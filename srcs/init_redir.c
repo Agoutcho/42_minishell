@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void	init_to_zero(long *a, int *b, int *c)
 
 static int	malloc_r_array(t_data *data, int j, int *counter_redir)
 {
-	data->cmd_array[j].redir_size = *counter_redir;
-	data->cmd_array[j].redir_array = \
+	data->cmd[j].redir_size = *counter_redir;
+	data->cmd[j].redir_array = \
 		(t_redirect *)malloc(sizeof(t_redirect) * (*counter_redir));
-	if (!data->cmd_array[j].redir_array)
+	if (!data->cmd[j].redir_array)
 	{
 		big_free(data);
 		exit(2);
@@ -55,7 +55,7 @@ void	init_redir(t_data *data)
 	int		counter_redir;
 
 	init_to_zero(&i, &j, &counter_redir);
-	data->cmd_array[j].redir_size = 0;
+	data->cmd[j].redir_size = 0;
 	data->quote = e_no_quote;
 	while (data->input[i])
 	{

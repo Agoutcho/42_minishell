@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:33:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ void	affiche(t_data *data)
 		{
 			DEBUG("-----------------------------------")
 				DEBUG("Commande : %ld", i + 1)
-				if (data->cmd_array[i].arg)
-					targs = data->cmd_array[i].arg->first;
+				if (data->cmd[i].arg)
+					targs = data->cmd[i].arg->first;
 			CYAN
-				DEBUG("data : |%s|", data->cmd_array[i].the_cmd)
+				DEBUG("data : |%s|", data->cmd[i].the_cmd)
 				RESET
-				DEBUG("nombre de redirection : %ld", data->cmd_array[i].redir_size)
-				while (j < data->cmd_array[i].redir_size)
+				DEBUG("nombre de redirection : %ld", data->cmd[i].redir_size)
+				while (j < data->cmd[i].redir_size)
 				{
 					GREEN;
 						DEBUG("j : %ld", j)
-						DEBUG("type : %d", data->cmd_array[i].redir_array[j].type)
-						DEBUG("file : %s", data->cmd_array[i].redir_array[j].file_name)
+						DEBUG("type : %d", data->cmd[i].redir_array[j].type)
+						DEBUG("file : %s", data->cmd[i].redir_array[j].file_name)
 						RESET
 						j++;
 				}
@@ -48,7 +48,7 @@ void	affiche(t_data *data)
 			while (targs)
 			{
 				YELLOW
-					DEBUG("arg : |%s|", data->cmd_array[i].arg->arg)
+					DEBUG("arg : |%s|", data->cmd[i].arg->arg)
 					targs = targs->next;
 				RESET
 			}
@@ -114,7 +114,7 @@ void	prompt(t_data *data)
 void init_to_zero(t_data *data)
 {
 	data->size_cmd_array = 0;
-	data->cmd_array = NULL;
+	data->cmd = NULL;
 	// data->env = NULL;
 	data->input = NULL;
 }

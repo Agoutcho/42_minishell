@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static void	init_cmd_filled(t_data *data)
 	i = 0;
 	while (i < data->size_cmd_array)
 	{
-		data->cmd_array[i].the_cmd = NULL;
-		data->cmd_array[i].arg = NULL;
-		data->cmd_array[i].is_cmd_filled = 0;
-		data->cmd_array[i].redir_size = 0;
-		data->cmd_array[i].redir_array = NULL;
+		data->cmd[i].the_cmd = NULL;
+		data->cmd[i].arg = NULL;
+		data->cmd[i].is_cmd_filled = 0;
+		data->cmd[i].redir_size = 0;
+		data->cmd[i].redir_array = NULL;
 		i++;
 	}
 }
@@ -63,6 +63,6 @@ void	init_command(t_data *data)
 	}
 	data->size_cmd_array = counter_command;
 	temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
-	data->cmd_array = temp;
+	data->cmd = temp;
 	init_cmd_filled(data);
 }

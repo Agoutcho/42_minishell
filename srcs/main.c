@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:40:11 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/16 19:40:19 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:45:33 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@
 //     return 0;
 // }
 
-int	main(void)
-{
-	int	i;
+// int	main(void)
+// {
+// 	int	i;
 
-	i = 0;
-	while (__environ[i])
-		DEBUG("%s", __environ[i++]);
-}
+// 	i = 0;
+// 	while (__environ[i])
+// 		DEBUG("%s", __environ[i++]);
+// }

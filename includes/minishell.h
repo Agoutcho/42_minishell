@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:33:32 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:49:23 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ typedef struct	s_env
 }				t_env;
 
 /**
- * @brief cmd_array
+ * @brief cmd
  *        Une structure avec un tableau de commande
  *        de taille size. 
  *        Separer par les pipes
@@ -149,8 +149,9 @@ typedef struct	s_data
 {
 	t_env		*env; // malloc liste chainee
 	t_quote		quote;
-	t_cmd_array	*cmd_array; //malloc
+	t_cmd_array	*cmd; //malloc
 	long		size_cmd_array; // init a 0
+	t_fd_saver	fd_saver;
 	long		i_input;
 	char		*input;
 	char		*hd_line;

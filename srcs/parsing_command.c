@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:52:34 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static t_args	*add_args(t_data *data, long *i, long i_cmd)
 		big_free(data);
 	temp->next = NULL;
 	temp->arg = add_command(data, data->input, i, arg_size);
-	if (data->cmd_array[i_cmd].arg)
+	if (data->cmd[i_cmd].arg)
 	{
-		temp->first = data->cmd_array[i_cmd].arg->first;
-		data->cmd_array[i_cmd].arg->next = temp;
+		temp->first = data->cmd[i_cmd].arg->first;
+		data->cmd[i_cmd].arg->next = temp;
 	}
 	else
 		temp->first = temp;
@@ -38,20 +38,20 @@ void	do_command(t_data *data, long i_cmd, long *i)
 	int	arg_size;
 
 	arg_size = count_arg_size(data, data->input, *i);
-	if (data->cmd_array[i_cmd].is_cmd_filled == 0)
+	if (data->cmd[i_cmd].is_cmd_filled == 0)
 	{
-		data->cmd_array[i_cmd].is_cmd_filled = 1;
-		data->cmd_array[i_cmd].the_cmd = add_command(data, \
+		data->cmd[i_cmd].is_cmd_filled = 1;
+		data->cmd[i_cmd].the_cmd = add_command(data, \
 				data->input, i, arg_size);
 		RED
-		DEBUG("data->cmd_array[%ld].the_cmd : %s", i_cmd, data->cmd_array[i_cmd].the_cmd)
+		DEBUG("data->cmd[%ld].the_cmd : %s", i_cmd, data->cmd[i_cmd].the_cmd)
 		RESET
 	}
 	else
 	{
-		data->cmd_array[i_cmd].arg = add_args(data, i, i_cmd);
+		data->cmd[i_cmd].arg = add_args(data, i, i_cmd);
 		YELLOW
-		DEBUG("data->cmd_array[%ld].arg : %s", i_cmd, data->cmd_array[i_cmd].arg->arg)
+		DEBUG("data->cmd[%ld].arg : %s", i_cmd, data->cmd[i_cmd].arg->arg)
 		RESET
 	}
 }

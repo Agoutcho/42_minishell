@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ static void	free_redir(t_data *data, long i)
 	long	j;
 
 	j = 0;
-	while (j < data->cmd_array[i].redir_size)
+	while (j < data->cmd[i].redir_size)
 	{
-		secure_char_free(data->cmd_array[i].redir_array[j].file_name);
+		secure_char_free(data->cmd[i].redir_array[j].file_name);
 		j++;
 	}
-	if (data->cmd_array[i].redir_array)
-		free(data->cmd_array[i].redir_array);
-	data->cmd_array[i].redir_array = NULL;
+	if (data->cmd[i].redir_array)
+		free(data->cmd[i].redir_array);
+	data->cmd[i].redir_array = NULL;
 }
 
 void	free_cmd(t_data *data)
@@ -77,23 +77,23 @@ void	free_cmd(t_data *data)
 	i = 0;
 	while (i < data->size_cmd_array)
 	{
-		secure_char_free(data->cmd_array[i].the_cmd);
-		if (data->cmd_array[i].arg && data->cmd_array[i].arg->first)
-			data->cmd_array[i].arg = data->cmd_array[i].arg->first;
-		while (data->cmd_array[i].arg)
+		secure_char_free(data->cmd[i].the_cmd);
+		if (data->cmd[i].arg && data->cmd[i].arg->first)
+			data->cmd[i].arg = data->cmd[i].arg->first;
+		while (data->cmd[i].arg)
 		{
-			targs = data->cmd_array[i].arg;
+			targs = data->cmd[i].arg;
 			secure_char_free(targs->arg);
-			data->cmd_array[i].arg = data->cmd_array[i].arg->next;
+			data->cmd[i].arg = data->cmd[i].arg->next;
 			free(targs);
 			targs = NULL;
 		}
 		free_redir(data, i);
 		i++;
 	}
-	if (data->cmd_array)
+	if (data->cmd)
 	{
-		free(data->cmd_array);
-		data->cmd_array = NULL;
+		free(data->cmd);
+		data->cmd = NULL;
 	}
 }

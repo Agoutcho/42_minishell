@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parsing_input(t_data *data)
 	j = 0;
 	k = 0;
 	data->quote = e_no_quote;
-	data->cmd_array[0].arg = NULL;
+	data->cmd[0].arg = NULL;
 	while (j < data->size_cmd_array && data->input[i])
 	{
 		if (data->quote == e_no_quote)
