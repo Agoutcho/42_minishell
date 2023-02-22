@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:33:50 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,17 @@ void init_to_zero(t_data *data)
 }
 
 // TODO add HEREDOC
-int	main(int argc)
+int	main(int argc, char **argv)
 {
 	t_data data;
-
+	(void)argv;
+	
 	g_exit_code = 0;
 	if (argc == 1)
 	{
 		init_term(0);
-		signal(SIGINT, sig_handler);
-		signal(SIGQUIT, sig_handler);
+		// signal(SIGINT, sig_handler);
+		// signal(SIGQUIT, sig_handler);
 		init_env(&data, environ);
 		prompt(&data);
 		/** HEREDOC */

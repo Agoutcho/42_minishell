@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:31:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 01:33:32 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,13 +295,13 @@ int		e_heredoc_handler(t_redirect *redir);
 //@REDIRECTIONS_UTILS_C
 int		redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver);
 //@TEMPORAIRE
-int		check_printable(char *str);
+// int		check_printable(char *str);
 int		add_to_env(t_data *data, char *str);
 t_env	*find_env_value(t_data *data, char *key);
-char	*change_shlvl(char *env_value);
+// char	*change_shlvl(char *env_value);
 int		lst_add_env_value(char *envp, t_env *env);
 int		lst_add_back_env(t_data *data, char **env, int j);
-int		copy_env(t_data *data, char **env);
+// int		copy_env(t_data *data, char **env);
 void	print_list(t_env *env);
 int		init_env(t_data *data, char **env);
 //@PIPE_C
