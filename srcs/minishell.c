@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 02:01:05 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,14 @@ void	prompt(t_data *data)
 			big_free(data);
 			exit(1);// EXIT car ctrl + D
 		}
+		data->fd_saver.stdin = dup(0);
+		data->fd_saver.stdout = dup(1);
+		data->fd_saver.stderr = dup(2);
+		if (!execution(data))
+			free_data(data);
+		close(data->fd_saver.stdin);
+		close(data->fd_saver.stdout);
+		close(data->fd_saver.stderr);
 	}
 	return ;
 }
