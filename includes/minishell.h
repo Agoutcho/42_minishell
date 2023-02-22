@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:49:23 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 02:06:43 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void	big_free(t_data *data);
 long	move_space(char *str, long *i);
 int		fill_heredoc(t_data *data, char *heredoc);
 int		add_to_env(t_data *data, char *str);
+void	transform_args(t_data *data);
 
 // Free fonctions
 void	free_env(t_data *data);
