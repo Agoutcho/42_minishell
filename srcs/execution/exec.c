@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 03:10:20 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/23 02:52:16 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	execute(t_data *data, int i)
 	is_bt = is_builtins(data->cmd[i].the_cmd);
 	if (is_bt == -2)
 		return (0);
+	DEBUG("is_bt : %d", is_bt);
 	if (is_bt >= 0)
 	{
 		if (builtin_option_checker(is_bt, data->cmd[i].args))

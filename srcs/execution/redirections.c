@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 03:02:44 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/22 22:48:48 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	redirections_handler(t_cmd_array *cmd)
 	t_redirect	*redir;
 
 	i = 0;
-	DEBUG("redir_size : %ld",cmd->redir_size)
 	while (cmd->redir_size > i)
 	{
 		redir = &cmd->redir_array[i];

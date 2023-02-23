@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/18 13:21:57 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/23 02:54:44 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	is_builtins(char *cmd)
 	i = 0;
 	while (i <= 6)
 	{
+		DEBUG("cmd[0] : %c", cmd[0])
+		DEBUG("cmd[1] : %c", cmd[1])
 		if (ft_strcmp(cmd, builtins[i]) == 0)
 		{
 			free(builtins);
