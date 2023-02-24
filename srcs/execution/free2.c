@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:07:46 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/23 03:00:41 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 05:18:55 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	free_strs(char **strs)
 	{
 		if (strs[i])
 		{
-			DEBUG("strs[%d] : %p", i, strs[i]);
 			free(strs[i]);
 			strs[i] = NULL;
 		}
 		i++;
 	}
 	free(strs);
+	strs = NULL;
 }

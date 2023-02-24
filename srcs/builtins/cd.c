@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/18 13:41:20 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:53:25 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_cd(t_cmd_array *cmd, t_env *env)
 {
-	if (!cmd->args[0])
+	if (!cmd->args || !cmd->args[0])
 		return (cd_home(cmd, env));
 	if (cmd->args[1])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:40:08 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/09 11:40:38 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:52:28 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_pwd(char **args)
 {
 	char	*pwd;
 
-	if (args[0])
+	if (args && args[0])
 	{
 		ft_putendl_fd("pwd: too many arguments", 1);
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:46:38 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 10:56:53 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:55:15 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	error_builtins_handler(t_cmd_array *cmd)
 
 bool	option_checker(char **args)
 {
-	if (args[0])
+	if (args && args[0])
 	{
 		if (ft_strncmp(args[0], "-", 1) == 0)
 			return (false);
@@ -43,7 +43,7 @@ bool	builtin_option_checker(int cmd_id, char **args)
 	else if (cmd_id == 2 || cmd_id == 3 || cmd_id == 4)
 		return (option_checker(args));
 	else
-		if (args[0] == NULL)
+		if (args == NULL && args[0] == NULL)
 			return (true);
 	return (false);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 15:32:58 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:56:30 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 {
 	int	i;
 
-	if (cmd->args[0] == NULL)
+	if (cmd->args == NULL && cmd->args[0] == NULL)
 	{
 		if (!ft_export_no_args(env))
 			return (0);

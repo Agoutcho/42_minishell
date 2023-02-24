@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/22 03:04:26 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 05:21:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	get_input(t_data *data)
 	}
 	if (data->input && *data->input && data->input[0] != ' ')
 		add_history(data->input);
-	DEBUG("%s", data->input);
+	// DEBUG("%s", data->input);
 	parsing(data);
 	// affiche(data);
 	secure_char_free(data->input);
@@ -110,10 +110,8 @@ void	prompt(t_data *data)
 		data->fd_saver.stdin = dup(0);
 		data->fd_saver.stdout = dup(1);
 		data->fd_saver.stderr = dup(2);
-		DEBUG();
 		if (!execution(data))
 			free_data(data);
-		DEBUG();
 		close(data->fd_saver.stdin);
 		close(data->fd_saver.stdout);
 		close(data->fd_saver.stderr);

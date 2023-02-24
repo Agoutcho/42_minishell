@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:50:52 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 14:37:39 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:44:31 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	ft_echo(char **args)
 
 	i = 0;
 	option = false;
-	while (args[i] && !ft_strcmp(args[i], "-n"))
+	while (args && args[i] && !ft_strcmp(args[i], "-n"))
 	{
 		option = true;
 		i++;
 	}
-	while (args[i])
+	while (args && args[i])
 	{
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1] != NULL)

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:52:34 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 05:21:24 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ void	do_command(t_data *data, long i_cmd, long *i)
 		data->cmd[i_cmd].is_cmd_filled = 1;
 		data->cmd[i_cmd].the_cmd = add_command(data, \
 				data->input, i, arg_size);
-		RED
-		DEBUG("data->cmd[%ld].the_cmd : %s", i_cmd, data->cmd[i_cmd].the_cmd)
-		RESET
+		// RED
+		// DEBUG("data->cmd[%ld].the_cmd : %s", i_cmd, data->cmd[i_cmd].the_cmd)
+		// RESET
 	}
 	else
 	{
 		data->cmd[i_cmd].arg = add_args(data, i, i_cmd);
-		YELLOW
-		DEBUG("data->cmd[%ld].arg : %s", i_cmd, data->cmd[i_cmd].arg->arg)
-		RESET
+		// YELLOW
+		// DEBUG("data->cmd[%ld].arg : %s", i_cmd, data->cmd[i_cmd].arg->arg)
+		// RESET
 	}
 }

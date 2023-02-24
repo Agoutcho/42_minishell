@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/23 03:09:06 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 05:20:24 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	if (!env_array)
 		return (cmd_utils);
 	cmd_utils.path = get_path(cmd->the_cmd, env_array);
-	DEBUG("cmd_utils.path : %p", cmd_utils.path);
 	if (!cmd_utils.path)
 	{
 		ft_putstr_fd("command not found: ", 2);
@@ -40,7 +39,6 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	}
 	cmd_utils.args = add_element_to_array(cmd->args, cmd->the_cmd);
 	cmd_utils.envp = env_array;
-	DEBUG("envp : %p", cmd_utils.envp);
 	if (!cmd_utils.args || !cmd_utils.envp)
 	{
 		ft_putstr_fd("malloc failed", 2);
@@ -78,7 +76,6 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 	int			ret;
 	
 	cmd_utils = prepare_cmd_utils(cmd, env);
-	DEBUG("envp : %p", cmd_utils.envp);
 	if (!cmd_utils.path || !cmd_utils.args || !cmd_utils.envp)
 	{
 		if (cmd_utils.path)
@@ -107,7 +104,7 @@ char	**add_element_to_array(char **array, char *element)
 
 	size = 0;
 	i = 0;
-	while (array[size])
+	while (array && array[size])
 		size++;
 	new_array = malloc(sizeof(char *) * (size + 2));
 	if (!new_array)

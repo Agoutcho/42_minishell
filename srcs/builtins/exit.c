@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:08:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 16:59:35 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:58:13 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_exit(char **args)
 {
 	int	code;
 
-	if (args[0])
+	if (args && args[0])
 	{
 		if (args[1])
 		{

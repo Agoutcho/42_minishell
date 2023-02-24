@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 09:06:32 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 15:04:02 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/24 04:57:06 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 
 int	ft_unset(t_cmd_array *cmd, t_env *env)
 {
-	if (cmd->args[0] == NULL)
+	if (cmd->args == NULL && cmd->args[0] == NULL)
 	{
 		ft_putendl_fd("unset: not enough arguments", 2);
 		return (0);

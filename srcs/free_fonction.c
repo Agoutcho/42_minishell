@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/23 00:56:29 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 05:28:24 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void	free_cmd(t_data *data)
 			data->cmd[i].arg = data->cmd[i].arg->first;
 		while (data->cmd[i].arg)
 			free_arg_lst(data, i);
-		free_args_char(data, i);
+		if (data->cmd[i].args)
+			free_args_char(data, i);
 		free_redir(data, i);
 		i++;
 	}
