@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:00:31 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 17:03:57 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	is_dollar_ok(char *str, long *i, int change_i)
 {
 	if ((str[*i] == '$' && str[(*i) + 1] != '-' && str[(*i) + 1] != '?' \
-		&& !ft_isalnum(str[(*i) + 1])) || !str[(*i) + 1] \
-		|| str[(*i) + 1] == ' ')
+		&& str[(*i) + 1] != '_' && !ft_isalnum(str[(*i) + 1])) \
+		|| !str[(*i) + 1] || str[(*i) + 1] == ' ')
 	{
 		if (change_i)
 			(*i)++;
@@ -57,7 +57,7 @@ int	count_dollar_size(t_data *data, char *str, long *i, int *counter)
 	temp_i = *i;
 	if (str[*i] == '-' || str[*i] == '?')
 		return (count_dollar_special(data, str, i));
-	while (str[temp_i] && ft_isalnum(str[temp_i]))
+	while (str[temp_i] && (ft_isalnum(str[temp_i]) || str[temp_i] == '_'))
 		temp_i++;
 	size_dollar = temp_i - *i + 1;
 	temp = (char *)malloc(sizeof(char) * (size_dollar + 1));

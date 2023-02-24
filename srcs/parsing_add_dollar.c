@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:07:26 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:59:45 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_dol_env(t_data *data, long *i, char *parsed, long *index)
 
 	str = data->input;
 	temp_i = *i;
-	while (str[temp_i] && ft_isalnum(str[temp_i]))
+	while (str[temp_i] && (ft_isalnum(str[temp_i]) || str[temp_i] == '_'))
 		temp_i++;
 	size_dollar = temp_i - *i + 1;
 	temp_key = (char *)malloc(sizeof(char) * (size_dollar + 1));
