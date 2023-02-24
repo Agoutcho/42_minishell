@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:46:38 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 04:55:15 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 05:35:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	builtin_option_checker(int cmd_id, char **args)
 	else if (cmd_id == 2 || cmd_id == 3 || cmd_id == 4)
 		return (option_checker(args));
 	else
-		if (args == NULL && args[0] == NULL)
+		if (args == NULL || args[0] == NULL)
 			return (true);
 	return (false);
 }
