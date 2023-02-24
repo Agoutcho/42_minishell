@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 04:53:25 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:00:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 	}
 	else if (cmd->args[0][0] == '-' && cmd->args[0][1] == '\0')
 		return (cd_oldpwd(cmd, env));
-	else if (access(cmd->args[0], F_OK) == 0)
+	else if (is_directory(cmd->args[0]))
 	{
 		if (!change_pwd(env, "OLDPWD="))
 			return (0);
@@ -31,11 +31,6 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 			return (0);
 		if (!change_pwd(env, "PWD="))
 			return (0);
-	}
-	else
-	{
-		ft_putendl_fd("cd: no such a file or directory", 2);
-		return (1);
 	}
 	return (1);
 }
@@ -48,7 +43,7 @@ int	cd_home(t_cmd_array *cmd, t_env *env)
 	env = env->first;
 	if (temp)
 	{
-		if (access(temp->value, F_OK) == 0)
+		if (is_directory(temp->value))
 		{
 			if (!change_pwd(env, "OLDPWD="))
 				return (0);
@@ -76,7 +71,7 @@ int	cd_oldpwd(t_cmd_array *cmd, t_env *env)
 	if (temp)
 	{
 		path = ft_strdup(temp->value);
-		if (access(path, F_OK) == 0)
+		if (is_directory(path))
 		{
 			if (!change_pwd(env, "OLDPWD="))
 				return (0);
@@ -110,5 +105,20 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 		replace_node(env, pwd);
 	}
 	env = env->first;
+	return (1);
+}
+
+int	is_directory(char *path)
+{
+	if (access(path, F_OK) != 0)
+	{
+		ft_putendl_fd("cd: no such a file or directory", 2);
+		return (0);
+	}
+	if (access(path, X_OK) != 0)
+	{
+		ft_putendl_fd("cd: not a directory", 2);
+		return (0);
+	}
 	return (1);
 }

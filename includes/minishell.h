@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/23 00:57:27 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:00:53 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int		ft_cd(t_cmd_array *cmd, t_env *env);
 int		change_pwd(t_env *env, char *pwd_oldpwd_flag);
 int		cd_home(t_cmd_array *cmd, t_env *env);
 int		cd_oldpwd(t_cmd_array *cmd, t_env *env);
+int		is_directory(char *path);
 //	@ECHO_C
 int		ft_echo(char **args);
 //	@ENV_C
