@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 23:45:09 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 00:21:43 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,11 @@ int	main(int argc, char **argv)
 		init_term(0);
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
-		init_env(&data, environ);
+		if (!init_env(&data, environ))
+		{
+			big_free(&data);
+			exit(1);
+		}
 		prompt(&data);
 	}
 	return (0);

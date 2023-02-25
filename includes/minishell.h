@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/25 01:25:15 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 23:50:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void	init_term(bool mode);
 
 // @SIG_HANDLER_C
 void	sig_handler(int sig);
+void	sig_handler_heredoc(int sig);
 
 ///////////////////////////////////////////////////////////////////////////////
 

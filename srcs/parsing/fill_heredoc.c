@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/25 01:18:22 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 00:22:17 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	add_heredoc(t_redirect *data)
 
 int	fill_heredoc(t_redirect *data, char *heredoc)
 {
+	// signal(SIGINT, sig_handler_heredoc);
 	data->heredoc = NULL;
 	while (1)
 	{
