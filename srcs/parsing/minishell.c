@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 00:21:43 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 00:38:57 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	big_free(t_data *data)
 {
 	free_env(data);
 	free_cmd(data);
+	rl_clear_history();
 }
 
 /**
@@ -132,13 +133,14 @@ int	main(int argc, char **argv)
 {
 	t_data data;
 	(void)argv;
-	
+
 	g_exit_code = 0;
 	init_to_zero(&data, 1);
 	if (argc == 1)
 	{
 		init_term(0);
 		signal(SIGINT, sig_handler);
+		// signal(SIGQUIT, SIG_IGN);
 		signal(SIGQUIT, sig_handler);
 		if (!init_env(&data, environ))
 		{

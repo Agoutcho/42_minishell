@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 23:58:57 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 00:43:42 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 		// ft_putstr_fd("Rachele: ", 2);
 		ft_putstr_fd(cmd->the_cmd, 2);
 		ft_putendl_fd(": command not found", 2);
+		free_strs(env_array);
 		return (cmd_utils);
 	}
 	cmd_utils.args = add_element_to_array(cmd->args, cmd->the_cmd);
