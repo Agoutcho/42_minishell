@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:21:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 02:43:42 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	get_input(t_data *data)
 	secure_char_free(data->input);
 	// free_cmd(data);
 	// init_to_zero(data);
-	return (1);
+	return (2);
 }
 
 void	big_free(t_data *data)
@@ -103,10 +103,12 @@ void	prompt(t_data *data)
 		ret = get_input(data);
 		if (ret == 0)
 		{
-			printf("CTRL+D = EXIT\n");
-			big_free(data);
+			ft_putstr_fd("exit\n", 1);
+			// big_free(data);
 			exit(1);// EXIT car ctrl + D
 		}
+		if (ret == 1)
+			continue;
 		data->fd_saver.stdin = dup(0);
 		data->fd_saver.stdout = dup(1);
 		data->fd_saver.stderr = dup(2);
@@ -127,7 +129,6 @@ void init_to_zero(t_data *data)
 	data->input = NULL;
 }
 
-// TODO add HEREDOC
 int	main(int argc, char **argv)
 {
 	t_data data;
@@ -137,19 +138,10 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		init_term(0);
-		// signal(SIGINT, sig_handler);
-		// signal(SIGQUIT, sig_handler);
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, sig_handler);
 		init_env(&data, environ);
 		prompt(&data);
-		/** HEREDOC */
-		// fill_heredoc(&data, "heredoc");
-		// if (data.heredoc)
-		// 	data.heredoc = data.heredoc->first;
-		// while (data.heredoc)
-		// {
-		// 	DEBUG("heredoc : %s", data.heredoc->line);
-		// 	data.heredoc = data.heredoc->next;
-		// }
 	}
 	return (0);
 }

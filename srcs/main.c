@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:40:11 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:45:33 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/24 04:45:48 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,16 @@
 //         printf("Command not found\n");
 //     return 0;
 // }
+// char *testo(char *test)
+// {
+//     test = "MDR lol";
+//     return (test);
+// }
 
 // int	main(void)
 // {
-// 	int	i;
+//     char test[10]="MDR lol";
 
-// 	i = 0;
-// 	while (__environ[i])
-// 		DEBUG("%s", __environ[i++]);
+//     // test = testo(test);
+// 	DEBUG("test : %s", test);
 // }
