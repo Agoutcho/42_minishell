@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:20:24 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:38:52 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 	{
 		if (cmd_utils.path)
 			free(cmd_utils.path);
-		if (cmd_utils.args)
-			free_strs(cmd_utils.args);
+		// if (cmd_utils.args)
+		// 	free(cmd_utils.args);
 		if (cmd_utils.envp)
 			free_strs(cmd_utils.envp);
 		return (0);
@@ -89,8 +89,8 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 	ret = exec_cmd_utils(cmd_utils);
 	if (cmd_utils.path)
 		free(cmd_utils.path);
-	if (cmd_utils.args)
-		free_strs(cmd_utils.args);
+	// if (cmd_utils.args)
+	// 	free(cmd_utils.args);
 	if (cmd_utils.envp)
 		free_strs(cmd_utils.envp);
 	return (ret);

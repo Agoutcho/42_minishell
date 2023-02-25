@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:19:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:34:54 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int	is_builtins(char *cmd)
 		}
 		i++;
 	}
+	free(builtins);
 	return (-1);
 }

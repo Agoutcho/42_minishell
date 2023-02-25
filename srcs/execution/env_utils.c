@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:09:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 13:59:14 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/25 04:43:09 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,17 @@ void	remove_node(t_env *env)
 			temp = temp->next;
 		temp->next = env->next;
 		if (env->key)
+		{
 			free(env->key);
+			env->key = NULL;
+		}
 		if (env->value)
+		{
 			free(env->value);
+			env->value = NULL;	
+		}
 		free(env);
+		env = NULL;
 	}
 }
 
@@ -56,7 +63,10 @@ t_env	*search_key(char *key, t_env *env)
 int	replace_node(t_env *env, char *value)
 {
 	if (env->value)
+	{
 		free(env->value);
+		env->value = NULL;
+	}
 	env->value = ft_strdup(value);
 	if (!env->value)
 		return (0);

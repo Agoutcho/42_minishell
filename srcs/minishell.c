@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 02:43:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:29:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	prompt(t_data *data)
 		if (ret == 0)
 		{
 			ft_putstr_fd("exit\n", 1);
-			// big_free(data);
+			big_free(data);
 			exit(1);// EXIT car ctrl + D
 		}
 		if (ret == 1)
@@ -117,6 +117,7 @@ void	prompt(t_data *data)
 		close(data->fd_saver.stdin);
 		close(data->fd_saver.stdout);
 		close(data->fd_saver.stderr);
+		free_cmd(data);
 	}
 	return ;
 }
