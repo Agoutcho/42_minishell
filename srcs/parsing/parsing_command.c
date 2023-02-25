@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:52:34 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/24 05:21:24 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 23:24:18 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_args	*add_args(t_data *data, long *i, long i_cmd)
 	if (!temp)
 		big_free(data);
 	temp->next = NULL;
+	temp->first = NULL;
 	temp->arg = add_command(data, data->input, i, arg_size);
 	if (data->cmd[i_cmd].arg)
 	{

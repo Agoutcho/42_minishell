@@ -6,13 +6,13 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 04:29:49 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 23:23:26 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void init_to_zero(t_data *data);
+void init_to_zero(t_data *data, int env_to_null);
 // int	g_exit_code;
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void	affiche(t_data *data)
@@ -122,12 +122,13 @@ void	prompt(t_data *data)
 	return ;
 }
 
-void init_to_zero(t_data *data)
+void init_to_zero(t_data *data, int env_to_null)
 {
 	data->size_cmd_array = 0;
 	data->cmd = NULL;
-	// data->env = NULL;
 	data->input = NULL;
+	if (env_to_null)
+		data->env = NULL;
 }
 
 int	main(int argc, char **argv)
@@ -136,6 +137,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	
 	g_exit_code = 0;
+	init_to_zero(&data, 1);
 	if (argc == 1)
 	{
 		init_term(0);
