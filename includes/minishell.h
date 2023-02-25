@@ -55,7 +55,7 @@
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 /* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes */
 extern char **environ;
-int g_exit_code;
+int	g_exit_code;
 
 typedef enum	e_redir 
 {
@@ -238,8 +238,8 @@ char	**sort_strs(char **strs);
 //	@CD_C
 int		ft_cd(t_cmd_array *cmd, t_env *env);
 int		change_pwd(t_env *env, char *pwd_oldpwd_flag);
-int		cd_home(t_cmd_array *cmd, t_env *env);
-int		cd_oldpwd(t_cmd_array *cmd, t_env *env);
+int		cd_home(t_env *env);
+int		cd_oldpwd(t_env *env);
 int		is_directory(char *path);
 //	@ECHO_C
 int		ft_echo(char **args);

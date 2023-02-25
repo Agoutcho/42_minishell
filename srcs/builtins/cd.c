@@ -15,14 +15,14 @@
 int	ft_cd(t_cmd_array *cmd, t_env *env)
 {
 	if (!cmd->args || !cmd->args[0])
-		return (cd_home(cmd, env));
+		return (cd_home(env));
 	if (cmd->args[1])
 	{
 		ft_putendl_fd("cd: string not in pwd", 2);
 		return (1);
 	}
 	else if (cmd->args[0][0] == '-' && cmd->args[0][1] == '\0')
-		return (cd_oldpwd(cmd, env));
+		return (cd_oldpwd(env));
 	else if (is_directory(cmd->args[0]))
 	{
 		if (!change_pwd(env, "OLDPWD="))
@@ -35,7 +35,7 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 	return (1);
 }
 
-int	cd_home(t_cmd_array *cmd, t_env *env)
+int	cd_home(t_env *env)
 {
 	t_env	*temp;
 
@@ -61,7 +61,7 @@ int	cd_home(t_cmd_array *cmd, t_env *env)
 	return (1);
 }
 
-int	cd_oldpwd(t_cmd_array *cmd, t_env *env)
+int	cd_oldpwd(t_env *env)
 {
 	t_env	*temp;
 	char	*path;
@@ -103,6 +103,7 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 		if (!pwd)
 			return (0);
 		replace_node(env, pwd);
+		free(pwd);
 	}
 	env = env->first;
 	return (1);

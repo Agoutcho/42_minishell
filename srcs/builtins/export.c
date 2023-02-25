@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:37:12 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 21:33:26 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 			}
 			else
 			{
-				ft_putendl_fd("export: illegal argument", 2);
+				ft_putstr_fd("Rachele: export: `", 2);
+				ft_putstr_fd(cmd->args[i], 2);
+				ft_putendl_fd("': not a valid identifier", 2);
 			}
 			i++;
 		}
