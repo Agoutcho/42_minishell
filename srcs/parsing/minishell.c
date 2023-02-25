@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 23:23:26 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 23:45:09 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,8 @@ int	get_input(t_data *data)
 	}
 	if (data->input && *data->input && data->input[0] != ' ')
 		add_history(data->input);
-	// DEBUG("%s", data->input);
 	parsing(data);
-	// affiche(data);
 	secure_char_free(data->input);
-	// free_cmd(data);
-	// init_to_zero(data);
 	return (2);
 }
 
@@ -118,6 +114,7 @@ void	prompt(t_data *data)
 		close(data->fd_saver.stdout);
 		close(data->fd_saver.stderr);
 		free_cmd(data);
+		init_to_zero(data, 0);
 	}
 	return ;
 }
