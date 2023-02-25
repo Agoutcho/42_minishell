@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:28:05 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 01:20:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	e_heredoc_handler(t_redirect *redir)
 		perror("open");
 		return (0);
 	}
-	temp = redir->heredoc;
+	fill_heredoc(redir, redir->file_name);
+	temp = redir->heredoc->first;
 	while (temp)
 	{
 		ft_putendl_fd(temp->line, redir->file_fd);

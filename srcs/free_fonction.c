@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/24 05:28:24 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 01:24:53 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_env(t_data *data)
 	}
 }
 
-void	free_heredoc(t_data *data)
+void	free_heredoc(t_redirect *data)
 {
 	t_heredoc	*temp;
 
@@ -61,6 +61,7 @@ static void	free_redir(t_data *data, long i)
 	j = 0;
 	while (j < data->cmd[i].redir_size)
 	{
+		free_heredoc(&data->cmd[i].redir_array[j]);
 		secure_char_free(data->cmd[i].redir_array[j].file_name);
 		j++;
 	}

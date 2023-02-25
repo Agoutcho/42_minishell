@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/24 16:00:53 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/25 01:25:15 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct	s_heredoc
 typedef struct	s_redirect 
 {
 	t_redir		type;
+	char		*hd_line;
 	t_heredoc	*heredoc;
 	char		*file_name; // malloc
 	int			file_fd;
@@ -154,8 +155,6 @@ typedef struct	s_data
 	t_fd_saver	fd_saver;
 	long		i_input;
 	char		*input;
-	char		*hd_line;
-	t_heredoc	*heredoc; // malloc liste chainee
 }				t_data;
 
 // PARSE ERROR SYNTAX ERROR
@@ -200,14 +199,14 @@ int		find_lenght_in_env(t_data *data, char *str);
 t_env	*find_env_value(t_data *data, char *key);
 void	big_free(t_data *data);
 long	move_space(char *str, long *i);
-int		fill_heredoc(t_data *data, char *heredoc);
+int		fill_heredoc(t_redirect *data, char *heredoc);
 int		add_to_env(t_data *data, char *str);
 void	transform_args(t_data *data);
 
 // Free fonctions
 void	free_env(t_data *data);
 void	free_cmd(t_data *data);
-void	free_heredoc(t_data *data);
+void	free_heredoc(t_redirect *data);
 void	secure_char_free(char *input);
 void	free_args_char(t_data *data, long i);
 void	free_arg_lst(t_data *data, long i);
