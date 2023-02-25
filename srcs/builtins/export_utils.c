@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	get_key_length(char *arg)
 {
@@ -49,7 +49,7 @@ char	*get_key(char *arg)
 char	*get_value(char *arg)
 {
 	char	*value;
-	int		i;
+	size_t	i;
 	int		j;
 
 	i = get_key_length(arg);
