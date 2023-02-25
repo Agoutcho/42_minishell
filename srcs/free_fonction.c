@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	secure_char_free(char *input)
 {
@@ -72,7 +72,6 @@ static void	free_redir(t_data *data, long i)
 
 void	free_cmd(t_data *data)
 {
-	t_args	*targs;
 	long	i;
 
 	i = 0;

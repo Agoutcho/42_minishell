@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	find_til_in_env(t_data *data, char *t_key, char *parsed, long *idex)
 {
