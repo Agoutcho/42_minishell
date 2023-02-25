@@ -22,13 +22,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!dst)
 		return (NULL);
 	i = 0;
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		dst[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (s2[j])
+	while (s2 && s2[j])
 	{
 		dst[i] = s2[j];
 		i++;

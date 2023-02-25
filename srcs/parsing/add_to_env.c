@@ -59,7 +59,7 @@ static int	add_not_printable(char *str, t_env *env)
 	env->key = (char *)malloc(sizeof(char) * key_len + 1);
 	if (!env->key)
 		return (0);
-	ft_strlcat(env->key, str, key_len + 2);
+	env->key = ft_strdup(str);
 	env->affiche_env = check_printable(str);
 	return (1);
 }
@@ -76,7 +76,7 @@ int	add_to_env(t_data *data, char *str)
 	t_env	*new;
 	t_env	*temp;
 
-	temp = data->env;
+	temp = data->env->first;
 	while (temp->next)
 		temp = temp->next;
 	new = (t_env *)malloc(sizeof(t_env));

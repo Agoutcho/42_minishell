@@ -33,7 +33,9 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 			}
 			else
 			{
-				ft_putendl_fd("export: illegal argument", 2);
+				ft_putstr_fd("Rachele: export: `", 2);
+				ft_putstr_fd(cmd->args[i], 2);
+				ft_putendl_fd("': not a valid identifier", 2);
 			}
 			i++;
 		}
@@ -50,6 +52,7 @@ int	handle_export_arg(char *arg, t_env **env)
 	if (!split_arg_on_equal_sign(arg, &key, &value))
 		return (0);
 	temp = search_key(key, *env);
+	DEBUG("%s", key)
 	if (temp)
 	{
 		*env = temp;

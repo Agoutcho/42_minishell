@@ -13,7 +13,7 @@
 #include "../../includes/minishell.h"
 
 void init_to_zero(t_data *data);
-int	g_exit_code;
+// int	g_exit_code;
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void	affiche(t_data *data)
 {

@@ -87,6 +87,5 @@ int	is_exit_arg_valid(char *arg)
 void	exit_shell(void)
 {
 	ft_putendl_fd("exit", 1);
-	ft_putnbr_fd(g_exit_code, 2);
 	exit(g_exit_code);
 }

@@ -14,7 +14,7 @@
 
 long	move_space(char *str, long *i)
 {
-	while (str[*i] && str[*i] == ' ')
+	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
 		(*i)++;
 	if (!str[*i])
 		return (-1);

@@ -17,7 +17,7 @@ int	execution(t_data *data)
 	int	i;
 
 	i = 0;
-	// while (data->cmd[i].the_cmd != NULL)
+	init_term(1);
 	while (i < data->size_cmd_array)
 	{
 		if (!pipe_handler(data, i))
@@ -39,13 +39,15 @@ int	execution(t_data *data)
 		}
 		i++;
 	}
-	return (1);
+	return (init_term(0), 1);
 }
 
 int	execute(t_data *data, int i)
 {
 	int	is_bt;
 
+	if (!data->cmd[i].the_cmd)
+		return (1);
 	is_bt = is_builtins(data->cmd[i].the_cmd);
 	if (is_bt == -2)
 		return (0);

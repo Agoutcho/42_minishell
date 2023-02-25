@@ -33,7 +33,7 @@ int	builtins_handler(t_data *data, int i)
 	{
 		if (data->size_cmd_array == 1 && ft_exit(data->cmd[i].args) == 0)
 		{
-			free_data(data);
+			//free_data(data);
 			exit_shell();
 		}
 	}

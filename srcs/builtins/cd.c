@@ -103,6 +103,7 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 		if (!pwd)
 			return (0);
 		replace_node(env, pwd);
+		free(pwd);
 	}
 	env = env->first;
 	return (1);

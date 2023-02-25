@@ -32,6 +32,10 @@
 test '|' mpm | lol "|||lol" mdr | lol 
 test |"rezkofekozokergokf"
 
+BIZZZZZZZZARE :
+
+les signaux dans la part execution sont naze
+
 SEGFAULT :
 
 "echo" lol > fichier1.txt >> fichier2.txt << "HEREDOC" xD| cat '  ving' "$SHELL" < '$entre' << "$SHELL" > $"" | pipe lol | pipo
