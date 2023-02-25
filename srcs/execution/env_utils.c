@@ -14,6 +14,7 @@
 
 void	remove_node(t_env *env)
 {
+	//danger leaks
 	t_env	*temp;
 
 	if (env)
@@ -40,11 +41,14 @@ void	remove_node(t_env *env)
 t_env	*search_key(char *key, t_env *env)
 {
 	int	i;
+	char *joined_key;
 
 	i = ft_strlen(key);
 	if (key[i - 1] != '=')
 	{
-		key = ft_strjoin(key, "=");
+		joined_key = key;
+		key = ft_strjoin(joined_key, "=");
+		free(joined_key);
 		if (!key)
 		{
 			ft_putendl_fd("unset, export: something went wrong", 2);

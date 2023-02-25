@@ -33,16 +33,13 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	cmd_utils.path = get_path(cmd->the_cmd, env_array);
 	if (!cmd_utils.path)
 	{
-		ft_putstr_fd("command not found: ", 2);
+		ft_putstr_fd("Rachele: ", 2);
 		ft_putendl_fd(cmd->the_cmd, 2);
+		ft_putstr_fd(": command not found", 2);
 		return (cmd_utils);
 	}
 	cmd_utils.args = add_element_to_array(cmd->args, cmd->the_cmd);
 	cmd_utils.envp = env_array;
-	if (!cmd_utils.args || !cmd_utils.envp)
-	{
-		ft_putstr_fd("malloc failed", 2);
-	}
 	return (cmd_utils);
 }
 
@@ -80,8 +77,8 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 	{
 		if (cmd_utils.path)
 			free(cmd_utils.path);
-		// if (cmd_utils.args)
-		// 	free(cmd_utils.args);
+		if (cmd_utils.args)
+			free_strs(cmd_utils.args);
 		if (cmd_utils.envp)
 			free_strs(cmd_utils.envp);
 		return (0);
@@ -89,8 +86,8 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 	ret = exec_cmd_utils(cmd_utils);
 	if (cmd_utils.path)
 		free(cmd_utils.path);
-	// if (cmd_utils.args)
-	// 	free(cmd_utils.args);
+	if (cmd_utils.args)
+	 	free_strs(cmd_utils.args);
 	if (cmd_utils.envp)
 		free_strs(cmd_utils.envp);
 	return (ret);
@@ -109,10 +106,10 @@ char	**add_element_to_array(char **array, char *element)
 	new_array = malloc(sizeof(char *) * (size + 2));
 	if (!new_array)
 		return (NULL);
-	new_array[0] = element;
+	new_array[0] = ft_strdup(element);
 	while (i < size)
 	{
-		new_array[i + 1] = array[i];
+		new_array[i + 1] = ft_strdup(array[i]);
 		i++;
 	}
 	new_array[size + 1] = NULL;
@@ -129,6 +126,8 @@ char	*get_path(char *cmd, char **env)
 	i = 0;
 	if (!env[i])
 		return (NULL);
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5))
 		i++;
 	if (!env[i])
@@ -136,6 +135,7 @@ char	*get_path(char *cmd, char **env)
 	path = env[i] + 5;
 	while (path && ft_strichr(path, ':') > -1)
 	{
+		//TODO test malloc
 		dir = ft_strndup(path, ft_strichr(path, ':'));
 		bin = ft_strcjoin(dir, cmd, '/');
 		free(dir);
