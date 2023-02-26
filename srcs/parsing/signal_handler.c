@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 16:22:34 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/20 21:43:33 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 21:02:15 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ void	sig_handler(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_exit_code = 130;
 		return ;
 	}
 	if (sig == SIGQUIT)
 	{
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_on_new_line();
+		// rl_redisplay();
 		return ;
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 16:00:58 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 23:23:42 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 	if (cmd->args[1])
 	{
 		ft_putendl_fd("Rachele: cd: too many arguments", 2);
-		return (1);
+		return (set_g_exit_code(1, 1));
 	}
 	else if (cmd->args[0][0] == '-' && cmd->args[0][1] == '\0')
 		return (cd_oldpwd(env));
@@ -57,8 +57,11 @@ int	cd_home(t_env *env)
 		}
 	}
 	else
+	{
 		ft_putendl_fd("Rachele: cd: HOME not set", 2);
-	return (1);
+		return (set_g_exit_code(1, 1));
+	}
+	return (set_g_exit_code(0, 1));
 }
 
 int	cd_oldpwd(t_env *env)
@@ -86,7 +89,10 @@ int	cd_oldpwd(t_env *env)
 		free(path);
 	}
 	else
+	{
 		ft_putendl_fd("Rachele: cd: OLDPWD not set", 2);
+		return (set_g_exit_code(1, 1));
+	}
 	return (1);
 }
 
@@ -117,7 +123,7 @@ int	is_directory(char *path)
 		ft_putstr_fd("Rachele: cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": No such a file or directory", 2);
-		return (0);
+		return (set_g_exit_code(1, 0));
 	}
 	dir = opendir(path);
     if (dir != NULL)
@@ -130,7 +136,7 @@ int	is_directory(char *path)
         ft_putstr_fd("Rachele: cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": Not a directory", 2);
-        return (0);
+        return (set_g_exit_code(1, 0));
     }
 	return (1);
 }

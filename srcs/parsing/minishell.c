@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 17:16:28 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 21:14:30 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ void	affiche(t_data *data)
 		}
 }
 
+int	set_g_exit_code(int code, int return_value)
+{
+	g_exit_code = code;
+	return (return_value);
+}
+
 /**
  * @brief	Displays the prompt and calls a new function "parsing" which returns an int (ret) and takes input and t_cmd struct as arguments
  */
@@ -102,7 +108,7 @@ void	prompt(t_data *data)
 		{
 			ft_putstr_fd("exit\n", 1);
 			big_free(data);
-			exit(1);// EXIT car ctrl + D
+			exit(g_exit_code);
 		}
 		if (ret == 1)
 			continue;
@@ -110,7 +116,10 @@ void	prompt(t_data *data)
 		data->fd_saver.stdout = dup(1);
 		data->fd_saver.stderr = dup(2);
 		if (!execution(data))
-			free_data(data);
+		{
+			big_free(data);
+			exit(1);
+		}
 		close(data->fd_saver.stdin);
 		close(data->fd_saver.stdout);
 		close(data->fd_saver.stderr);

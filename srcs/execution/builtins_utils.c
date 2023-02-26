@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:46:38 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:35:34 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 20:40:11 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	error_builtins_handler(t_cmd_array *cmd, char *arg)
 	{
 		ft_putstr_fd(": invalid option\n", 2);
 	}
+	g_exit_code = 1;
 }
 
 bool	option_checker(char **args)

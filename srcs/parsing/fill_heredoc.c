@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/26 17:05:27 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:26:27 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,27 @@ void	add_heredoc(t_redirect *data)
 int	fill_heredoc(t_redirect *data, char *heredoc)
 {
 	// signal(SIGINT, sig_handler_heredoc);
+	// pid_t pid;
+
+	// pid = fork()
+	// if (pid == -1)
+	// {
+	// 	// fail
+	// }
+	// if (pid == 0)
+	// {
+		// l'enfant lance les signaux pour heredoc
+		//enfant appel de ta fonction ici
+	// }
+	// else
+	// {
+	// 	// parent
+	// 	// if waitpid(pid, NULL, 0) == -1
+	// 	// le parent apres que l'enfant est exit : rmeets les signaux comme ils etaient
+	// 	//	perror
+	// 	// signal(SIGINT, sig_handler);
+	// 	// signal(SIGQUIT, sig_handler);
+	// }
 	data->heredoc = NULL;
 	while (1)
 	{
