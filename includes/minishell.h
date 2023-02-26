@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/25 23:50:58 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:39:38 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <termios.h>
+#include <dirent.h>
 #include <unistd.h>
 
 /**
@@ -225,7 +226,6 @@ void	sig_handler_heredoc(int sig);
 
 // @EXEC
 int		execution(t_data *data);
-bool	is_executable(char *path);
 int		executable_handler(t_cmd_array *cmd, t_env *env);
 
 //@BUILTINS/
@@ -258,7 +258,7 @@ int		ft_export(t_cmd_array *cmd, t_env *env);
 int		is_valid_arg(char *arg);
 int		split_arg_on_equal_sign(char *arg, char **key, char **value);
 //	@PWD_C
-int		ft_pwd(char **args);
+int		ft_pwd(void);
 //	@UNSET_C
 int		ft_unset(t_cmd_array *cmd, t_env *env);
 int		unset_keys(t_cmd_array *cmd, t_env *env);
@@ -271,18 +271,19 @@ int		builtins_handler(t_data *data, int i);
 char	**init_builtins_tab(char **builtins);
 int		is_builtins(char *cmd);
 //@BUILTINS_UTILS_C
-void	error_builtins_handler(t_cmd_array *cmd);
+void	error_builtins_handler(t_cmd_array *cmd, char *arg);
 bool	option_checker(char **args);
 bool	builtin_option_checker(int cmd_id, char **args);
 //@EXECUTABLE_C
 void	error_executable_handler(char *path, int error);
-bool	is_executable(char *path);
+int		is_executable(char *path);
 int		executable_handler(t_cmd_array *cmd, t_env *env);
 //@ENV_UTILS_C
 void	remove_node(t_env *env);
 t_env	*search_key(char *key, t_env *env);
 int		replace_node(t_env *env, char *value);
 char	**env_to_array(t_env *env_list);
+char	**env_to_array_plus_quotes(t_env *env_list);
 //@ENV_CREATE_NODE_C
 int		create_node(t_env *env, char *key, char *value);
 t_env	*init_new_node(void);

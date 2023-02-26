@@ -55,7 +55,7 @@ char	*get_value(char *arg)
 	i = get_key_length(arg);
 	j = 0;
 	if (i == ft_strlen(arg))
-		return (ft_strdup("''"));
+		return (ft_strdup(""));
 	value = malloc((ft_strlen(arg) - i + 1) * sizeof(char));
 	if (!value)
 		return (NULL);
@@ -77,7 +77,7 @@ int	ft_export_no_args(t_env *env)
 
 	if (env)
 	{
-		env_array_not_sorted = env_to_array(env);
+		env_array_not_sorted = env_to_array_plus_quotes(env);
 		if (!env_array_not_sorted)
 			return (0);
 		env_array = sort_strs(env_array_not_sorted);
@@ -88,7 +88,9 @@ int	ft_export_no_args(t_env *env)
 			i = 0;
 			while (env_array[i])
 			{
-				ft_putendl_fd(env_array[i], 1);
+				ft_putstr_fd("declare -x ", 1);
+				ft_putstr_fd(env_array[i], 1);
+				ft_putendl_fd("\"", 1);
 				i++;
 			}
 		}

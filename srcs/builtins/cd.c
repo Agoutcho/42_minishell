@@ -18,7 +18,7 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 		return (cd_home(env));
 	if (cmd->args[1])
 	{
-		ft_putendl_fd("cd: string not in pwd", 2);
+		ft_putendl_fd("Rachele: cd: too many arguments", 2);
 		return (1);
 	}
 	else if (cmd->args[0][0] == '-' && cmd->args[0][1] == '\0')
@@ -57,7 +57,7 @@ int	cd_home(t_env *env)
 		}
 	}
 	else
-		ft_putendl_fd("cd : HOME not set", 2);
+		ft_putendl_fd("Rachele: cd: HOME not set", 2);
 	return (1);
 }
 
@@ -86,7 +86,7 @@ int	cd_oldpwd(t_env *env)
 		free(path);
 	}
 	else
-		ft_putendl_fd("cd : OLDPWD not set", 2);
+		ft_putendl_fd("Rachele: cd: OLDPWD not set", 2);
 	return (1);
 }
 
@@ -111,15 +111,26 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 
 int	is_directory(char *path)
 {
+	DIR *dir;
 	if (access(path, F_OK) != 0)
 	{
-		ft_putendl_fd("cd: no such a file or directory", 2);
+		ft_putstr_fd("Rachele: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putendl_fd(": No such a file or directory", 2);
 		return (0);
 	}
-	if (access(path, X_OK) != 0)
+	dir = opendir(path);
+    if (dir != NULL)
 	{
-		ft_putendl_fd("cd: not a directory", 2);
-		return (0);
-	}
+        closedir(dir);
+        return (1);
+    }
+	else
+	{
+        ft_putstr_fd("Rachele: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putendl_fd(": Not a directory", 2);
+        return (0);
+    }
 	return (1);
 }

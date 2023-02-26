@@ -10,7 +10,7 @@ OBJDIR  := objs
 
 # Compiler and flags
 CC      := gcc
-CFLAGS  := -Wall -Wextra -Werror
+CFLAGS  := -g -Wall -Wextra -Werror
 LFLAGS  := libft/libft.a -lreadline
 
 # List of object files to build

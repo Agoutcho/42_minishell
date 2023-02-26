@@ -12,18 +12,18 @@
 
 #include "../../includes/minishell.h"
 
-void	error_builtins_handler(t_cmd_array *cmd)
+void	error_builtins_handler(t_cmd_array *cmd, char *arg)
 {
+	ft_putstr_fd("Rachele: ", 2);
 	ft_putstr_fd(cmd->the_cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(arg, 2);
 	if (ft_strcmp(cmd->the_cmd, "env") == 0)
 		ft_putstr_fd(": illegal argument\n", 2);
-	else if (ft_strcmp(cmd->the_cmd, "cd") == 0)
-	{
-		ft_putstr_fd(": no such a file or directory: ", 2);
-		ft_putendl_fd(cmd->args[0], 2);
-	}
 	else
-		ft_putstr_fd(": illegal option\n", 2);
+	{
+		ft_putstr_fd(": invalid option\n", 2);
+	}
 }
 
 bool	option_checker(char **args)

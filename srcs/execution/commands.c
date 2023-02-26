@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 00:43:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:49:12 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	cmd_utils.path = get_path(cmd->the_cmd, env_array);
 	if (!cmd_utils.path)
 	{
-		// ft_putstr_fd("Rachele: ", 2);
 		ft_putstr_fd(cmd->the_cmd, 2);
 		ft_putendl_fd(": command not found", 2);
 		free_strs(env_array);
@@ -57,7 +56,7 @@ int	exec_cmd_utils(t_cmd_utils cmd_utils)
 	else if (pid == 0)
 	{
 		execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-		ft_putendl_fd("execve failed", 2);
+		perror("execve");
 		return (0);
 	}
 	if (waitpid(pid, NULL, 0) == -1)

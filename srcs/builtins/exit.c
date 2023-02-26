@@ -16,14 +16,16 @@ int	ft_exit(char **args)
 {
 	if (args && args[0])
 	{
-		if (args[1])
+		if (!is_exit_arg_valid(args[0]))
 		{
-			ft_putendl_fd("exit: too many arguments", 2);
+			ft_putstr_fd("Rachele: exit: ", 2);
+			ft_putstr_fd(args[0], 2);
+			ft_putendl_fd(": numeric argument required", 2);
 			return (1);
 		}
-		else if (!is_exit_arg_valid(args[0]))
+		if (args[1])
 		{
-			ft_putendl_fd("exit: numeric argument required", 2);
+			ft_putendl_fd("Rachele: exit: too many arguments", 2);
 			return (1);
 		}
 		g_exit_code = get_exit_code(args[0]);

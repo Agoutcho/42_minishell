@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 21:33:26 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 17:41:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,17 @@ int	handle_export_arg(char *arg, t_env **env)
 	temp = search_key(key, *env);
 	if (temp)
 	{
+		if (ft_strcmp(key, temp->key) == 61)
+		{
+			free(temp->key);
+			temp->key = ft_strdup(key);
+		}
 		*env = temp;
 		if (value)
+		{
 			if (!replace_node(*env, value))
 				return (0);
+		}
 	}
 	else
 	{
@@ -72,24 +79,37 @@ int	handle_export_arg(char *arg, t_env **env)
 	return (1);
 }
 
+int	ft_is_portable_charset(char c)
+{
+    if (ft_isalnum(c) || c == '!' || c == '"' || c == '#' || c == '$' || c == '%' || c == '&' ||
+        c == '\'' || c == '(' || c == ')' || c == '*' || c == '+' || c == ',' || c == '-' ||
+        c == '.' || c == '/' || c == ':' || c == ';' || c == '<' || c == '=' || c == '>' ||
+        c == '?' || c == '@' || c == '[' || c == '\\' || c == ']' || c == '^' || c == '_' ||
+        c == '`' || c == '{' || c == '|' || c == '}' || c == '~' || c == ' ')
+        return (1);
+    return (0);
+}
+
 int	is_valid_arg(char *arg)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(arg[i]) == 0)
+	if (ft_isalpha(arg[i++]) == 0)
 		return (0);
+	while (arg[i] && arg[i] != '=')
+	{
+		if (ft_isalnum(arg[i]) == 1 || arg[i] == '_')
+			i++;
+		else
+			return (0);
+	}
 	while (arg[i])
 	{
-		if (arg[i] == '=')
-		{
-			if (!arg[i + 1])
-				return (1);
+		if (ft_is_portable_charset(arg[i]))
 			i++;
-		}
-		if (ft_isalnum(arg[i]) == 0)
+		else
 			return (0);
-		i++;
 	}
 	return (1);
 }
