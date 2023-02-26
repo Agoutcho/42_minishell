@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:50:52 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 04:44:31 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 00:02:57 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ int	ft_echo(char **args)
 	}
 	if (!option)
 		ft_putchar_fd('\n', 1);
-	return (1);
+	return (set_g_exit_code(0, 1));
 }

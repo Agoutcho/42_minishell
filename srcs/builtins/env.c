@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:28:47 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/09 17:41:48 by nradal           ###   ########.fr       */
+/*   Updated: 2023/02/27 00:07:54 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int	ft_env(t_env *env)
 		}
 		ptr = ptr->next;
 	}
-	return (1);
+	return (set_g_exit_code(0, 1));
 }

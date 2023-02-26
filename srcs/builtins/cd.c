@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 23:23:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/26 23:45:57 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	cd_home(t_env *env)
 	env = env->first;
 	if (temp)
 	{
-		if (is_directory(temp->value))
-		{
+		if (!is_directory(temp->value))
+			return (1);
 			if (!change_pwd(env, "OLDPWD="))
 				return (0);
 			if (chdir(temp->value) != 0)
@@ -54,7 +54,6 @@ int	cd_home(t_env *env)
 			}
 			if (!change_pwd(env, "PWD="))
 				return (0);
-		}
 	}
 	else
 	{
