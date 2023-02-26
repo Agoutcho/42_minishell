@@ -12,43 +12,47 @@
 
 #include "../../includes/minishell.h"
 
-void	error_executable_handler(char *path, int error)
+int	is_valid_executable(char *path)
 {
-	if (error == 1)
+	DIR *dir;
+	if (access(path, F_OK) != 0)
 	{
-		ft_putstr_fd("Rachele: no such a file or directory: ", 2);
-		ft_putendl_fd(path, 2);
+		ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putendl_fd(": No such a file or directory", 2);
+		return (0);
 	}
-	else if (error == 2)
+	if (access(path, X_OK))
 	{
-		ft_putstr_fd("Rachele: permission denied: ", 2);
-		ft_putendl_fd(path, 2);
+		ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putendl_fd(": permission denied", 2);
+		return (0);
 	}
+	dir = opendir(path);
+    if (dir != NULL)
+	{
+        closedir(dir);
+        ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putendl_fd(": Is a directory", 2);
+        return (0);
+    }
+	return (1);
 }
 
-bool	is_executable(char *path)
+int	is_executable(char *path)
 {
-	int	len;
-	int	i;
-
-	len = ft_strlen(path);
-	i = len - 1;
-	while (i >= 2 && path[i] != '/')
-		i--;
-	i -= 1;
-	if (ft_strncmp(path + i, "./", 2) == 0)
+	if (!path)
+		return (-1);
+	if  (ft_strncmp(path, "./", 2) == 0)
 	{
-		if (access(path, F_OK) == 0)
-		{
-			if (access(path, X_OK) == 0)
-				return (true);
-			else
-				error_executable_handler(path, 2);
-		}
+		if (is_valid_executable(path) == 1)
+			return (1);
 		else
-			error_executable_handler(path, 1);
+			return (-1);
 	}
-	return (false);
+	return (0);
 }
 
 int	executable_handler(t_cmd_array *cmd, t_env *env)
@@ -56,6 +60,9 @@ int	executable_handler(t_cmd_array *cmd, t_env *env)
 	pid_t	pid;
 	char	**env_array;
 
+	env_array = env_to_array(env);
+	if (!env_array)
+		return (0);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -64,15 +71,15 @@ int	executable_handler(t_cmd_array *cmd, t_env *env)
 	}
 	else if (pid == 0)
 	{
-		env_array = env_to_array(env);
-		if (!env_array)
-			return (0);
 		execve(cmd->the_cmd, cmd->args, env_array);
+		perror("execve");
+		exit(0);
 	}
 	if (waitpid(pid, NULL, 0) == -1)
 	{
-		perror("fork");
+		perror("waitpid");
 		return (0);
 	}
+	free_strs(env_array);
 	return (1);
 }

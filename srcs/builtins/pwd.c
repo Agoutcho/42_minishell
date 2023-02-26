@@ -12,15 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_pwd(char **args)
+int	ft_pwd(void)
 {
 	char	*pwd;
 
-	if (args && args[0])
-	{
-		ft_putendl_fd("pwd: too many arguments", 1);
-		return (1);
-	}
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (0);

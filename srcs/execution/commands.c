@@ -34,8 +34,8 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	if (!cmd_utils.path)
 	{
 		ft_putstr_fd("Rachele: ", 2);
-		ft_putendl_fd(cmd->the_cmd, 2);
-		ft_putstr_fd(": command not found", 2);
+		ft_putstr_fd(cmd->the_cmd, 2);
+		ft_putendl_fd(": command not found", 2);
 		return (cmd_utils);
 	}
 	cmd_utils.args = add_element_to_array(cmd->args, cmd->the_cmd);
@@ -56,8 +56,8 @@ int	exec_cmd_utils(t_cmd_utils cmd_utils)
 	else if (pid == 0)
 	{
 		execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-		ft_putendl_fd("execve failed", 2);
-		return (0);
+		perror("execve");
+		exit(0);
 	}
 	if (waitpid(pid, NULL, 0) == -1)
 	{

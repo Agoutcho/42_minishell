@@ -52,16 +52,25 @@ int	handle_export_arg(char *arg, t_env **env)
 	if (!split_arg_on_equal_sign(arg, &key, &value))
 		return (0);
 	temp = search_key(key, *env);
-	DEBUG("%s", key)
 	if (temp)
 	{
+		DEBUG("FOUND KEY")
+		if (ft_strcmp(key, temp->key) == 61)
+		{
+			free(temp->key);
+			temp->key = ft_strdup(key);
+		}
 		*env = temp;
 		if (value)
+		{
+			DEBUG("REPLACE")
 			if (!replace_node(*env, value))
 				return (0);
+		}
 	}
 	else
 	{
+		DEBUG("CREATE")
 		*env = (*env)->first;
 		if (!create_node(*env, key, value))
 			return (0);
@@ -73,24 +82,37 @@ int	handle_export_arg(char *arg, t_env **env)
 	return (1);
 }
 
+int	ft_isportablecharset(char c)
+{
+    if (ft_isalnum(c) || c == '!' || c == '"' || c == '#' || c == '$' || c == '%' || c == '&' ||
+        c == '\'' || c == '(' || c == ')' || c == '*' || c == '+' || c == ',' || c == '-' ||
+        c == '.' || c == '/' || c == ':' || c == ';' || c == '<' || c == '=' || c == '>' ||
+        c == '?' || c == '@' || c == '[' || c == '\\' || c == ']' || c == '^' || c == '_' ||
+        c == '`' || c == '{' || c == '|' || c == '}' || c == '~' || c == ' ')
+        return (1);
+    return (0);
+}
+
 int	is_valid_arg(char *arg)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(arg[i]) == 0)
+	if (ft_isalpha(arg[i++]) == 0)
 		return (0);
+	while (arg[i] && arg[i] != '=')
+	{
+		if (ft_isalnum(arg[i]) == 1 || arg[i] == '_')
+			i++;
+		else
+			return (0);
+	}
 	while (arg[i])
 	{
-		if (arg[i] == '=')
-		{
-			if (!arg[i + 1])
-				return (1);
+		if (ft_isportablecharset(arg[i]))
 			i++;
-		}
-		if (ft_isalnum(arg[i]) == 0)
+		else
 			return (0);
-		i++;
 	}
 	return (1);
 }

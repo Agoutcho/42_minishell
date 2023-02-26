@@ -24,7 +24,7 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 		if ((!get_unset_key(cmd->args[i], &key))
 			|| (ft_strlen(cmd->args[i]) == 0))
 		{
-			ft_putendl_fd("unset: invalid parameter name", 2);
+			return (1);
 		}
 		else
 		{
@@ -44,10 +44,7 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 int	ft_unset(t_cmd_array *cmd, t_env *env)
 {
 	if (cmd->args == NULL || cmd->args[0] == NULL)
-	{
-		ft_putendl_fd("unset: not enough arguments", 2);
 		return (0);
-	}
 	else
 	{
 		return (unset_keys(cmd, env));

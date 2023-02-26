@@ -22,7 +22,7 @@ int	builtins_handler(t_data *data, int i)
 	else if (which_builtins == 1)
 		return (ft_cd(&data->cmd[i], data->env));
 	else if (which_builtins == 2)
-		return (ft_pwd(data->cmd[i].args));
+		return (ft_pwd());
 	else if (which_builtins == 3)
 		return (ft_export(&data->cmd[i], data->env));
 	else if (which_builtins == 4)
@@ -42,7 +42,7 @@ int	builtins_handler(t_data *data, int i)
 
 char	**init_builtins_tab(char **builtins)
 {
-	builtins = malloc(6 * sizeof(builtins));
+	builtins = malloc(7 * sizeof(char *));
 	if (!builtins)
 		return (NULL);
 	builtins[0] = "echo";

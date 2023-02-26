@@ -46,24 +46,34 @@ t_env	*init_new_node(void)
 
 int	set_key(t_env *node, char *key)
 {
-	if (key[ft_strlen(key) - 1] != '=')
-		node->key = ft_strjoin(key, "=");
-	else
-		node->key = ft_strdup(key);
-	return (node->key != NULL);
+	// if (key[ft_strlen(key) - 1] != '=')
+	// 	node->key = ft_strjoin(key, "=");
+	// else
+	// 	node->key = ft_strdup(key);
+	// return (node->key != NULL);
+	node->key = ft_strdup(key);
+	return (1);
 }
 
 int	set_value(t_env *node, char *value)
 {
+	// if (value)
+	// {
+	// 	node->value = ft_strdup(value);
+	// 	node->affiche_env = 1;
+	// }
+	// else
+	// {
+	// 	node->value = ft_strdup("''");
+	// 	node->affiche_env = 0;
+	// }
+	// return (node->value != NULL);
 	if (value)
 	{
 		node->value = ft_strdup(value);
 		node->affiche_env = 1;
 	}
 	else
-	{
-		node->value = ft_strdup("''");
 		node->affiche_env = 0;
-	}
-	return (node->value != NULL);
+	return (1);
 }
