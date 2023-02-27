@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:40:08 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 04:52:28 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:11:26 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (0);
+		return (set_g_exit_code(1, 0));
 	ft_putendl_fd(pwd, 1);
 	free(pwd);
-	return (1);
+	return (set_g_exit_code(0, 1));
 }

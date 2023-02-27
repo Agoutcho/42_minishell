@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 09:06:32 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 02:39:48 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:12:16 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 		if ((!get_unset_key(cmd->args[i], &key))
 			|| (ft_strlen(cmd->args[i]) == 0))
 		{
-			return (1);
+			return (set_g_exit_code(0, 1));
 		}
 		else
 		{
@@ -38,7 +38,7 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 		}
 		i++;
 	}
-	return (1);
+	return (set_g_exit_code(0, 1));
 }
 
 int	ft_unset(t_cmd_array *cmd, t_env *env)
