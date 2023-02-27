@@ -4,43 +4,92 @@ GREEN   = \033[32m
 YELLOW  = \033[33m
 CYAN    = \033[36m
 
-# Directories
-SRCDIRS := srcs/builtins srcs/execution srcs/parsing
-OBJDIR  := objs
+NAME		:=	minishell
 
-# Compiler and flags
-CC      := gcc
-CFLAGS  := -g -Wall -Wextra -Werror
+CC			:=	gcc
+CFLAGS		:=	-g -Wall -Wextra -Werror 
 LFLAGS  := libft/libft.a -lreadline
 
-# List of object files to build
-OBJS    := $(patsubst %.c,$(OBJDIR)/%.o,$(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.c)))
+OBJ_FOLDER	:=	objs
+SRC_FOLDER	:=	srcs
 
-# Targets
-EXECUTABLE := Rachele
+HEADERFILE	:=	includes/minishell.h
+SRCS		:=	builtins/cd.c \
+				builtins/echo.c \
+				builtins/env.c \
+				builtins/exit.c \
+				builtins/export_utils.c \
+				builtins/export.c \
+				builtins/pwd.c \
+				builtins/unset.c \
+				execution/builtins_utils.c \
+				execution/builtins.c \
+				execution/commands.c \
+				execution/env_create_node.c \
+				execution/env_utils.c \
+				execution/exec.c \
+				execution/executable.c \
+				execution/free2.c \
+				execution/pipe_closer.c \
+				execution/pipe.c \
+				execution/redirections_utils.c \
+				execution/redirections.c \
+				parsing/add_to_env.c \
+				parsing/fill_heredoc.c \
+				parsing/free_arg.c \
+				parsing/free_fonction.c \
+				parsing/init_command.c \
+				parsing/init_env_creation.c \
+				parsing/init_env.c \
+				parsing/init_redir.c \
+				parsing/init_term.c \
+				parsing/minishell.c \
+				parsing/parse_error_pipe.c \
+				parsing/parse_error_quote.c \
+				parsing/parse_error_redir.c \
+				parsing/parse_error.c \
+				parsing/parsing_add_command.c \
+				parsing/parsing_add_dollar.c \
+				parsing/parsing_add_tilde.c \
+				parsing/parsing_add_tilde_utils.c \
+				parsing/parsing_arg_size.c \
+				parsing/parsing_command.c \
+				parsing/parsing_count_dollar.c \
+				parsing/parsing_input.c \
+				parsing/parsing.c \
+				parsing/parsing_redirection.c \
+				parsing/parsing_tilde_size.c \
+				parsing/signal_handler.c \
+				parsing/transform_args.c 
 
-.PHONY: all clean fclean re
+OBJS		:= $(SRCS:%.c=$(OBJ_FOLDER)/%.o)
 
-all: $(OBJDIR) $(EXECUTABLE)
+.SILENT:
 
-$(OBJDIR)/%.o: %.c
-	@printf "$(CYAN)[Compiling]$(RESET) %s\n" $<
-	@$(CC) $(CFLAGS) -I./includes -c $< -o $@
+all: libs $(NAME)
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(addprefix $(OBJDIR)/, $(SRCDIRS))
+libs:
+	@$(MAKE) -C ./libft/
 
-$(EXECUTABLE): $(OBJS)
+$(NAME): $(OBJS) libft/libft.a
 	@printf "$(YELLOW)[Linking]$(RESET) %s\n" $@
-	@$(CC) $(OBJS) $(LFLAGS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
+
+$(OBJS): $(OBJ_FOLDER)/%.o: $(SRC_FOLDER)/%.c $(HEADERFILE)
+	@mkdir -p $(@D)
+	@printf "$(CYAN)[Compiling]$(RESET) %s\n" $<
+	$(CC) $(CFLAGS) -I/usr/local/opt/readline/include/ -o $@ -c $<
 
 clean:
+	$(MAKE) clean -C ./libft/
 	@printf "$(GREEN)[Cleaning]$(RESET) object files\n"
-	@rm -rf $(OBJDIR)
+	rm -fr $(OBJ_FOLDER)
 
 fclean: clean
-	@printf "$(GREEN)[Cleaning]$(RESET) $(EXECUTABLE)\n"
-	@rm -f $(EXECUTABLE)
+	$(MAKE) fclean -C ./libft/
+	@printf "$(GREEN)[Cleaning]$(RESET) $(NAME)\n"
+	rm -fr $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
