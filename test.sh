@@ -69,7 +69,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 // TODO globale
 [ ] 2.ajouter les erreurs lorsque le path est change et qu'on essaie un ls qui n'a pas de droit
 [x] 1.Regler le segfault lorsque qu'on fait cd - et que OLDPWD n'est pas set
-[ ] 1.Regler les syntaxes error ne pas quitter le shell si ca marche pas.
+[x] 1.Regler les syntaxes error ne pas quitter le shell si ca marche pas.
 [ ] 1.Faire le heredoc
 [ ] 1.Finir les codes erreurs
 [ ] 1.finir les signaux
@@ -79,4 +79,4 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] 1. secure les malloc
 [ ] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
 ou cat | cat | ls
-[ ]
+[ ] 1. gerer le cat puis ctrl + C
