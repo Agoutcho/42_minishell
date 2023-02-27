@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 18:34:20 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 06:05:50 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ void	init_command(t_data *data)
 	}
 	data->size_cmd_array = counter_command;
 	temp = (t_cmd_array *)malloc(sizeof(t_cmd_array) * counter_command);
+	if (!temp)
+	{
+		big_free(data);
+		exit(1);
+	}
 	data->cmd = temp;
 	init_cmd_filled(data);
 }

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:29:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:25:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 05:55:53 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,19 @@ static int	is_last_value_ok(char *str, int i)
 	return (1);
 }
 
-static void	print_quote_error(t_data *data, char *str)
+static int	print_quote_error(t_data *data, char *str)
 {
 	int	fd;
 
 	fd = STDERR_FILENO;
-	free(data->input);
 	ft_putstr_fd("Rachele: unexpected EOF while looking for matching `", fd);
 	ft_putstr_fd(str, fd);
 	ft_putstr_fd("'\nRachele: syntax error: unexpected end of file\n", fd);
-	big_free(data);
-	exit(2);
+	free_cmd(data);
+	return (set_g_exit_code(2, 0));
 }
 
-void	check_quotes(t_data *data)
+int	check_quotes(t_data *data)
 {
 	long	i;
 
@@ -61,13 +60,13 @@ void	check_quotes(t_data *data)
 		i++;
 	}
 	if (data->quote == e_big_quote)
-		print_quote_error(data, "\"");
+		return (print_quote_error(data, "\""));
 	if (data->quote == e_little_quote)
 		print_quote_error(data, "'");
 	if (!is_last_value_ok(data->input, i))
 	{
-		free(data->input);
-		big_free(data);
-		exit(2);
+		free_cmd(data);
+		return (set_g_exit_code(2, 0));
 	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 00:45:41 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 05:45:08 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,11 +159,11 @@ typedef struct	s_data
 }				t_data;
 
 // PARSE ERROR SYNTAX ERROR
-void	check_parse_error(t_data *data);
-void	check_redir(t_data *data);
-void	check_pipe(t_data *data);
-void	check_quotes(t_data *data);
-void	exit_error(char c, char *input, t_data *data);
+int		check_parse_error(t_data *data);
+int		check_redir(t_data *data);
+int		check_pipe(t_data *data);
+int		check_quotes(t_data *data);
+int		exit_error(char c, char *input, t_data *data);
 
 // INIT ENV
 int		init_env(t_data *data, char **env);
@@ -179,7 +179,7 @@ void	init_command(t_data *data);
 void	set_quote(t_data *data, long *i, int change_i);
 
 // PARSING
-void	parsing(t_data *data);
+int		parsing(t_data *data);
 void	parsing_input(t_data *data);
 void	do_redirection(t_data *data, long ic, long *i, long *k);
 void	do_command(t_data *data, long i_cmd, long *i);

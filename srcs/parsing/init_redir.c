@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 18:47:29 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 06:09:24 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	malloc_r_array(t_data *data, int j, int *counter_redir)
 	if (!data->cmd[j].redir_array)
 	{
 		big_free(data);
-		exit(2);
+		exit(1);
 	}
 	while (i < *counter_redir)
 	{

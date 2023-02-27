@@ -75,3 +75,5 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] 1.finir les signaux
 [ ] 3.dans search_key si la variable est set mais n'a pas de value ca marche moyen
 [ ] 1. checker les fd avec ls -l /proc/PID/fd/
+[ ] 1. normer
+[ ] 1. secure les malloc
