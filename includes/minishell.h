@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 05:45:08 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 09:12:31 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,8 @@ void	init_term(bool mode);
 // @SIG_HANDLER_C
 void	sig_handler(int sig);
 void	sig_handler_heredoc(int sig);
+void	sig_quit_handler_heredoc(int signum);
+void	sig_action(void);
 
 int	set_g_exit_code(int code, int return_value);
 
