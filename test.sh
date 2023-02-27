@@ -77,3 +77,6 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] 1. checker les fd avec ls -l /proc/PID/fd/
 [ ] 1. normer
 [ ] 1. secure les malloc
+[ ] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
+ou cat | cat | ls
+[ ]

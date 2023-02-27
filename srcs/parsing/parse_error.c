@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:34:54 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 06:01:14 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 06:37:29 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_parse_error(t_data *data)
 	fd = STDERR_FILENO;
 	i = 0;
 	data->quote = e_no_quote;
-	if (!check_redir(data) && !check_pipe(data) && !check_quotes(data))
+	if (!check_redir(data) || !check_pipe(data) || !check_quotes(data))
 		return (set_g_exit_code(2, 0));
 	if (move_space(data->input, &i) == -1)
 		return (1);

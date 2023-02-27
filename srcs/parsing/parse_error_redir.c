@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:26:16 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 05:33:05 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 06:24:35 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	find_the_redir(t_data *data, char *str, long i)
 		i++;
 	if (str[i] == '|' || str[i] == '>' || str[i] == '<')
 		return (exit_error(str[i], str, data));
+	return (1);
 }
 
 static int	is_redir_ok(char *str, long i, t_data *data)
