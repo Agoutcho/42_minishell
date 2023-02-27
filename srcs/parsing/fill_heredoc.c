@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 09:12:11 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:40:18 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,17 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 {
 	// signal(SIGINT, sig_handler_heredoc);
 	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sig_int_child_handler);
+	signal(SIGQUIT, SIG_DFL);
 
-	sig_action();
+	// sig_action();
 	g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_CREAT, 0600);
 	if (g_exit_code == -1)
 		exit (1);
 	while (1)
 	{
 		data->hd_line = readline("> ");
-		if (!data->hd_line)
+		if (!data->hd_line && g_exit_code != -1)
 		{
 			ft_putstr_fd("-Rachele: warning: here-document delimited ", 1);
 			ft_putstr_fd("by end-of-file (wanted `", 1);
@@ -60,8 +62,10 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 		ft_putendl_fd(data->hd_line, g_exit_code);
 		secure_char_free(data->hd_line);
 	}
+	if (g_exit_code != -1)
+		g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_TRUNC);
 	if (close(g_exit_code))
-		return (1);
+		exit (1);
 	secure_char_free(data->hd_line);
 	// big_free(data);
 	exit (0);

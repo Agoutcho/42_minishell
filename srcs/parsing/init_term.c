@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_term.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:02 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/14 20:16:22 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:57:59 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,27 @@ void	init_term(bool mode)
 		exit(1);
 	}
 }
+
+void	restore(struct termios *old)
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, old);
+}
+
+void	uncannon(t_termios *termio)
+{
+	tcgetattr(STDIN_FILENO, &termio->old);
+	tcgetattr(STDIN_FILENO, &termio->new);
+	termio->new.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termio->new);
+}
+
+void	rerestore(t_termios *termio)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termio->old);
+}
+
+void	reuncannon(t_termios *termio)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termio->new);
+}
+

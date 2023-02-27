@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 06:54:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:29:51 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ void	prompt(t_data *data)
 			big_free(data);
 			exit(1);
 		}
+		signal(SIGINT, sig_int_handler);
+		signal(SIGQUIT, SIG_IGN);
 		close(data->fd_saver.stdin);
 		close(data->fd_saver.stdout);
 		close(data->fd_saver.stderr);
@@ -152,7 +154,10 @@ int	main(int argc, char **argv)
 	init_to_zero(&data, 1);
 	if (argc == 1)
 	{
-		init_term(0);
+		// init_term(0);
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, SIG_IGN);
+		uncannon(&data.termio);
 		signal(SIGINT, sig_handler);
 		// signal(SIGQUIT, SIG_IGN);
 		signal(SIGQUIT, sig_handler);
@@ -162,6 +167,7 @@ int	main(int argc, char **argv)
 			exit(1);
 		}
 		prompt(&data);
+		restore(&data.termio.old);
 	}
 	return (0);
 }

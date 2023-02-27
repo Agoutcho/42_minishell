@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 05:19:31 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:29:13 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	execution(t_data *data)
 	int	i;
 
 	i = 0;
-	init_term(1);
+	// init_term(1);
+	rerestore(&data->termio);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sig_int_handler_exec);
 	while (i < data->size_cmd_array)
 	{
 		if (!pipe_handler(data, i))
@@ -39,7 +42,7 @@ int	execution(t_data *data)
 		}
 		i++;
 	}
-	return (init_term(0), 1);
+	return (reuncannon(&data->termio), 1);
 }
 
 int	execute(t_data *data, int i)

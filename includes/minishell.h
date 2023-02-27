@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 09:12:31 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:31:10 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,12 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct	s_termios
+{
+	struct termios	old;
+	struct termios	new;
+}				t_termios;
+
 /**
  * @brief cmd
  *        Une structure avec un tableau de commande
@@ -156,7 +162,17 @@ typedef struct	s_data
 	t_fd_saver	fd_saver;
 	long		i_input;
 	char		*input;
+	t_termios	termio;
 }				t_data;
+
+///////////////////////////////////////////////////////////////////////
+void	uncannon(t_termios *termio);
+void	restore(struct termios *old);
+void	rerestore(t_termios *termio);
+void	reuncannon(t_termios *termio);
+void	sig_int_handler(int signum);
+void	sig_int_handler_exec(int signum);
+void	sig_int_child_handler(int signum);
 
 // PARSE ERROR SYNTAX ERROR
 int		check_parse_error(t_data *data);
