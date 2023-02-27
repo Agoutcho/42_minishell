@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 12:40:18 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:38:14 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ void	add_heredoc(t_redirect *data)
 
 static int forked_heredoc(t_redirect *data, char *heredoc)
 {
+	int	temp;
 	// signal(SIGINT, sig_handler_heredoc);
 	// signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, sig_int_child_handler);
 	signal(SIGQUIT, SIG_DFL);
 
 	// sig_action();
+	temp = 0;
 	g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_CREAT, 0600);
 	if (g_exit_code == -1)
 		exit (1);
@@ -62,13 +64,16 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 		ft_putendl_fd(data->hd_line, g_exit_code);
 		secure_char_free(data->hd_line);
 	}
-	if (g_exit_code != -1)
+	if (g_exit_code == -1)
+	{
 		g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_TRUNC);
+		temp = 130;
+	}
 	if (close(g_exit_code))
 		exit (1);
 	secure_char_free(data->hd_line);
 	// big_free(data);
-	exit (0);
+	exit (temp);
 }
 
 int	fill_heredoc(t_redirect *data, char *heredoc)
@@ -90,5 +95,7 @@ int	fill_heredoc(t_redirect *data, char *heredoc)
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
+	if (status != 0)
+		return (set_g_exit_code(status, 0));
 	return (1);
 }
