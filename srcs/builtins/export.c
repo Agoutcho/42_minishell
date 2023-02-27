@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 17:41:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 02:14:28 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 	if (cmd->args == NULL || cmd->args[0] == NULL)
 	{
 		if (!ft_export_no_args(env))
-			return (0);
+			return (set_g_exit_code(1, 0));
 	}
 	else
 	{

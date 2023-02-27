@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 17:42:32 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 02:09:39 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	create_env(t_data *data)
 int	init_env(t_data *data, char **env)
 {
 	t_env *temp[1];
-	
+
 	if (env[0] != NULL && !copy_env(data, env))
 		return (0);
 	else if (env[0] == NULL && !create_env(data))

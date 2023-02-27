@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 20:34:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/27 02:11:52 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,18 @@ int	exec_cmd_utils(t_cmd_utils cmd_utils)
 	else if (pid == 0)
 	{
 		execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-		perror("execve");
-		exit(0);
+		// perror("execve");
+		exit(126);
 	}
-	if (waitpid(pid, NULL, 0) == -1)
+	if (waitpid(pid, &g_exit_code, 0) == -1)
 	{
-		perror("waitpid");
+		// perror("waitpid");
 		return (0);
 	}
+	if (WIFEXITED(g_exit_code))
+		g_exit_code = WEXITSTATUS(g_exit_code);
+	else if (WIFSIGNALED(g_exit_code))
+		g_exit_code = WTERMSIG(g_exit_code);
 	return (1);
 }
 
@@ -82,7 +86,7 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 			free_strs(cmd_utils.args);
 		if (cmd_utils.envp)
 			free_strs(cmd_utils.envp);
-		return (0);
+		return (1);
 	}
 	ret = exec_cmd_utils(cmd_utils);
 	if (cmd_utils.path)

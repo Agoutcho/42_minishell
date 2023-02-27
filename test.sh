@@ -55,9 +55,23 @@ export yo+=to => hoto
 
 "echo" cat lol '$mdr''$SHELL'"$SHELL" > fichier.txt | echo lol | cat | lol | tr < infile > outfile >> outappend | ls -l
 
+echo mdr > f1
+cat>f2<f1>f3>>f5>f4|echo lol|cat
+
+
 // TODO check $- $$ $?  $"" $
 // TODO check ~/ ~+ ~-
 // TODO ~ et ~/ et ~:    https://abs.traduc.org/abs-5.3-fr/ch03.html#tilde
 // ~ = $HOME
 // ~+ = $PWD
 // ~- = $OLDPWD
+
+// TODO globale
+[ ] 2.ajouter les erreurs lorsque le path est change et qu'on essaie un ls qui n'a pas de droit
+[x] 1.Regler le segfault lorsque qu'on fait cd - et que OLDPWD n'est pas set
+[ ] 1.Regler les syntaxes error ne pas quitter le shell si ca marche pas.
+[ ] 1.Faire le heredoc
+[ ] 1.Finir les codes erreurs
+[ ] 1.finir les signaux
+[ ] 3.dans search_key si la variable est set mais n'a pas de value ca marche moyen
+[ ] 1. checker les fd avec ls -l /proc/PID/fd/
