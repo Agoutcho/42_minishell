@@ -92,7 +92,7 @@ int	cd_oldpwd(t_env *env)
 		ft_putendl_fd("Rachele: cd: OLDPWD not set", 2);
 		return (set_g_exit_code(1, 1));
 	}
-	return (1);
+	return (set_g_exit_code(0, 1));
 }
 
 int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
@@ -108,6 +108,14 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 		if (!pwd)
 			return (0);
 		replace_node(env, pwd);
+		free(pwd);
+	}
+	else
+	{
+		pwd = getcwd(NULL, 0);
+		if (!pwd)
+			return (0);
+		create_node(env, pwd_oldpwd_flag, pwd);
 		free(pwd);
 	}
 	env = env->first;

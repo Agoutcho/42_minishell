@@ -52,6 +52,13 @@ int	e_heredoc_handler(t_redirect *redir)
 
 int	e_in_handler(t_redirect *redir)
 {
+	if (access(redir->file_name, R_OK) != 0)
+	{
+		ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(redir->file_name, 2);
+		ft_putendl_fd(": Permission denied", 2);
+		return (0);
+	}
 	redir->file_fd = open(redir->file_name, O_RDONLY);
 	DEBUG("redir->file_fd : %d", redir->file_fd)
 	if (redir->file_fd == -1)
@@ -69,8 +76,15 @@ int	e_in_handler(t_redirect *redir)
 
 int	e_out_handler(t_redirect *redir)
 {
+	if (access(redir->file_name, W_OK) != 0)
+	{
+		ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(redir->file_name, 2);
+		ft_putendl_fd(": Permission denied", 2);
+		return (0);
+	}
 	redir->file_fd = open(redir->file_name,
-			O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (redir->file_fd == -1)
 	{
 		perror("open");
@@ -86,6 +100,13 @@ int	e_out_handler(t_redirect *redir)
 
 int	e_append_handler(t_redirect *redir)
 {
+	if (access(redir->file_name, W_OK) != 0)
+	{
+		ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(redir->file_name, 2);
+		ft_putendl_fd(": Permission denied", 2);
+		return (0);
+	}
 	redir->file_fd = open(redir->file_name,
 			O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (redir->file_fd == -1)

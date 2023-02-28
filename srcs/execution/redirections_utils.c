@@ -23,11 +23,14 @@ int	redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver)
 		{
 			unlink("/tmp/heredoc_file");
 		}
-		if (close(cmd->redir_array[i].file_fd))
-		{
-			perror("close");
-			return (0);
-		}
+		// if (access(cmd->redir_array[i].file_name, W_OK) == 0)
+		// {
+			if (close(cmd->redir_array[i].file_fd) == -1)
+			{
+				perror("close");
+				return (0);
+			}
+		// }
 		i++;
 	}
 	dup2(fd_saver.stdin, 0);
