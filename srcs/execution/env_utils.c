@@ -154,14 +154,19 @@ char	**env_to_array_plus_quotes(t_env *env_list)
 	i = 0;
 	while (ptr)
 	{
-		quoted_value = ft_strjoin("\"", ptr->value);
-		if (!quoted_value)
+		if (ptr->value)
 		{
-			free_strs(env_array);
-			return (NULL);
+			quoted_value = ft_strjoin("\"", ptr->value);
+			if (!quoted_value)
+			{
+				free_strs(env_array);
+				return (NULL);
+			}
+			env_array[i] = ft_strjoin(ptr->key, quoted_value);
+			free(quoted_value);
 		}
-		env_array[i] = ft_strjoin(ptr->key, quoted_value);
-		free(quoted_value);
+		else
+			env_array[i] = ft_strjoin(ptr->key, ptr->value);
 		if (!env_array[i])
 		{
 			free_strs(env_array);

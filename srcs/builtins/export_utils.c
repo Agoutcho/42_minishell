@@ -90,7 +90,10 @@ int	ft_export_no_args(t_env *env)
 			{
 				ft_putstr_fd("declare -x ", 1);
 				ft_putstr_fd(env_array[i], 1);
-				ft_putendl_fd("\"", 1);
+				if (ft_strchr(env_array[i], '=') != 0)
+					ft_putendl_fd("\"", 1);
+				else
+					write(1, "\n", 1);
 				i++;
 			}
 		}
