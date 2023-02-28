@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/28 04:08:35 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:21:36 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,25 @@
  */
 # define DEBUG(x, ...) printf("[%s][%s:%d] "x"\n",__FILE__, __FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
-# define BLACK  printf("\033[0;30m");
-# define RED    printf("\033[0;31m");
-# define GREEN  printf("\033[0;32m");
-# define YELLOW printf("\033[0;33m");
-# define BLUE   printf("\033[0;34m");
-# define PURPLE printf("\033[0;35m");
-# define CYAN   printf("\033[0;36m");
-# define WHITE  printf("\033[0;37m");
-# define RESET  printf("\033[0m");
+# define BLACKp  printf("\033[0;30m");
+# define REDp    printf("\033[0;31m");
+# define GREENp  printf("\033[0;32m");
+# define YELLOWp printf("\033[0;33m");
+# define BLUEp   printf("\033[0;34m");
+# define PURPLEp printf("\033[0;35m");
+# define CYANp   printf("\033[0;36m");
+# define WHITEp  printf("\033[0;37m");
+# define RESETp  printf("\033[0m");
+
+# define BLACK  "\033[0;30m"
+# define RED    "\033[0;31m"
+# define GREEN  "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE   "\033[0;34m"
+# define PURPLE "\033[0;35m"
+# define CYAN   "\033[0;36m"
+# define WHITE  "\033[0;37m"
+# define RESET  "\033[0m"
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 /* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes */
@@ -315,10 +325,10 @@ void	free_data(t_data *data);
 void	free_strs(char **strs);
 //@REDIRECTIONS_C
 int		redirections_handler(t_cmd_array *cmd);
-int		e_in_handler(t_redirect *redir);
+int		e_in_handler(t_redirect *redir, size_t *in_val, int i);
 int		e_out_handler(t_redirect *redir);
 int		e_append_handler(t_redirect *redir);
-int		e_heredoc_handler(t_redirect *redir);
+int		e_hd_handler(t_redirect *redir, size_t *in_val, int i);
 //@REDIRECTIONS_UTILS_C
 int		redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver);
 //@TEMPORAIRE

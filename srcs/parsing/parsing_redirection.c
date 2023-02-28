@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:45:25 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/25 01:26:46 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:56:46 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ static void	add_type(t_data *data, long i_cmd, long *i, long *k)
 		data->cmd[i_cmd].redir_array[*k].type = e_heredoc;
 	else if (data->input[*i] == '<' && data->input[(*i) + 1] != '<')
 		data->cmd[i_cmd].redir_array[*k].type = e_in;
-	// GREEN
-	// DEBUG("type : %d", data->cmd[i_cmd].redir_array[*k].type)
-	// RESET
 	if (data->cmd[i_cmd].redir_array[*k].type == e_append \
 			|| data->cmd[i_cmd].redir_array[*k].type == e_heredoc)
 		(*i) = (*i) + 2;
@@ -43,8 +40,5 @@ void	do_redirection(t_data *data, long i_cmd, long *i, long *k)
 	data->cmd[i_cmd].redir_array[*k].file_name = add_command(data, \
 			data->input, i, arg_size);
 	data->cmd[i_cmd].redir_array[*k].file_fd = -1;
-	// GREEN
-	// DEBUG("data->cmd[%ld].redir_array[%ld].file_name : %s", i_cmd, *k, data->cmd[i_cmd].redir_array[*k].file_name)
-	// RESET
 	(*k)++;
 }

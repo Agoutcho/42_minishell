@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/28 01:02:44 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:36:16 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,26 @@ void	affiche(t_data *data)
 				DEBUG("Commande : %ld", i + 1)
 				if (data->cmd[i].arg)
 					targs = data->cmd[i].arg->first;
-			CYAN
+			CYANp
 				DEBUG("data : |%s|", data->cmd[i].the_cmd)
-				RESET
+				RESETp
 				DEBUG("nombre de redirection : %ld", data->cmd[i].redir_size)
 				while (j < data->cmd[i].redir_size)
 				{
-					GREEN;
+					GREENp;
 						DEBUG("j : %ld", j)
 						DEBUG("type : %d", data->cmd[i].redir_array[j].type)
 						DEBUG("file : %s", data->cmd[i].redir_array[j].file_name)
-						RESET
+						RESETp
 						j++;
 				}
 			j = 0;
 			while (targs)
 			{
-				YELLOW
+				YELLOWp
 					DEBUG("arg : |%s|", data->cmd[i].arg->arg)
 					targs = targs->next;
-				RESET
+				RESETp
 			}
 			i++;
 		}
