@@ -68,22 +68,22 @@ all: $(NAME)
 $(OBJ_PATH)%.o : $(SRC_PATH)%.c $(INC_NAME)
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) -c $< -o $@
-	@echo "$(BLUE)[>LIBFT]	$@ created.$(NOC)"
+	@echo "$(BLUE)[Libft]$(NOC)	$@ created."
 
 $(NAME): $(OBJ)
 	@ar crs $(NAME) $(OBJ)
-	@echo "$(BLUE)[>LIBFT]	$@ created.$(NOC)"
+	@echo "$(BLUE)[Libft]$(NOC)	$@ created."
 
 clean:
 	@rm -rf $(OBJ_PATH)
-	@echo "$(BLUE)[>LIBFT]	.o files deleted.$(NOC)"
+	@echo "$(BLUE)[Libft]$(NOC)	.o files deleted."
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(BLUE)[>LIBFT]	$(NAME) deleted.$(NOC)"
+	@echo "$(BLUE)[Libft]$(NOC)	$(NAME) deleted."
 
 ffclean:
 	@rm -f $(NAME)
-	@echo "$(BLUE)[>LIBFT]	$(NAME) deleted.$(NOC)"
+	@echo "$(BLUE)[Libft]$(NOC)	$(NAME) deleted."
 
 re: fclean all
