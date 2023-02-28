@@ -8,7 +8,7 @@ NAME		:=	minishell
 
 CC			:=	gcc
 CFLAGS		:=	-g -Wall -Wextra -Werror 
-LFLAGS  := libft/libft.a -lreadline
+LFLAGS		:=	libft/libft.a -lreadline
 
 OBJ_FOLDER	:=	objs
 SRC_FOLDER	:=	srcs
@@ -62,7 +62,7 @@ SRCS		:=	builtins/cd.c \
 				parsing/signal_handler.c \
 				parsing/transform_args.c 
 
-OBJS		:= $(SRCS:%.c=$(OBJ_FOLDER)/%.o)
+OBJS		:=	$(SRCS:%.c=$(OBJ_FOLDER)/%.o)
 
 .SILENT:
 

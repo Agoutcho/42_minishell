@@ -57,12 +57,10 @@ int	exec_cmd_utils(t_cmd_utils cmd_utils)
 	else if (pid == 0)
 	{
 		execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-		// perror("execve");
 		exit(126);
 	}
 	if (waitpid(pid, &g_exit_code, 0) == -1)
 	{
-		// perror("waitpid");
 		return (0);
 	}
 	if (WIFEXITED(g_exit_code))
@@ -129,6 +127,7 @@ char	*get_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
+	DEBUG()
 	if (!env[i])
 		return (NULL);
 	if (access(cmd, F_OK) == 0)

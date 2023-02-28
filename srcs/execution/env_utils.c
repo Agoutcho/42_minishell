@@ -20,7 +20,7 @@ void	remove_node(t_env *env)
 	if (env)
 	{
 		temp = env->first;
-		while (temp->next != env)
+		while (temp->next && temp->next != env)
 			temp = temp->next;
 		temp->next = env->next;
 		if (env->key)

@@ -72,7 +72,8 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [x] 1.Regler les syntaxes error ne pas quitter le shell si ca marche pas.
 [ ] 1.Faire le heredoc
 [ ] 1.Finir les codes erreurs
-[ ] 1.finir les signaux
+[x] 1.finir les signaux
+[ ] 2. tester les signaux
 [ ] 3.dans search_key si la variable est set mais n'a pas de value ca marche moyen
 [ ] 1. checker les fd avec ls -l /proc/PID/fd/
 [ ] 1. normer
@@ -80,3 +81,4 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
 ou cat | cat | ls
 [ ] 1. gerer le cat puis ctrl + C
+[ ] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
