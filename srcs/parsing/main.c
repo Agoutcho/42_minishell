@@ -41,10 +41,31 @@
 //     return (test);
 // }
 
-// int	main(void)
-// {
-//     char test[10]="MDR lol";
+// int fd;
 
-//     // test = testo(test);
-// 	DEBUG("test : %s", test);
+// int	main(int ac, char ** ag, char ** e)
+// {
+//     pid_t   pid;
+//     int fd = open("outfile", O_RDWR | O_CREAT, 0777);
+//     char **test =NULL;
+//     // printf("parent fd : %d\n",fd);
+//     pid = fork();
+//     if (pid == 0)
+//     {
+//         // printf("enfant fd : %d\n",fd);
+//         // write(fd, "IK\n", 3);
+//         // sleep (20);
+//         execve("/bin/ls", test, e);
+//         exit(0);
+//     }
+//     waitpid(pid, NULL, 0);
+//     // printf("parent post wait fd : %d\n",fd);
+//     // if (write(fd, "OK\n", 3) == -1)
+//     //     write(2, "NO\n", 3);
+//     // else
+//     //     write(2, "YE\n", 3);
+//     // sleep(10);
+//     close(fd);
+//     exit(0);
 // }
+

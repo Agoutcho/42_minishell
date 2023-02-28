@@ -122,6 +122,7 @@ typedef struct	s_cmd_array
 	int			pipe_fd[2];
 	int			multiple_pipe;
 	long		redir_size;
+	pid_t		pid;
 	t_redirect	*redir_array; //malloc 
 }				t_cmd_array;
 
@@ -343,7 +344,7 @@ int		close_last_pipe(t_data *data, int i);
 int		close_middle_pipe(t_data *data, int i);
 //@COMMANDS_C
 char	*get_path(char *cmd, char **env);
-int		commands_handler(t_cmd_array *cmd, t_env *env);
+void	commands_handler(t_cmd_array *cmd, t_env *env);
 char	**add_element_to_array(char **array, char *element);
 
 #endif

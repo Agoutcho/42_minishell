@@ -76,6 +76,8 @@ int	e_in_handler(t_redirect *redir)
 
 int	e_out_handler(t_redirect *redir)
 {
+	redir->file_fd = open(redir->file_name,
+		O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (access(redir->file_name, W_OK) != 0)
 	{
 		ft_putstr_fd("Rachele: ", 2);
@@ -83,8 +85,6 @@ int	e_out_handler(t_redirect *redir)
 		ft_putendl_fd(": Permission denied", 2);
 		return (0);
 	}
-	redir->file_fd = open(redir->file_name,
-		O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (redir->file_fd == -1)
 	{
 		perror("open");

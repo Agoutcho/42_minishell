@@ -7,7 +7,7 @@ CYAN    = \033[36m
 NAME		:=	minishell
 
 CC			:=	gcc
-CFLAGS		:=	-g -Wall -Wextra -Werror 
+CFLAGS		:=	#-g -Wall -Wextra -Werror 
 LFLAGS		:=	libft/libft.a -lreadline
 
 OBJ_FOLDER	:=	objs

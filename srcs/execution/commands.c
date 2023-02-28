@@ -36,7 +36,6 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 		ft_putstr_fd(cmd->the_cmd, 2);
 		ft_putendl_fd(": command not found", 2);
 		free_strs(env_array);
-		g_exit_code = 127;
 		return (cmd_utils);
 	}
 	cmd_utils.args = add_element_to_array(cmd->args, cmd->the_cmd);
@@ -44,36 +43,28 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	return (cmd_utils);
 }
 
-int	exec_cmd_utils(t_cmd_utils cmd_utils)
+void	exec_cmd_utils(t_cmd_utils cmd_utils)
 {
-	pid_t	pid;
+	execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
+	DEBUG("Execve failed in commands");
 
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("pid");
-		return (0);
-	}
-	else if (pid == 0)
-	{
-		execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-		exit(126);
-	}
-	if (waitpid(pid, &g_exit_code, 0) == -1)
-	{
-		return (0);
-	}
-	if (WIFEXITED(g_exit_code))
-		g_exit_code = WEXITSTATUS(g_exit_code);
-	else if (WIFSIGNALED(g_exit_code))
-		g_exit_code = WTERMSIG(g_exit_code);
-	return (1);
+	if (cmd_utils.path)
+		free(cmd_utils.path);
+	if (cmd_utils.args)
+	 	free_strs(cmd_utils.args);
+	if (cmd_utils.envp)
+		free_strs(cmd_utils.envp);
+	exit (1);
+	//! je sais pas quoi faire de ca 
+	// if (WIFEXITED(g_exit_code))
+	// 	g_exit_code = WEXITSTATUS(g_exit_code);
+	// else if (WIFSIGNALED(g_exit_code))
+	// 	g_exit_code = WTERMSIG(g_exit_code);
 }
 
-int	commands_handler(t_cmd_array *cmd, t_env *env)
+void	commands_handler(t_cmd_array *cmd, t_env *env)
 {
 	t_cmd_utils	cmd_utils;
-	int			ret;
 	
 	cmd_utils = prepare_cmd_utils(cmd, env);
 	if (!cmd_utils.path || !cmd_utils.args || !cmd_utils.envp)
@@ -84,16 +75,9 @@ int	commands_handler(t_cmd_array *cmd, t_env *env)
 			free_strs(cmd_utils.args);
 		if (cmd_utils.envp)
 			free_strs(cmd_utils.envp);
-		return (1);
+		exit (127);
 	}
-	ret = exec_cmd_utils(cmd_utils);
-	if (cmd_utils.path)
-		free(cmd_utils.path);
-	if (cmd_utils.args)
-	 	free_strs(cmd_utils.args);
-	if (cmd_utils.envp)
-		free_strs(cmd_utils.envp);
-	return (ret);
+	exec_cmd_utils(cmd_utils);
 }
 
 char	**add_element_to_array(char **array, char *element)
@@ -110,9 +94,13 @@ char	**add_element_to_array(char **array, char *element)
 	if (!new_array)
 		return (NULL);
 	new_array[0] = ft_strdup(element);
+	if (!new_array[0])
+		return (NULL);
 	while (i < size)
 	{
 		new_array[i + 1] = ft_strdup(array[i]);
+		if (!new_array[i + 1])
+			return (NULL);
 		i++;
 	}
 	new_array[size + 1] = NULL;
@@ -127,7 +115,6 @@ char	*get_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	DEBUG()
 	if (!env[i])
 		return (NULL);
 	if (access(cmd, F_OK) == 0)
