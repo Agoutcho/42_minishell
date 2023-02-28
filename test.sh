@@ -67,18 +67,27 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 // ~- = $OLDPWD
 
 // TODO globale
-[ ] 2.ajouter les erreurs lorsque le path est change et qu'on essaie un ls qui n'a pas de droit
-[x] 1.Regler le segfault lorsque qu'on fait cd - et que OLDPWD n'est pas set
-[x] 1.Regler les syntaxes error ne pas quitter le shell si ca marche pas.
-[ ] 1.Faire le heredoc
-[ ] 1.Finir les codes erreurs
-[x] 1.finir les signaux
-[ ] 2. tester les signaux
-[ ] 3.dans search_key si la variable est set mais n'a pas de value ca marche moyen
-[ ] 1. checker les fd avec ls -l /proc/PID/fd/
+
+// TODO IMPORTANT
+
 [ ] 1. normer
 [ ] 1. secure les malloc
 [ ] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
 ou cat | cat | ls
-[ ] 1. gerer le cat puis ctrl + C
+[ ] 1. Faire le heredoc
+[ ] 1. Finir les codes erreurs
+[x] 1. gerer le cat puis ctrl + C
+[x] 1. Regler le segfault lorsque qu'on fait cd - et que OLDPWD n'est pas set
+[x] 1. Regler les syntaxes error ne pas quitter le shell si ca marche pas.
+[x] 1. finir les signaux
+
+[ ] 2. checker les fd avec ls -l /proc/PID/fd/ ou avec le system monitor clique droit open files
+[ ] 2. gerer le segfault unset tous l'env
+
+[ ] 3. ajouter les erreurs lorsque le path est change et qu'on essaie un ls qui n'a pas de droit
+[ ] 3. dans search_key si la variable est set mais n'a pas de value ca marche moyen
+
+// TODO TEST
+
+[ ] 2. tester les signaux
 [ ] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
