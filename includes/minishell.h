@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 12:31:10 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 01:01:57 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 /* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes */
 extern char **environ;
-int	g_exit_code;
+extern int	g_exit_code;
 
 typedef enum	e_redir 
 {

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 08:58:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 00:45:21 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	redirections_handler(t_cmd_array *cmd)
 
 int	e_heredoc_handler(t_redirect *redir)
 {
-	t_heredoc	*temp;
 	int			test;
 
 	test = fill_heredoc(redir, redir->file_name);

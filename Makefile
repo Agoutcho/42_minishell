@@ -29,7 +29,7 @@ SRCS		:=	builtins/cd.c \
 				execution/env_utils.c \
 				execution/exec.c \
 				execution/executable.c \
-				execution/free2.c \
+				execution/free.c \
 				execution/pipe_closer.c \
 				execution/pipe.c \
 				execution/redirections_utils.c \

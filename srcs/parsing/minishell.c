@@ -6,14 +6,23 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 12:29:51 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 01:02:44 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void init_to_zero(t_data *data, int env_to_null);
-// int	g_exit_code;
+int	g_exit_code;
+
+void init_to_zero(t_data *data, int env_to_null)
+{
+	data->size_cmd_array = 0;
+	data->cmd = NULL;
+	data->input = NULL;
+	if (env_to_null)
+		data->env = NULL;
+}
+
 // echo "xD > file" >> $SHELL | cat -e lol > file.txt >> $SHELL segfault
 void	affiche(t_data *data)
 {
@@ -134,15 +143,6 @@ void	prompt(t_data *data)
 		init_to_zero(data, 0);
 	}
 	return ;
-}
-
-void init_to_zero(t_data *data, int env_to_null)
-{
-	data->size_cmd_array = 0;
-	data->cmd = NULL;
-	data->input = NULL;
-	if (env_to_null)
-		data->env = NULL;
 }
 
 int	main(int argc, char **argv)
