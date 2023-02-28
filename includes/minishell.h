@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/28 01:01:57 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 04:08:35 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct	s_redirect
 	t_heredoc	*heredoc;
 	char		*file_name; // malloc
 	int			file_fd;
+	int			save_std_in;
 }				t_redirect;
 
 /**

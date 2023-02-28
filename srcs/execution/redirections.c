@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/28 00:45:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 04:11:56 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	redirections_handler(t_cmd_array *cmd)
 	while (cmd->redir_size > i)
 	{
 		redir = &cmd->redir_array[i];
+	 	redir->save_std_in = dup(STDIN_FILENO);
 		if (redir->type == e_in && !e_in_handler(redir))
 			return (cmd->redir_size = i, 0);
 		else if (redir->type == e_out && !e_out_handler(redir))
@@ -36,8 +37,12 @@ int	redirections_handler(t_cmd_array *cmd)
 
 int	e_heredoc_handler(t_redirect *redir)
 {
-	int			test;
+	int		test;
+	t_redirect *temp;
 
+	temp = redir - 1;
+	dup2(temp->save_std_in, STDIN_FILENO);
+	DEBUG("redir->file_name %s", redir->file_name)
 	test = fill_heredoc(redir, redir->file_name);
 	if (test == 0)
 		return (0);
@@ -48,6 +53,7 @@ int	e_heredoc_handler(t_redirect *redir)
 int	e_in_handler(t_redirect *redir)
 {
 	redir->file_fd = open(redir->file_name, O_RDONLY);
+	DEBUG("redir->file_fd : %d", redir->file_fd)
 	if (redir->file_fd == -1)
 	{
 		perror(redir->file_name);

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 14:26:01 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/02/28 03:58:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	add_heredoc(t_redirect *data)
 
 static int forked_heredoc(t_redirect *data, char *heredoc)
 {
+	int save_in;
+
+	save_in = dup(STDIN_FILENO);
 	int	temp;
 	// signal(SIGINT, sig_handler_heredoc);
 	// signal(SIGQUIT, SIG_IGN);
@@ -43,11 +46,13 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 
 	// sig_action();
 	temp = 0;
-	g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_CREAT, 0600);
+	g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_CREAT | O_TRUNC, 0600);
 	if (g_exit_code == -1)
 		exit (1);
+	DEBUG()
 	while (1)
 	{
+		DEBUG()
 		data->hd_line = readline("> ");
 		if (!data->hd_line && g_exit_code != -1)
 		{
@@ -58,17 +63,20 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 			secure_char_free(data->hd_line);
 			exit (0);
 		}
-		if (ft_strncmp(data->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0)
+		if (ft_strncmp(data->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0 \
+		|| ft_strncmp(data->hd_line, heredoc, ft_strlen(heredoc) + 1) == -1)
 			break ;
 		// add_heredoc(data);
 		ft_putendl_fd(data->hd_line, g_exit_code);
 		secure_char_free(data->hd_line);
 	}
-	ft_putstr_fd("g_code ", 2);
+	DEBUG()
 	if (g_exit_code == -1)
 	{
-		DEBUG();
-		g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_TRUNC);
+		dup2(save_in, STDIN_FILENO);
+		g_exit_code = open("/tmp/heredoc_file", O_RDWR | O_TRUNC | O_CREAT, 0600);
+		perror(strerror(errno));
+		DEBUG("g_exit_code : %d", g_exit_code);
 		temp = 130;
 	}
 	if (close(g_exit_code))
@@ -97,6 +105,7 @@ int	fill_heredoc(t_redirect *data, char *heredoc)
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
+	DEBUG("status : %d", status)
 	if (status != 0)
 		return (set_g_exit_code(status, 0));
 	return (1);
