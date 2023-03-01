@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 02:09:06 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 01:47:34 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 02:52:39 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,29 @@ void	find_val_in_env(t_data *com, char *t_key, char *parsed, long *idex)
 
 void	parsing_input(t_data *data)
 {
-	long			i;
-	long			j;
-	long			k;
+	long			input;
+	long			j_cmd;
+	long			k_redir;
 
-	i = 0;
-	j = 0;
-	k = 0;
+	input = 0;
+	j_cmd = 0;
+	k_redir = 0;
 	data->quote = e_no_quote;
 	data->cmd[0].arg = NULL;
-	while (j < data->size_cmd_array && data->input[i])
+	while (j_cmd < data->size_cmd_array && data->input[input])
 	{
 		if (data->quote == e_no_quote)
-			move_space(data->input, &i);
-		set_quote(data, &i, 0);
-		if (data->quote == e_no_quote && data->input[i] == '|')
+			move_space(data->input, &input);
+		set_quote(data, &input, 0);
+		if (data->quote == e_no_quote && data->input[input] == '|')
 		{
-			j++;
-			i++;
-			k = 0;
+			j_cmd++;
+			input++;
+			k_redir = 0;
 		}
-		else if (data->quote == e_no_quote && is_redir(data->input[i]))
-			do_redirection(data, j, &i, &k);
-		else if (data->input[i])
-			do_command(data, j, &i);
+		else if (data->quote == e_no_quote && is_redir(data->input[input]))
+			do_redirection(data, j_cmd, &input, &k_redir);
+		else if (data->input[input])
+			do_command(data, j_cmd, &input);
 	}
 }

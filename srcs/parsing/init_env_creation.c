@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:09:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 18:37:58 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 02:22:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int	lst_add_env_value(char *envp, t_env *env)
 		key_len++;
 	while (envp[value_len + key_len])
 		value_len++;
-	env->key = (char *)malloc(sizeof(char) * key_len + 1);
+	env->key = (char *)malloc(sizeof(char) * key_len + 2);
+	env->key = (char *)ft_memset(env->key, 0, key_len + 2);
 	if (!env->key)
 		return (0);
-	env->value = (char *)malloc(sizeof(char) * value_len + 1);
+	env->value = (char *)malloc(sizeof(char) * value_len + 2);
 	if (!env->value)
 		return (0);
 	ft_strlcat(env->key, envp, key_len + 2);

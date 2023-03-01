@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 02:11:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 02:41:47 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ char	*get_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	DEBUG()
 	if (!env[i])
 		return (NULL);
 	if (access(cmd, F_OK) == 0)

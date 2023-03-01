@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:36:35 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 06:09:24 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 02:46:56 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	init_redir(t_data *data)
 		if (data->input[i])
 			i++;
 	}
-	malloc_r_array(data, j, &counter_redir);
+	if (counter_redir > 0)
+		malloc_r_array(data, j, &counter_redir);
 }
