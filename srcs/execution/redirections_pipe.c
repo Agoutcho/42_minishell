@@ -6,49 +6,74 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:41:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/28 19:33:18 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/01 13:33:46 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_create_pipe(t_command *cmd)
+int	create_pipe(t_data *data, int i)
 {
-	int	fd[2];
-
-	if (pipe(fd) == RETURN_ERROR)
-		return (ft_print_error(cmd, errno, NULL));
-	if (cmd->fd->out == STDOUT_FILENO)
-		cmd->fd->out = fd[1];
-	else
-		close(fd[1]);
-	if (cmd->next->fd->in == STDIN_FILENO)
-		cmd->next->fd->in = fd[0];
-	else
-		close(fd[0]);
-	return (0);
+	if (pipe(data->cmd[i].pipe_fd) == -1)
+    {
+        perror("Rachele: pipe:");
+        return (0);
+    }
+    return (1);
 }
 
-int	ft_connect_pipe(t_command *cmd)
+int ft_connect_pipe(t_data, int i)
 {
-	if (cmd->fd->in != STDIN_FILENO && cmd->fd->in != RETURN_ERROR)
-	{
-		dup2(cmd->fd->in, STDIN_FILENO);
-		close(cmd->fd->in);
-	}
-	if (cmd->fd->out != STDOUT_FILENO)
-	{
-		dup2(cmd->fd->out, STDOUT_FILENO);
-		close(cmd->fd->out);
-	}
-	return (0);
+    if (i >= 1 && data->cmd[i].pipe_fd[0] != -1) // si c'est pas le premier pipe et que pipe_fd[0] est pas fail
+    {
+        if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+        {
+            perror("Rachele: dup2:");
+            return (0);
+        }
+    }
+    else
+    {
+        if (close(pipe_fd[0] == -1))
+        {
+            perror("Rachele: close:");
+            return (0);
+        }
+    }
+    if (i <= data->size_cmd_array - 1 && data->cmd[i].pipe_fd[1] != -1) // si c'est pas le dernier pipe et que pipe_fd[0] est pas fail
+    {
+        if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+        {
+            perror("Rachele: dup2:");
+            return (0);
+        }
+    }
+    else
+    {
+        if (close(pipe_fd[0]) == -1)
+        {
+            perror("Rachele: close:");
+            return (0);    
+        }
+    }
+    return (1);
 }
 
-int	ft_close_pipe(t_command *cmd)
+ft_close_child_fd(t_data *data, int i)
 {
-	if (cmd->fd->in != STDIN_FILENO && cmd->fd->in != RETURN_ERROR)
-		close(cmd->fd->in);
-	if (cmd->fd->out != STDOUT_FILENO)
-		close(cmd->fd->out);
-	return (0);
+    int counter;
+
+    counter = 0;
+    while(counter < data->size_cmd_array)
+    {
+        if (counter != i)
+        {
+            if (close(data->cmd[counter].pipe_fd[0]) == -1 || close(data->cmd[counter].pipe_fd) == -1)
+            {
+                perror("Rachele: close:");
+                return (0);
+            }
+        }
+        counter++;
+    }
 }

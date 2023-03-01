@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/28 04:08:35 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:43:19 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ typedef struct	s_cmd_array
 	t_args		*arg; // malloc liste chainee
 	int			is_cmd_filled;
 	int			pipe_fd[2];
+	// int			fd_out;
+	// int			fd_in;
 	int			multiple_pipe;
 	long		redir_size;
 	pid_t		pid;
@@ -333,10 +335,10 @@ int		lst_add_back_env(t_data *data, char **env, int j);
 void	print_list(t_env *env);
 int		init_env(t_data *data, char **env);
 //@PIPE_C
-int		pipe_handler(t_data *data, int i);
-int		first_pipe_handler(t_data *data, int i);
-int		last_pipe_handler(t_data *data, int i);
-int		middle_pipe_handler(t_data *data, int i);
+int		create_pipe(t_data *data, int i);
+int		ft_connect_pipe(t_data *data, int i);
+int		ft_close_child_fd(t_data *data, int i);
+int		ft_close_pipe(t_data *data, int i);
 //@PIPE_CLOSER_C
 int		pipe_closer(t_data *data, int i);
 int		close_first_pipe(t_data *data, int i);

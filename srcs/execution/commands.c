@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 02:11:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:40:28 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 
 void	exec_cmd_utils(t_cmd_utils cmd_utils)
 {
+	DEBUG("%s", cmd_utils.path);
 	execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
 	DEBUG("Execve failed in commands");
 

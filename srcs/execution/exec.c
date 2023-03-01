@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/28 19:37:10 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/01 15:47:35 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,27 @@ int	execution(t_data *data)
 	int is_bt;
 
 	i = 0;
+	// while (i < data->size_cmd_array)
+	// {
+	// 	data->cmd[i].fd_in = -1;
+	// 	data->cmd[i].fd_out = -1;
+	// 	i++;
+	// }
+	// i = 0;
 	rerestore(&data->termio);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, sig_int_handler_exec);
 	while (i < data->size_cmd_array)
 	{
-		// create pipe
+		if (!create_pipe(data, i))
+			return (0);
 		is_bt = is_builtins(data->cmd[i].the_cmd);
 		if (is_bt == -2)
 			return (0);
 		else if (is_bt >= 0)
 		{
-			// if (!pipe_handler(data, i))
-			// 	return (0);
+			if (!ft_connect_pipe(data, i))
+				return (0);
 			if (builtin_option_checker(is_bt, data->cmd[i].args))
 			{
 				if (redirections_handler(&data->cmd[i]))
@@ -40,8 +48,6 @@ int	execution(t_data *data)
 					if (!redirections_closer(&data->cmd[i], data->fd_saver))
 						return (0);
 				}
-				// if (!pipe_closer(data, i))
-				// 	return (0);
 			}
 			else
 			{
@@ -51,14 +57,16 @@ int	execution(t_data *data)
 		}
 		else
 		{
-			// pipe
 			data->cmd[i].pid = fork();
 			if (data->cmd[i].pid == -1)
 				return (0);
 			else if (data->cmd[i].pid == 0)
 			{
-				// if (!pipe_handler(data, i))
-				// 	return (0);
+				if (!ft_connect_pipe(data, i))
+					return (0);
+				DEBUG("OK")
+				if (!ft_close_child_fd(data, i))
+					return (0);
 				if (redirections_handler(&data->cmd[i]))
 				{
 					if (!execute(data, i))
@@ -80,6 +88,10 @@ int	execution(t_data *data)
 				return (0);
 			g_exit_code %= 255;
 			i++;
+		}
+		if (!ft_close_pipe(data, i))
+		{
+			return (0);
 		}
 	}
 	return (reuncannon(&data->termio), 1);
