@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 02:09:39 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 04:04:36 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static int	copy_env(t_data *data, char **env)
 
 static int	free_create_env(char *pwd, char *join, char *temp, int v)
 {
-	secure_char_free(pwd);
-	secure_char_free(join);
-	secure_char_free(temp);
+	secure_char_free(&pwd);
+	secure_char_free(&join);
+	secure_char_free(&temp);
 	return (v);
 }
 

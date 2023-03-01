@@ -68,6 +68,10 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO globale
 
+[ ] - faire les builtins hors du fork si plus d'une commande sinon forker
+[ ] - revoir init_env_creation.c 
+[ ] - revoir dans le parsing du $ ce que je mets dans temp
+
 // TODO IMPORTANT
 
 [ ] 1. normer

@@ -6,18 +6,21 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/25 01:24:53 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 19:22:09 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	secure_char_free(char *input)
+void	secure_char_free(char **input)
 {
-	if (input)
+	if (*input)
 	{
-		free(input);
-		input = NULL;
+		DEBUG("%p", input);
+		free(*input);
+		DEBUG("%p", input);
+		*input = NULL;
+		DEBUG("%p", input);
 	}
 }
 
@@ -30,8 +33,8 @@ void	free_env(t_data *data)
 	while (data->env)
 	{
 		temp = data->env;
-		secure_char_free(data->env->key);
-		secure_char_free(data->env->value);
+		secure_char_free(&data->env->key);
+		secure_char_free(&data->env->value);
 		data->env = data->env->next;
 		free(temp);
 		temp = NULL;
@@ -47,7 +50,7 @@ void	free_heredoc(t_redirect *data)
 	while (data->heredoc)
 	{
 		temp = data->heredoc;
-		secure_char_free(data->heredoc->line);
+		secure_char_free(&data->heredoc->line);
 		data->heredoc = data->heredoc->next;
 		free(temp);
 		temp = NULL;
@@ -62,7 +65,7 @@ static void	free_redir(t_data *data, long i)
 	while (j < data->cmd[i].redir_size)
 	{
 		free_heredoc(&data->cmd[i].redir_array[j]);
-		secure_char_free(data->cmd[i].redir_array[j].file_name);
+		secure_char_free(&data->cmd[i].redir_array[j].file_name);
 		j++;
 	}
 	if (data->cmd[i].redir_array)
@@ -77,7 +80,9 @@ void	free_cmd(t_data *data)
 	i = 0;
 	while (i < data->size_cmd_array)
 	{
-		secure_char_free(data->cmd[i].the_cmd);
+		DEBUG("data->cmd[%ld].the_cmd : %p", i, data->cmd[i].the_cmd)
+		secure_char_free(&data->cmd[i].the_cmd);
+		DEBUG("data->cmd[%ld].the_cmd : %p", i, data->cmd[i].the_cmd)
 		if (data->cmd[i].arg && data->cmd[i].arg->first)
 			data->cmd[i].arg = data->cmd[i].arg->first;
 		while (data->cmd[i].arg)

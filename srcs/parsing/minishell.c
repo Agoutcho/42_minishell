@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/28 17:36:16 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 04:04:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ int	get_input(t_data *data)
 	data->input = readline("Rachele ═> ");
 	if (!data->input)
 	{
-		secure_char_free(data->input);
+		secure_char_free(&data->input);
 		return (0);
 	}
 	if (!ft_strlen(data->input))
 	{
-		secure_char_free(data->input);
+		secure_char_free(&data->input);
 		return (1);
 	}
 	if (data->input && *data->input && data->input[0] != ' ')
@@ -93,10 +93,10 @@ int	get_input(t_data *data)
 	if (!parsing(data))
 	{
 		free_cmd(data);
-		secure_char_free(data->input);
+		secure_char_free(&data->input);
 		return (1);
 	}
-	secure_char_free(data->input);
+	secure_char_free(&data->input);
 	return (2);
 }
 

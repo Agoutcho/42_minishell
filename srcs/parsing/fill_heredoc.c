@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:06:46 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/28 03:58:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/01 04:04:10 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 			ft_putstr_fd("by end-of-file (wanted `", 1);
 			ft_putstr_fd(heredoc, 1);
 			ft_putstr_fd("')\n", 1);
-			secure_char_free(data->hd_line);
+			secure_char_free(&data->hd_line);
 			exit (0);
 		}
 		if (ft_strncmp(data->hd_line, heredoc, ft_strlen(heredoc) + 1) == 0 \
@@ -68,7 +68,7 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 			break ;
 		// add_heredoc(data);
 		ft_putendl_fd(data->hd_line, g_exit_code);
-		secure_char_free(data->hd_line);
+		secure_char_free(&data->hd_line);
 	}
 	DEBUG()
 	if (g_exit_code == -1)
@@ -81,7 +81,7 @@ static int forked_heredoc(t_redirect *data, char *heredoc)
 	}
 	if (close(g_exit_code))
 		exit (1);
-	secure_char_free(data->hd_line);
+	secure_char_free(&data->hd_line);
 	// big_free(data);
 	exit (temp);
 }
