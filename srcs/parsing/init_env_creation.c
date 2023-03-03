@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:09:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/01 02:22:04 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:41:48 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ int	lst_add_env_value(char *envp, t_env *env)
 		return (0);
 	while (envp[key_len] != '=')
 		key_len++;
-	while (envp[value_len + key_len])
+	while (envp[value_len + key_len + 1])
 		value_len++;
 	env->key = (char *)malloc(sizeof(char) * key_len + 2);
-	env->key = (char *)ft_memset(env->key, 0, key_len + 2);
 	if (!env->key)
 		return (0);
-	env->value = (char *)malloc(sizeof(char) * value_len + 2);
+	env->value = (char *)malloc(sizeof(char) * value_len + 1);
 	if (!env->value)
 		return (0);
-	ft_strlcat(env->key, envp, key_len + 2);
-	ft_strlcpy(env->value, envp + key_len + 1, value_len + 2);
+	ft_strlcpy(env->key, envp, key_len + 2);
+	ft_strlcpy(env->value, envp + key_len + 1, value_len + 1);
 	if (ft_strncmp(env->key, "SHLVL=", ft_strlen(env->key) + 1) == 0)
 		env->value = change_shlvl(env->value);
 	env->affiche_env = 1;

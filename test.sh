@@ -65,12 +65,16 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 // ~ = $HOME
 // ~+ = $PWD
 // ~- = $OLDPWD
+// TODO peut etre ajouter '$_' => la derniere variable connue  https://abs.traduc.org/abs-5.3-fr/ch09.html
 
 // TODO globale
 
-[ ] - faire les builtins hors du fork si plus d'une commande sinon forker
+[ ] - faire les builtins hors du fork si une seule commande sinon forker 
 [ ] - revoir init_env_creation.c 
-[ ] - revoir dans le parsing du $ ce que je mets dans temp
+[ ] - revoir dans le parsing du $ ce que je mets dans temp 
+[ ] - revoir init_env_creation.c 
+[ ] - dans l'init env ajouter OLDPWD et SHLVL s'il n'existe pas et verifier si la key est nulle 
+[ ] - gerer le _
 
 // TODO IMPORTANT
 

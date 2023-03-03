@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 21:56:05 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/01 19:22:09 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:45:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ void	secure_char_free(char **input)
 {
 	if (*input)
 	{
-		DEBUG("%p", input);
 		free(*input);
-		DEBUG("%p", input);
 		*input = NULL;
-		DEBUG("%p", input);
 	}
 }
 
@@ -80,9 +77,7 @@ void	free_cmd(t_data *data)
 	i = 0;
 	while (i < data->size_cmd_array)
 	{
-		DEBUG("data->cmd[%ld].the_cmd : %p", i, data->cmd[i].the_cmd)
 		secure_char_free(&data->cmd[i].the_cmd);
-		DEBUG("data->cmd[%ld].the_cmd : %p", i, data->cmd[i].the_cmd)
 		if (data->cmd[i].arg && data->cmd[i].arg->first)
 			data->cmd[i].arg = data->cmd[i].arg->first;
 		while (data->cmd[i].arg)
