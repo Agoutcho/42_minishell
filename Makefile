@@ -30,7 +30,6 @@ SRCS		:=	builtins/cd.c \
 				execution/exec.c \
 				execution/executable.c \
 				execution/free.c \
-				execution/pipe_closer.c \
 				execution/pipe.c \
 				execution/redirections_utils.c \
 				execution/redirections.c \

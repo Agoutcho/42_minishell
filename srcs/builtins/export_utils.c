@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:03:47 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 15:50:18 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:44:36 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_value(char *arg)
 	return (value);
 }
 
-int	ft_export_no_args(t_env *env)
+int	ft_export_no_args(t_env *env, t_cmd_array *cmd)
 {
 	char	**env_array;
 	char	**env_array_not_sorted;
@@ -88,12 +88,12 @@ int	ft_export_no_args(t_env *env)
 			i = 0;
 			while (env_array[i])
 			{
-				ft_putstr_fd("declare -x ", 1);
-				ft_putstr_fd(env_array[i], 1);
+				ft_putstr_fd("declare -x ", cmd->fd_out);
+				ft_putstr_fd(env_array[i], cmd->fd_out);
 				if (ft_strchr(env_array[i], '=') != 0)
-					ft_putendl_fd("\"", 1);
+					ft_putendl_fd("\"", cmd->fd_out);
 				else
-					write(1, "\n", 1);
+					write(cmd->fd_out, "\n", 1);
 				i++;
 			}
 		}

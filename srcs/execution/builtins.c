@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/25 04:34:54 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:45:37 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	builtins_handler(t_data *data, int i)
 
 	which_builtins = is_builtins(data->cmd[i].the_cmd);
 	if (which_builtins == 0)
-		return (ft_echo(data->cmd[i].args));
+		return (ft_echo(&data->cmd[i]));
 	else if (which_builtins == 1)
 		return (ft_cd(&data->cmd[i], data->env));
 	else if (which_builtins == 2)
-		return (ft_pwd());
+		return (ft_pwd(&data->cmd[i]));
 	else if (which_builtins == 3)
 		return (ft_export(&data->cmd[i], data->env));
 	else if (which_builtins == 4)
 		return (ft_unset(&data->cmd[i], data->env));
 	else if (which_builtins == 5)
-		return (ft_env(data->env));
+		return (ft_env(data->env, &data->cmd[i]));
 	else if (which_builtins == 6)
 	{
 		if (data->size_cmd_array == 1 && ft_exit(data->cmd[i].args) == 0)

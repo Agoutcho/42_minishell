@@ -3,35 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:50:52 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 14:10:21 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:43:57 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_echo(char **args)
+int	ft_echo(t_cmd_array *cmd)
 {
 	int		i;
 	bool	option;
 
 	i = 0;
 	option = false;
-	while (args && args[i] && !ft_strcmp(args[i], "-n"))
+	while (cmd->args && cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
 	{
 		option = true;
 		i++;
 	}
-	while (args && args[i])
+	while (cmd->args && cmd->args[i])
 	{
-		ft_putstr_fd(args[i], 1);
-		if (args[i + 1] != NULL)
-			ft_putchar_fd(' ', 1);
+		ft_putstr_fd(cmd->args[i], cmd->fd_out);
+		if (cmd->args[i + 1] != NULL)
+			ft_putchar_fd(' ', cmd->fd_out);
 		i++;
 	}
 	if (!option)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', cmd->fd_out);
 	return (set_g_exit_code(0, 1));
 }
+

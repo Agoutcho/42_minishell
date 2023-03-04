@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/27 06:05:50 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:48:51 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	init_cmd_filled(t_data *data)
 		data->cmd[i].args = NULL;
 		data->cmd[i].arg = NULL;
 		data->cmd[i].is_cmd_filled = 0;
-		data->cmd[i].multiple_pipe = 0;
 		data->cmd[i].redir_size = 0;
 		data->cmd[i].redir_array = NULL;
 		i++;

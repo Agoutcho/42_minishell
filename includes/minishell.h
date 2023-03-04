@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/01 04:03:15 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:41:56 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,9 @@ typedef struct	s_cmd_array
 	char		**args;
 	t_args		*arg; // malloc liste chainee
 	int			is_cmd_filled;
-	int			pipe_fd[2];
-	int			multiple_pipe;
+	pid_t		pid;
+	int			fd_out;
+	int			fd_in;
 	long		redir_size;
 	t_redirect	*redir_array; //malloc 
 }				t_cmd_array;
@@ -265,7 +266,7 @@ int		executable_handler(t_cmd_array *cmd, t_env *env);
 int		get_key_length(char *arg);
 char	*get_key(char *arg);
 char	*get_value(char *arg);
-int		ft_export_no_args(t_env *env);
+int		ft_export_no_args(t_env *env, t_cmd_array *cmd);
 char	**sort_strs(char **strs);
 //	@CD_C
 int		ft_cd(t_cmd_array *cmd, t_env *env);
@@ -274,9 +275,9 @@ int		cd_home(t_env *env);
 int		cd_oldpwd(t_env *env);
 int		is_directory(char *path);
 //	@ECHO_C
-int		ft_echo(char **args);
+int		ft_echo(t_cmd_array *cmd);
 //	@ENV_C
-int		ft_env(t_env *env);
+int		ft_env(t_env *env, t_cmd_array *cmd);
 //	@EXIT_C
 int		ft_exit(char **args);
 int		get_exit_code(char *arg);
@@ -289,7 +290,7 @@ int		ft_export(t_cmd_array *cmd, t_env *env);
 int		is_valid_arg(char *arg);
 int		split_arg_on_equal_sign(char *arg, char **key, char **value);
 //	@PWD_C
-int		ft_pwd(void);
+int		ft_pwd(t_cmd_array *cmd);
 //	@UNSET_C
 int		ft_unset(t_cmd_array *cmd, t_env *env);
 int		unset_keys(t_cmd_array *cmd, t_env *env);
@@ -342,15 +343,11 @@ int		lst_add_back_env(t_data *data, char **env, int j);
 void	print_list(t_env *env);
 int		init_env(t_data *data, char **env);
 //@PIPE_C
-int		pipe_handler(t_data *data, int i);
-int		first_pipe_handler(t_data *data, int i);
-int		last_pipe_handler(t_data *data, int i);
-int		middle_pipe_handler(t_data *data, int i);
+int		ft_create_pipe(t_data *data, int i);
+int		ft_connect_pipe(t_cmd_array *cmd);
+int		ft_close_pipe(t_cmd_array *cmd);
+void	ft_close_child_fd(t_data *data, int current);
 //@PIPE_CLOSER_C
-int		pipe_closer(t_data *data, int i);
-int		close_first_pipe(t_data *data, int i);
-int		close_last_pipe(t_data *data, int i);
-int		close_middle_pipe(t_data *data, int i);
 //@COMMANDS_C
 char	*get_path(char *cmd, char **env);
 int		commands_handler(t_cmd_array *cmd, t_env *env);

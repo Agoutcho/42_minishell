@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/01 02:41:47 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:46:45 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,18 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 
 int	exec_cmd_utils(t_cmd_utils cmd_utils)
 {
-	pid_t	pid;
+	execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
+	perror("execve");
+	exit (256);
+	// free au max en cas d'erreur execve
 
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("pid");
-		return (0);
-	}
-	else if (pid == 0)
-	{
-		execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-		exit(126);
-	}
-	if (waitpid(pid, &g_exit_code, 0) == -1)
-	{
-		return (0);
-	}
-	if (WIFEXITED(g_exit_code))
-		g_exit_code = WEXITSTATUS(g_exit_code);
-	else if (WIFSIGNALED(g_exit_code))
-		g_exit_code = WTERMSIG(g_exit_code);
-	return (1);
+
+	// jsp quoi faire de ca ...
+	// if (WIFEXITED(g_exit_code))
+	// 	g_exit_code = WEXITSTATUS(g_exit_code);
+	// else if (WIFSIGNALED(g_exit_code))
+	// 	g_exit_code = WTERMSIG(g_exit_code);
+	// return (1);
 }
 
 int	commands_handler(t_cmd_array *cmd, t_env *env)
