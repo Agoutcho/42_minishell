@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/04 15:47:21 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/04 16:42:42 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	execution(t_data *data)
 	init_cmd_fd(data);
 	while (i < data->size_cmd_array)
 	{
+		if (!redirections_handler(&data->cmd[i]))
+			return (0);
 		if (!ft_create_pipe(data, i))
 			return (0);
 		is_bt = is_builtins(data->cmd[i].the_cmd);

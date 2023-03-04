@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/04 15:41:56 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/04 17:10:58 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,10 +326,10 @@ void	free_data(t_data *data);
 void	free_strs(char **strs);
 //@REDIRECTIONS_C
 int		redirections_handler(t_cmd_array *cmd);
-int		e_in_handler(t_redirect *redir, size_t *in_val, int i);
-int		e_out_handler(t_redirect *redir);
-int		e_append_handler(t_redirect *redir);
-int		e_hd_handler(t_redirect *redir, size_t *in_val, int i);
+int		e_out_handler(t_redirect *redir, t_cmd_array *cmd);
+int		e_append_handler(t_redirect *redir, t_cmd_array *cmd);
+int		e_in_handler(t_redirect *redir, t_cmd_array *cmd);
+int		e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd);
 //@REDIRECTIONS_UTILS_C
 int		redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver);
 //@TEMPORAIRE
