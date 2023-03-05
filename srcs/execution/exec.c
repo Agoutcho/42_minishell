@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/04 16:42:42 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/05 12:18:59 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	execution(t_data *data)
 	init_cmd_fd(data);
 	while (i < data->size_cmd_array)
 	{
-		if (!redirections_handler(&data->cmd[i]))
-			return (0);
 		if (!ft_create_pipe(data, i))
+			return (0);
+		if (!redirections_handler(&data->cmd[i]))
 			return (0);
 		is_bt = is_builtins(data->cmd[i].the_cmd);
 		if (is_bt == -2)
@@ -68,6 +68,10 @@ int	execution(t_data *data)
 					return (0);
 				}
 				ft_close_child_fd(data, i);
+				// ft_putendl_fd("Commands, :", 2);
+				// ft_putnbr_fd(data->cmd[i].fd_in, 2);
+				// ft_putnbr_fd(data->cmd[i].fd_out, 2);
+				// ft_putendl_fd("", 2);
 				if (!execute(data, i))
 				{
 					ft_putendl_fd("execute", 2);
@@ -81,15 +85,24 @@ int	execution(t_data *data)
 	while (i < data->size_cmd_array)
 	{
 		is_bt = is_builtins(data->cmd[i].the_cmd);
-		if (is_bt < 0)
+		// if (is_bt < 0)
+		// {
+		// 	if (waitpid(data->cmd[i].pid, &g_exit_code, 0) == -1)
+		// 	{
+		// 		ft_putendl_fd("waitpid", 2);
+		// 		return (0);
+		// 	}
+		// 	g_exit_code %= 255;
+		// }
+		if (is_bt < 0 || data->size_cmd_array > 1)
 		{
 			if (waitpid(data->cmd[i].pid, &g_exit_code, 0) == -1)
 			{
 				ft_putendl_fd("waitpid", 2);
 				return (0);
 			}
-			g_exit_code %= 255;
 		}
+		g_exit_code %= 255;
 		if (!ft_close_pipe(&data->cmd[i]))
 		{
 			ft_putendl_fd("close pipe", 2);

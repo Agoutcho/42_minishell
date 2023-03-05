@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:09:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/04 15:48:40 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/05 12:27:10 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,18 @@ int	ft_create_pipe(t_data *data, int i)
 		perror("Rachele: pipe");
 		return (0);
 	}
+	if (i + 1 == data->size_cmd_array)
+	{
+		close(fd[1]);
+		close(fd[0]);
+		return (1);
+	}
+	// ft_putendl_fd("Pipe, :", 2);
+	// ft_putnbr_fd(fd[0], 2);
+	// ft_putnbr_fd(fd[1], 2);
+	// ft_putendl_fd("", 2);
 	//DEBUG("[%s] PIPES -> [in/%d][out/%d]", data->cmd[i].the_cmd, fd[0], fd[1]);
-	if (data->cmd[i].fd_out == STDOUT_FILENO && i + 1 != data->size_cmd_array)
+	if (data->cmd[i].fd_out == STDOUT_FILENO)
 		data->cmd[i].fd_out = fd[1];
 	else
 		close(fd[1]);
@@ -40,7 +50,7 @@ int	ft_connect_pipe(t_cmd_array *cmd)
 	{
 		//DEBUG("[%s] DUP2 [fd_in/%d] <-> [stdin/%d]",cmd->the_cmd, cmd->fd_in, STDIN_FILENO)
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-			perror("Rachele: dup2");
+			perror("Rachele: dup2"); 
 		if (close(cmd->fd_in) == -1)
 			perror("Rachele: close");
 	}

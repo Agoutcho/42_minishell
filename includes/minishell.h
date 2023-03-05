@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/04 17:10:58 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/05 11:17:02 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ int		execution(t_data *data);
 int		execute(t_data *data, int i);
 //@BUILTINS_C
 int		builtins_handler(t_data *data, int i);
-char	**init_builtins_tab(char **builtins);
+char	**init_builtins_tab(void);
 int		is_builtins(char *cmd);
 //@BUILTINS_UTILS_C
 void	error_builtins_handler(t_cmd_array *cmd, char *arg);
