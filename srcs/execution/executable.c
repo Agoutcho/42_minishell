@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:21:16 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/17 11:00:55 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:31:45 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int	is_valid_executable(char *path)
 		ft_putstr_fd("Rachele: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": No such a file or directory", 2);
-		return (0);
+		exit (127);
 	}
 	if (access(path, X_OK))
 	{
 		ft_putstr_fd("Rachele: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": permission denied", 2);
-		return (0);
+		exit (126);
 	}
 	dir = opendir(path);
     if (dir != NULL)
@@ -36,7 +36,7 @@ int	is_valid_executable(char *path)
         ft_putstr_fd("Rachele: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": Is a directory", 2);
-        return (0);
+		exit (126);
     }
 	return (1);
 }
@@ -55,31 +55,28 @@ int	is_executable(char *path)
 	return (0);
 }
 
-int	executable_handler(t_cmd_array *cmd, t_env *env)
+int	executable_handler(t_data *data, int i)
 {
-	pid_t	pid;
+	char	*cmd;
+	char	**args;
 	char	**env_array;
 
-	env_array = env_to_array(env);
+	args = NULL;
+	cmd = ft_strdup(data->cmd[i].the_cmd);
+	if (!cmd)
+		free_exit(data, EXIT_FAILURE);
+	env_array = env_to_array(data->env);
 	if (!env_array)
-		return (0);
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return (0);
-	}
-	else if (pid == 0)
-	{
-		execve(cmd->the_cmd, cmd->args, env_array);
-		perror("execve");
-		exit(0);
-	}
-	if (waitpid(pid, NULL, 0) == -1)
-	{
-		perror("waitpid");
-		return (0);
-	}
+		free_exit(data, EXIT_FAILURE);
+	big_free(data);
+	execve(cmd, args, env_array);
+	ft_putstr_fd("Rachele : ", 2);
+	perror(cmd);
+	if (data->cmd[i].fd_in != STDIN_FILENO)
+		close(data->cmd[i].fd_in);
+	if (data->cmd[i].fd_in != STDOUT_FILENO)
+		close(data->cmd[i].fd_out);
+	secure_char_free(&cmd);
 	free_strs(env_array);
-	return (1);
+	exit (256);
 }

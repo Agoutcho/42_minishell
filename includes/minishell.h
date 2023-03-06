@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/06 10:43:24 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:25:31 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,13 @@ typedef struct	s_data
 	t_termios	termio;
 }				t_data;
 
+typedef struct s_cmd_utils
+{
+	char	*path;
+	char	**args;
+	char	**envp;
+}				t_cmd_utils;
+
 ///////////////////////////////////////////////////////////////////////
 void	uncannon(t_termios *termio);
 void	restore(struct termios *old);
@@ -258,7 +265,6 @@ int	set_g_exit_code(int code, int return_value);
 
 // @EXEC
 int		execution(t_data *data);
-int		executable_handler(t_cmd_array *cmd, t_env *env);
 
 //@BUILTINS/
 //	@BUILTINS_UTILS/
@@ -314,7 +320,7 @@ bool	builtin_option_checker(int cmd_id, char **args);
 //@EXECUTABLE_C
 void	error_executable_handler(char *path, int error);
 int		is_executable(char *path);
-int		executable_handler(t_cmd_array *cmd, t_env *env);
+int		executable_handler(t_data *data, int i);
 //@ENV_UTILS_C
 void	remove_node(t_env *env);
 t_env	*search_key(char *key, t_env *env);
@@ -327,8 +333,8 @@ t_env	*init_new_node(void);
 int		set_key(t_env *node, char *key);
 int		set_value(t_env *node, char *value);
 //@FREE_C
-void	free_data(t_data *data);
 void	free_strs(char **strs);
+void	free_exit(t_data *data, int exit_value);
 //@REDIRECTIONS_C
 int		redirections_handler(t_cmd_array *cmd);
 int		e_out_handler(t_redirect *redir, t_cmd_array *cmd);
@@ -356,7 +362,7 @@ void	ft_close_child_fd(t_data *data, int current);
 //@PIPE_CLOSER_C
 //@COMMANDS_C
 char	*get_path(char *cmd, char **env);
-void	commands_handler(t_cmd_array *cmd, t_env *env);
+void	commands_handler(t_data *data, int i);
 char	**add_element_to_array(char **array, char *element);
 //@COMMANDS_UTILS_C
 char	*get_path_env(char **env);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free2.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:07:46 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/28 00:32:26 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:06:00 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,10 @@ void	free_strs(char **strs)
 	}
 	free(strs);
 	strs = NULL;
+}
+
+void	free_exit(t_data *data, int exit_value)
+{
+	big_free(data);
+	exit(exit_value);
 }

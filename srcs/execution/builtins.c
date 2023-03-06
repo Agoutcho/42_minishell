@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 10:35:02 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:06:42 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int	builtins_handler(t_data *data, int i)
 		else if (data->cmd[i].pid == 0)
 		{
 			if (!ft_connect_pipe(&data->cmd[i]))
-				exit (EXIT_FAILURE);
+				free_exit(data, EXIT_FAILURE);
 			ft_close_child_fd(data, i);
 			if (!builtins_launcher(data, i))
-				exit(EXIT_FAILURE);
-			exit (EXIT_SUCCESS);
+				free_exit(data, EXIT_FAILURE);
+			free_exit(data, EXIT_SUCCESS);
 		}
 		return (1);
 	}
