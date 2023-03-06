@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:09:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 12:27:10 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:33:05 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,17 @@ int	ft_connect_pipe(t_cmd_array *cmd)
 	{
 		//DEBUG("[%s] DUP2 [fd_in/%d] <-> [stdin/%d]",cmd->the_cmd, cmd->fd_in, STDIN_FILENO)
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-			perror("Rachele: dup2"); 
+			return (perror("Rachele: dup2"), 0);
 		if (close(cmd->fd_in) == -1)
-			perror("Rachele: close");
+			return (perror("Rachele: close"), 0);
 	}
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
 		//DEBUG("[%s] DUP2 [fd_out/%d] <-> [stdout/%d]",cmd->the_cmd, cmd->fd_out, STDOUT_FILENO)
 		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-			perror("Rachele: dup2");
+			return (perror("Rachele: dup2"), 0);
 		if (close(cmd->fd_out) == -1)
-			perror("Rachele: close");
+			return (perror("Rachele: close"), 0);
 	}
 	return (1);
 }

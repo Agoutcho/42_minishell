@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 12:18:59 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:13:10 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	execution(t_data *data)
 		if (!redirections_handler(&data->cmd[i]))
 			return (0);
 		is_bt = is_builtins(data->cmd[i].the_cmd);
-		if (is_bt == -2)
-			return (0);
 		if (is_bt >= 0)
 		{
 			if (!builtins_handler(data, i))
@@ -97,17 +95,11 @@ int	execution(t_data *data)
 		if (is_bt < 0 || data->size_cmd_array > 1)
 		{
 			if (waitpid(data->cmd[i].pid, &g_exit_code, 0) == -1)
-			{
-				ft_putendl_fd("waitpid", 2);
-				return (0);
-			}
+				return (ft_putendl_fd("Rachele: waitpid", 2), 0);
 		}
 		g_exit_code %= 255;
 		if (!ft_close_pipe(&data->cmd[i]))
-		{
-			ft_putendl_fd("close pipe", 2);
-			return (0);
-		}
+			return (ft_putendl_fd("close pipe", 2), 0);
 		i++;
 	}
 	return (reuncannon(&data->termio), 1);

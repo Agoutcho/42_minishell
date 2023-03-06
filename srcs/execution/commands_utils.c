@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 15:50:52 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 18:40:10 by nradal           ###   ########.fr       */
+/*   Created: 2023/03/06 10:42:32 by nradal            #+#    #+#             */
+/*   Updated: 2023/03/06 10:42:57 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_echo(t_cmd_array *cmd)
+char	*get_path_env(char **env)
 {
-	int		i;
-	bool	option;
+	int	i;
 
 	i = 0;
-	option = false;
-	while (cmd->args && cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
+	while (env[i])
 	{
-		option = true;
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			return (env[i] + 5);
 		i++;
 	}
-	while (cmd->args && cmd->args[i])
-	{
-		ft_putstr_fd(cmd->args[i], cmd->fd_out);
-		if (cmd->args[i + 1] != NULL)
-			ft_putchar_fd(' ', cmd->fd_out);
-		i++;
-	}
-	if (!option)
-		ft_putchar_fd('\n', cmd->fd_out);
-	return (set_g_exit_code(0, 1));
+	return (NULL);
 }

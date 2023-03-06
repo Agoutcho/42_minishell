@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/04 15:44:59 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:26:31 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,10 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 			if (is_valid_arg(cmd->args[i]))
 			{
 				if (!handle_export_arg(cmd->args[i], &env))
-					return (0);
+					return (set_g_exit_code(1, 0));
 			}
 			else
-			{
-				ft_putstr_fd("Rachele: export: `", 2);
-				ft_putstr_fd(cmd->args[i], 2);
-				ft_putendl_fd("': not a valid identifier", 2);
-			}
+				export_e_print(cmd->args[i]);
 			i++;
 		}
 	}
@@ -47,47 +43,28 @@ int	handle_export_arg(char *arg, t_env **env)
 {
 	char	*key;
 	char	*value;
-	t_env	*temp;
+	int		result;
 
 	if (!split_arg_on_equal_sign(arg, &key, &value))
 		return (0);
-	temp = search_key(key, *env);
-	if (temp)
-	{
-		if (ft_strcmp(key, temp->key) == 61)
-		{
-			free(temp->key);
-			temp->key = ft_strdup(key);
-		}
-		*env = temp;
-		if (value)
-		{
-			if (!replace_node(*env, value))
-				return (0);
-		}
-	}
-	else
-	{
-		*env = (*env)->first;
-		if (!create_node(*env, key, value))
-			return (0);
-	}
-	if (key)
-		free(key);
-	if (value)
-		free(value);
-	return (1);
+	result = export_search_and_update_key(key, value, env);
+	if (!result)
+		result = export_create_node(key, value, env);
+	free_key_value(key, value);
+	return (result);
 }
 
 int	ft_is_portable_charset(char c)
 {
-    if (ft_isalnum(c) || c == '!' || c == '"' || c == '#' || c == '$' || c == '%' || c == '&' ||
-        c == '\'' || c == '(' || c == ')' || c == '*' || c == '+' || c == ',' || c == '-' ||
-        c == '.' || c == '/' || c == ':' || c == ';' || c == '<' || c == '=' || c == '>' ||
-        c == '?' || c == '@' || c == '[' || c == '\\' || c == ']' || c == '^' || c == '_' ||
-        c == '`' || c == '{' || c == '|' || c == '}' || c == '~' || c == ' ')
-        return (1);
-    return (0);
+	if (ft_isalnum(c) || c == '!' || c == '"' || c == '#' || c == '$'
+		|| c == '%' || c == '&' || c == '\'' || c == '(' || c == ')'
+		|| c == '*' || c == '+' || c == ',' || c == '-' || c == '.'
+		|| c == '/' || c == ':' || c == ';' || c == '<' || c == '='
+		|| c == '>' || c == '?' || c == '@' || c == '[' || c == '\\'
+		|| c == ']' || c == '^' || c == '_' || c == '`' || c == '{'
+		|| c == '|' || c == '}' || c == '~' || c == ' ')
+		return (1);
+	return (0);
 }
 
 int	is_valid_arg(char *arg)

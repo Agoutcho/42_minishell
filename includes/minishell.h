@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/05 11:17:02 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 10:43:24 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,11 @@ char	*get_key(char *arg);
 char	*get_value(char *arg);
 int		ft_export_no_args(t_env *env, t_cmd_array *cmd);
 char	**sort_strs(char **strs);
+//			@2
+void	export_e_print(char *str);
+void	free_key_value(char *key, char *value);
+int		export_search_and_update_key(char *key, char *value, t_env **env);
+int		export_create_node(char *key, char *value, t_env **env);
 //	@CD_C
 int		ft_cd(t_cmd_array *cmd, t_env *env);
 int		change_pwd(t_env *env, char *pwd_oldpwd_flag);
@@ -332,6 +337,7 @@ int		e_in_handler(t_redirect *redir, t_cmd_array *cmd);
 int		e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd);
 //@REDIRECTIONS_UTILS_C
 int		redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver);
+void	heredoc_print(char *heredoc);
 //@TEMPORAIRE
 // int		check_printable(char *str);
 int		add_to_env(t_data *data, char *str);
@@ -350,7 +356,9 @@ void	ft_close_child_fd(t_data *data, int current);
 //@PIPE_CLOSER_C
 //@COMMANDS_C
 char	*get_path(char *cmd, char **env);
-int		commands_handler(t_cmd_array *cmd, t_env *env);
+void	commands_handler(t_cmd_array *cmd, t_env *env);
 char	**add_element_to_array(char **array, char *element);
+//@COMMANDS_UTILS_C
+char	*get_path_env(char **env);
 
 #endif

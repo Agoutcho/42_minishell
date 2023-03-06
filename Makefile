@@ -19,17 +19,20 @@ SRCS		:=	builtins/cd.c \
 				builtins/env.c \
 				builtins/exit.c \
 				builtins/export_utils.c \
+				builtins/export_utils2.c \
 				builtins/export.c \
 				builtins/pwd.c \
 				builtins/unset.c \
 				execution/builtins_utils.c \
 				execution/builtins.c \
 				execution/commands.c \
+				execution/commands_utils.c \
 				execution/env_create_node.c \
 				execution/env_utils.c \
 				execution/exec.c \
 				execution/executable.c \
 				execution/free.c \
+				execution/heredoc.c \
 				execution/pipe.c \
 				execution/redirections_utils.c \
 				execution/redirections.c \

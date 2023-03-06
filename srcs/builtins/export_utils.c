@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:03:47 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/04 15:44:36 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:35:41 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,20 @@ int	ft_export_no_args(t_env *env, t_cmd_array *cmd)
 	if (env)
 	{
 		env_array_not_sorted = env_to_array_plus_quotes(env);
-		if (!env_array_not_sorted)
-			return (0);
-		env_array = sort_strs(env_array_not_sorted);
+		if (env_array_not_sorted)
+			env_array = sort_strs(env_array_not_sorted);
 		if (!env_array)
 			return (0);
-		else
+		i = 0;
+		while (env_array[i])
 		{
-			i = 0;
-			while (env_array[i])
-			{
-				ft_putstr_fd("declare -x ", cmd->fd_out);
-				ft_putstr_fd(env_array[i], cmd->fd_out);
-				if (ft_strchr(env_array[i], '=') != 0)
-					ft_putendl_fd("\"", cmd->fd_out);
-				else
-					write(cmd->fd_out, "\n", 1);
-				i++;
-			}
+			ft_putstr_fd("declare -x ", cmd->fd_out);
+			ft_putstr_fd(env_array[i], cmd->fd_out);
+			if (ft_strchr(env_array[i], '=') != 0)
+				ft_putendl_fd("\"", cmd->fd_out);
+			else
+				write(cmd->fd_out, "\n", 1);
+			i++;
 		}
 		free_strs(env_array_not_sorted);
 	}

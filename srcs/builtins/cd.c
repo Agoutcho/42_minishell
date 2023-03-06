@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 14:14:20 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:38:54 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ int	cd_oldpwd(t_env *env)
 			if (!change_pwd(env, "OLDPWD="))
 				return (0);
 			if (chdir(path) != 0)
-			{
-				perror("chdir");
-				return (0);
-			}
+				return (perror("chdir"), 0);
 			if (!change_pwd(env, "PWD="))
 				return (0);
 		}
@@ -124,7 +121,8 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 
 int	is_directory(char *path)
 {
-	DIR *dir;
+	DIR	*dir;
+
 	if (access(path, F_OK) != 0)
 	{
 		ft_putstr_fd("Rachele: cd: ", 2);
@@ -133,17 +131,14 @@ int	is_directory(char *path)
 		return (set_g_exit_code(1, 0));
 	}
 	dir = opendir(path);
-    if (dir != NULL)
-	{
-        closedir(dir);
-        return (1);
-    }
+	if (dir != NULL)
+		return (closedir(dir), 1);
 	else
 	{
-        ft_putstr_fd("Rachele: cd: ", 2);
+		ft_putstr_fd("Rachele: cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": Not a directory", 2);
-        return (set_g_exit_code(1, 0));
-    }
+		return (set_g_exit_code(1, 0));
+	}
 	return (1);
 }
