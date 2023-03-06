@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 17:55:59 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:29:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	close_pipe(int pipe_fd[2], int fd_index)
 	return (1);
 }
 
-void	child_process(int pipe_fd[2])
+void	child_process(int pipe_fd[2], char *heredoc)
 {
 	char	*heredoc_line;
 
@@ -49,8 +49,8 @@ void	child_process(int pipe_fd[2])
 			free(heredoc_line);
 			exit(EXIT_FAILURE);
 		}
-		if (ft_strncmp(heredoc_line, "EOF", 3 + 1) == 0
-			|| ft_strncmp(heredoc_line, "EOF", 3 + 1) == -1)
+		if (ft_strncmp(heredoc_line, heredoc, ft_strlen(heredoc) + 1) == 0
+			|| ft_strncmp(heredoc_line, heredoc, ft_strlen(heredoc) + 1) == -1)
 			break ;
 		ft_putendl_fd(heredoc_line, pipe_fd[1]);
 		free(heredoc_line);
@@ -101,7 +101,7 @@ int	e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd)
 		return (0);
 	}
 	else if (pid == 0)
-		child_process(pipe_fd);
+		child_process(pipe_fd, redir->file_name);
 	else
 		return (parent_process(pipe_fd, &status, cmd, pid));
 	return (1);
