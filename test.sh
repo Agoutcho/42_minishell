@@ -78,6 +78,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO IMPORTANT
 
+[ ] 1. Faire les heredoc en premier, si une redir ne marche pas ne pas faire les autres
 [ ] 1. normer
 [ ] 1. secure les malloc
 [ ] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
@@ -89,6 +90,7 @@ ou cat | cat | ls
 [x] 1. Regler les syntaxes error ne pas quitter le shell si ca marche pas.
 [x] 1. finir les signaux
 
+[x] 2. Ajouter le pwd apres un cd - 
 [ ] 2. checker les fd avec ls -l /proc/PID/fd/ ou avec le system monitor clique droit open files
 [ ] 2. gerer le segfault unset tous l'env
 

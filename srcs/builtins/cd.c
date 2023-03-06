@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 18:38:54 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:11:43 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 		return (set_g_exit_code(1, 1));
 	}
 	else if (cmd->args[0][0] == '-' && cmd->args[0][1] == '\0')
-		return (cd_oldpwd(env));
+		return (cd_oldpwd(env, cmd));
 	else if (is_directory(cmd->args[0]))
 	{
 		if (!change_pwd(env, "OLDPWD="))
@@ -63,7 +63,7 @@ int	cd_home(t_env *env)
 	return (set_g_exit_code(0, 1));
 }
 
-int	cd_oldpwd(t_env *env)
+int	cd_oldpwd(t_env *env, t_cmd_array *cmd)
 {
 	t_env	*temp;
 	char	*path;
@@ -82,6 +82,7 @@ int	cd_oldpwd(t_env *env)
 			if (!change_pwd(env, "PWD="))
 				return (0);
 		}
+		ft_pwd(cmd);
 		free(path);
 	}
 	else
