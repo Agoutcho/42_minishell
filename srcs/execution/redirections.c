@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 17:39:31 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:57:42 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,18 @@
 int	redirections_handler(t_cmd_array *cmd)
 {
 	int			i;
+	int			temp_fd;
 	t_redirect	*redir;
 
+	i = 0;
+	while (cmd->redir_size > i)
+	{
+		redir = &cmd->redir_array[i];
+		if (redir->type == e_heredoc && !e_heredoc_handler(redir, cmd))
+			return (0);
+		i++;
+		temp_fd = cmd->fd_in;
+	}
 	i = 0;
 	while (cmd->redir_size > i)
 	{
@@ -27,11 +37,34 @@ int	redirections_handler(t_cmd_array *cmd)
 			return (0);
 		else if (redir->type == e_in && !e_in_handler(redir, cmd))
 			return (0);
-		else if (redir->type == e_heredoc && !e_heredoc_handler(redir, cmd))
-			return (0);
 		i++;
 	}
+	if (is_hd(cmd))
+		cmd->fd_in = temp_fd;
 	return (1);
+}
+
+int	is_hd(t_cmd_array *cmd)
+{
+	int	i;
+	int	n_in;
+	int	n_hd;
+
+	i = 0;
+	n_in = 0;
+	n_hd = 0;
+	while (cmd->redir_size > i)
+	{
+		if (cmd->redir_array[i].type == e_heredoc)
+			n_hd = i;
+		else if (cmd->redir_array[i].type == e_in)
+			n_in = i;
+		i++;
+	}
+	if (n_hd > n_in)
+		return (1);
+	else
+		return (0);
 }
 
 // int e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd)
