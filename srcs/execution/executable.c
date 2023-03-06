@@ -6,48 +6,48 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:21:16 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 14:31:45 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:42:37 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_valid_executable(char *path)
+int	is_valid_executable(t_data *data, int i)
 {
 	DIR *dir;
-	if (access(path, F_OK) != 0)
+	if (access(data->cmd[i].the_cmd, F_OK) != 0)
 	{
 		ft_putstr_fd("Rachele: ", 2);
-		ft_putstr_fd(path, 2);
+		ft_putstr_fd(data->cmd[i].the_cmd, 2);
 		ft_putendl_fd(": No such a file or directory", 2);
-		exit (127);
+		free_exit (data, 127);
 	}
-	if (access(path, X_OK))
+	if (access(data->cmd[i].the_cmd, X_OK))
 	{
 		ft_putstr_fd("Rachele: ", 2);
-		ft_putstr_fd(path, 2);
+		ft_putstr_fd(data->cmd[i].the_cmd, 2);
 		ft_putendl_fd(": permission denied", 2);
-		exit (126);
+		free_exit (data, 126);
 	}
-	dir = opendir(path);
+	dir = opendir(data->cmd[i].the_cmd);
     if (dir != NULL)
 	{
         closedir(dir);
         ft_putstr_fd("Rachele: ", 2);
-		ft_putstr_fd(path, 2);
+		ft_putstr_fd(data->cmd[i].the_cmd, 2);
 		ft_putendl_fd(": Is a directory", 2);
-		exit (126);
+		free_exit (data, 126);
     }
 	return (1);
 }
 
-int	is_executable(char *path)
+int	is_executable(t_data *data, int i)
 {
-	if (!path)
+	if (!data->cmd[i].the_cmd)
 		return (-1);
-	if  (ft_strncmp(path, "./", 2) == 0)
+	if  (ft_strncmp(data->cmd[i].the_cmd, "./", 2) == 0)
 	{
-		if (is_valid_executable(path) == 1)
+		if (is_valid_executable(data, i) == 1)
 			return (1);
 		else
 			return (-1);

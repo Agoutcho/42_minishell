@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 14:25:49 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:42:20 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	execute(t_data *data, int i)
 
 	if (!data->cmd[i].the_cmd)
 		return (1);
-	is_exec = is_executable(data->cmd[i].the_cmd);
+	is_exec = is_executable(data, i);
 	if (is_exec == 1)
 	{
 		if (!executable_handler(data, i))

@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/06 14:25:31 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 14:41:59 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,8 +318,7 @@ void	error_builtins_handler(t_cmd_array *cmd, char *arg);
 bool	option_checker(char **args);
 bool	builtin_option_checker(int cmd_id, char **args);
 //@EXECUTABLE_C
-void	error_executable_handler(char *path, int error);
-int		is_executable(char *path);
+int		is_executable(t_data *data, int i);
 int		executable_handler(t_data *data, int i);
 //@ENV_UTILS_C
 void	remove_node(t_env *env);
