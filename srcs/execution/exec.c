@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 14:42:20 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/06 15:22:23 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,29 +77,20 @@ int	execution(t_data *data)
 				}
 			}
 		}
+		if (!ft_close_pipe(&data->cmd[i]))
+			return (ft_putendl_fd("close pipe", 2), 0);
 		i++;
 	}
 	i = 0;
 	while (i < data->size_cmd_array)
 	{
 		is_bt = is_builtins(data->cmd[i].the_cmd);
-		// if (is_bt < 0)
-		// {
-		// 	if (waitpid(data->cmd[i].pid, &g_exit_code, 0) == -1)
-		// 	{
-		// 		ft_putendl_fd("waitpid", 2);
-		// 		return (0);
-		// 	}
-		// 	g_exit_code %= 255;
-		// }
-		if (is_bt < 0 || data->size_cmd_array > 1)
+		if (is_bt == -1 || data->size_cmd_array > 1)
 		{
 			if (waitpid(data->cmd[i].pid, &g_exit_code, 0) == -1)
 				return (ft_putendl_fd("Rachele: waitpid", 2), 0);
+			g_exit_code %= 255;
 		}
-		g_exit_code %= 255;
-		if (!ft_close_pipe(&data->cmd[i]))
-			return (ft_putendl_fd("close pipe", 2), 0);
 		i++;
 	}
 	return (reuncannon(&data->termio), 1);
