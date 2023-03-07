@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 21:57:42 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:33:01 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,96 +67,6 @@ int	is_hd(t_cmd_array *cmd)
 		return (0);
 }
 
-// int e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd)
-// {
-// 	int		pipe_fd[2];
-// 	pid_t	pid;
-// 	int		status;
-// 	char	*heredoc_line;
-
-// 	redir->file_fd = -1;
-// 	if (pipe(pipe_fd) == -1)
-// 	{
-// 		perror("Rachele: pipe");
-// 		return (0);
-// 	}
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("Rachele: pid");
-// 		return (0);
-// 	}
-// 	else if (pid == 0)
-// 	{
-// 		signal(SIGINT, sig_int_child_handler);
-// 		signal(SIGQUIT, SIG_DFL);
-
-// 		if (close(pipe_fd[0]) == -1)
-// 		{
-// 			perror("Rachele: close");
-// 			exit (EXIT_FAILURE);
-// 		}
-// 		while (1)
-// 		{
-// 			heredoc_line = readline("> ");
-// 			if (!heredoc_line && g_exit_code != -1)
-// 			{
-// 				ft_putstr_fd("-Rachele: warning: here-document delimited ", 2);
-// 				ft_putstr_fd("by end-of-file (wanted `", 2);
-// 				ft_putstr_fd("EOF", 2);
-// 				ft_putstr_fd("')\n", 2);
-// 				free(heredoc_line);
-// 				exit (EXIT_FAILURE);
-// 			}
-// 			if (ft_strncmp(heredoc_line, "EOF", 3 + 1) == 0 || ft_strncmp(heredoc_line, "EOF", 3 + 1) == -1)
-// 			{
-// 				free(heredoc_line);
-// 				break ;
-// 			}
-// 			ft_putendl_fd(heredoc_line, pipe_fd[1]);
-// 			free(heredoc_line);
-// 		}
-// 		if (close(pipe_fd[1]) == -1)
-// 		{
-// 			perror("Rachele: close");
-// 			exit (EXIT_FAILURE);
-// 		}
-// 		exit (EXIT_SUCCESS);
-// 	}
-// 	else
-// 	{
-// 		if (close(pipe_fd[1]) == -1)
-// 		{
-// 			perror("Rachele: close");
-// 			exit (EXIT_FAILURE);
-// 		}
-// 		if (waitpid(pid, &status, 0) == -1)
-// 		{
-// 			perror("Rachele: waitpid");
-// 			return (0);
-// 		}
-// 		if (status == 1)
-// 		{
-// 			if (close(pipe_fd[0]) == -1)
-// 			{
-// 				perror("Rachele: close");
-// 				exit (EXIT_FAILURE);
-// 			}
-// 			return (1);
-// 		}
-// 		if (cmd->fd_in != STDIN_FILENO)
-// 		{
-// 			if (close(cmd->fd_in) == -1)
-// 			{
-// 				perror("Rachele: close");
-// 				return (set_g_exit_code(1, 0));
-// 			}
-// 		}
-// 		cmd->fd_in = pipe_fd[0];
-// 	}
-// 	return (1);
-// }
-
 int	e_out_handler(t_redirect *redir, t_cmd_array *cmd)
 {
 	redir->file_fd = open(redir->file_name,
@@ -216,6 +126,12 @@ int	e_append_handler(t_redirect *redir, t_cmd_array *cmd)
 int	e_in_handler(t_redirect *redir, t_cmd_array *cmd)
 {
 	redir->file_fd = open(redir->file_name, O_RDONLY);
+	if (access(redir->file_name, F_OK) != 0)
+	{
+		ft_putstr_fd("Rachele: no such file or directory: ", 2);
+		ft_putendl_fd(redir->file_name, 2);
+		return (set_g_exit_code(1, 0));
+	}
 	if (access(redir->file_name, R_OK) != 0)
 	{
 		ft_putstr_fd("Rachele: ", 2);
@@ -224,17 +140,11 @@ int	e_in_handler(t_redirect *redir, t_cmd_array *cmd)
 		return (set_g_exit_code(1, 0));
 	}
 	if (redir->file_fd == -1)
-	{
-		perror("Rachele: open");
-		return (set_g_exit_code(1, 0));
-	}
+		return (perror("Rachele: open"), set_g_exit_code(1, 0));
 	if (cmd->fd_in != STDIN_FILENO)
 	{
 		if (close(cmd->fd_in) == -1)
-		{
-			perror("Rachele: close");
-			return (set_g_exit_code(1, 0));
-		}
+			return (perror("Rachele: close"), set_g_exit_code(1, 0));
 	}
 	cmd->fd_in = redir->file_fd;
 	return (1);

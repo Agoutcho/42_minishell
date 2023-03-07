@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/06 21:12:15 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:35:30 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ int		redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver);
 void	heredoc_print(char *heredoc);
 //@TEMPORAIRE
 // int		check_printable(char *str);
+int		is_hd(t_cmd_array *cmd);
 int		add_to_env(t_data *data, char *str);
 t_env	*find_env_value(t_data *data, char *key);
 // char	*change_shlvl(char *env_value);

@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 14:06:42 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/07 11:31:25 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int	builtins_handler(t_data *data, int i)
 				free_exit(data, EXIT_FAILURE);
 			ft_close_child_fd(data, i);
 			if (!builtins_launcher(data, i))
+			{
+				ft_close_pipe(&data->cmd[i]);
 				free_exit(data, EXIT_FAILURE);
+			}
 			free_exit(data, EXIT_SUCCESS);
 		}
 		return (1);
