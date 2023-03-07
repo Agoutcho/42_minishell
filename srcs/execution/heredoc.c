@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 12:47:29 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/07 19:48:29 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	child_process(int pipe_fd[2], char *heredoc)
 			close_pipe(pipe_fd, 1);
 			exit(EXIT_FAILURE);
 		}
-		if (ft_strncmp(heredoc_line, heredoc, ft_strlen(heredoc) + 1) == 0
-			|| ft_strncmp(heredoc_line, heredoc, ft_strlen(heredoc) + 1) == -1)
+		if (!heredoc_line && g_exit_code == -1)
+			break ;
+		if (ft_strncmp(heredoc_line, heredoc, ft_strlen(heredoc) + 1) == 0)
 			break ;
 		ft_putendl_fd(heredoc_line, pipe_fd[1]);
 		free(heredoc_line);
@@ -60,7 +61,10 @@ void	child_process(int pipe_fd[2], char *heredoc)
 	if (!close_pipe(pipe_fd, 1))
 		exit(EXIT_FAILURE);
 	if (g_exit_code == -1)
-		exit(EXIT_FAILURE);
+	{
+		g_exit_code = 130;
+		exit(EXIT_FAILURE + 1);
+	}
 	exit(EXIT_SUCCESS);
 }
 
@@ -70,9 +74,11 @@ int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
 		return (0);
 	if (waitpid(pid, status, 0) == -1)
 		return (perror("Rachele: waitpid"), 0);
-	if (*status == 256)
+	if (*status == 256 || *status == 512)
 	{
 		close_pipe(pipe_fd, 0);
+		if (*status == 512)
+			return (g_exit_code = 130, 0);
 		return (0);
 	}
 	if (cmd->fd_in != STDIN_FILENO)
@@ -84,6 +90,8 @@ int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
 		}
 	}
 	cmd->fd_in = pipe_fd[0];
+	if (g_exit_code == 130)
+		return (0);
 	return (1);
 }
 
