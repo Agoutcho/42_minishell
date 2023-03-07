@@ -76,14 +76,22 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] - dans l'init env ajouter OLDPWD et SHLVL s'il n'existe pas et verifier si la key est nulle 
 [ ] - gerer le _
 
+// TODO NOAH
+
+[x] - revoir la gestion des redirections pour toutes les gerees d'un coup et eviter les petites erreuers dans les cas suivants :
+	< outfile cat > 1 > 2 >3 > 4 >> infi <<EOF
+
+[] - gerer les pipes avec les builtins, probleme de lecture ou d'ecriture dans les pipes des builtins.
+
+
 // TODO IMPORTANT
 
-[ ] 1. Faire les heredoc en premier, si une redir ne marche pas ne pas faire les autres
+[x] 1. Faire les heredoc en premier, si une redir ne marche pas ne pas faire les autres
 [ ] 1. normer
 [ ] 1. secure les malloc
-[ ] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
+[x] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
 ou cat | cat | ls
-[ ] 1. Faire le heredoc
+[x] 1. Faire le heredoc
 [ ] 1. Finir les codes erreurs
 [x] 1. gerer le cat puis ctrl + C
 [x] 1. Regler le segfault lorsque qu'on fait cd - et que OLDPWD n'est pas set
@@ -100,4 +108,4 @@ ou cat | cat | ls
 // TODO TEST
 
 [ ] 2. tester les signaux
-[ ] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
+[x] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux

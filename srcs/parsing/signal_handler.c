@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 16:22:34 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 13:37:01 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:37:51 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	sig_int_child_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		close (g_exit_code);
 		g_exit_code = -1;
 		close (STDIN_FILENO);
 		rl_redisplay();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 21:29:49 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:47:29 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	child_process(int pipe_fd[2], char *heredoc)
 		{
 			heredoc_print("EOF");
 			free(heredoc_line);
+			close_pipe(pipe_fd, 1);
 			exit(EXIT_FAILURE);
 		}
 		if (ft_strncmp(heredoc_line, heredoc, ft_strlen(heredoc) + 1) == 0
@@ -58,6 +59,8 @@ void	child_process(int pipe_fd[2], char *heredoc)
 	free(heredoc_line);
 	if (!close_pipe(pipe_fd, 1))
 		exit(EXIT_FAILURE);
+	if (g_exit_code == -1)
+		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
 }
 
@@ -67,11 +70,10 @@ int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
 		return (0);
 	if (waitpid(pid, status, 0) == -1)
 		return (perror("Rachele: waitpid"), 0);
-	if (*status == 1)
+	if (*status == 256)
 	{
-		if (!close_pipe(pipe_fd, 0))
-			exit(EXIT_FAILURE);
-		return (1);
+		close_pipe(pipe_fd, 0);
+		return (0);
 	}
 	if (cmd->fd_in != STDIN_FILENO)
 	{
