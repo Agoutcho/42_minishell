@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 11:31:25 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/07 16:20:01 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	builtins_handler(t_data *data, int i)
 			return (perror("Rachele: fork"), 0);
 		else if (data->cmd[i].pid == 0)
 		{
-			if (!ft_connect_pipe(&data->cmd[i]))
-				free_exit(data, EXIT_FAILURE);
 			ft_close_child_fd(data, i);
 			if (!builtins_launcher(data, i))
 			{
