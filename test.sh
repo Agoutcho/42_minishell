@@ -109,3 +109,82 @@ ou cat | cat | ls
 
 [ ] 2. tester les signaux
 [x] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
+
+// TEST
+
+1
+exit + non numeric arguments mauvais ordre d'affichage :
+Rachele {
+	Rachele ═> exit dwjehgdwe
+	Rachele: exit: dwjehgdwe: numeric argument required
+	exit
+}
+Bash {
+	exit fjewgfw
+	exit
+	bash: exit: fjewgfw: numeric argument required
+}
+
+2
+changer le path avec un truc avant -> PATH="$PWD:$PATH"
+Rachele {
+	Rachele ═> touch ls
+	Rachele ═> chmod 777 ls
+	Rachele ═> export ORIGINALPATH=$PATH
+	Rachele ═> export PATH="$PATH:$PWD"
+	Rachele ═> ls
+	includes  ls        minishell  srcs    test.sh   valgrind_ignore_leaks.txt
+	libft     Makefile  objs       tester  text.txt
+	Rachele ═> export PATH=$ORIGINALPATH
+	Rachele ═> export PATH="$PWD:$PATH"
+	Rachele ═> ls
+	Rachele : /home/noahrd0/goinfre/WORKING/ls: Exec format error
+}
+Bash {
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ touch ls
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ chmod 777 ls
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export ORIGINALPATH=$PATH
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export PATH="$PATH:$PWD"
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ ls
+	includes  ls        minishell  srcs    test.sh   valgrind_ignore_leaks.txt
+	libft     Makefile  objs       tester  text.txt
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export PATH=$ORIGINALPATH
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export PATH="$PWD:$PATH"
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ ls
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ 
+}
+
+3
+heredoc avec les variables d'environnement
+Rachele {
+	Rachele ═> cat << $USER > tmp1
+	> bonjour
+	> je
+	> suis
+	> '$USER'
+	> "$USER"
+	> $USER 		// (on exit pas du heredoc)
+	> noahrd0 		// (pour pouvoir exit)
+	cat tmp1
+	bonjour
+	je
+	suis
+	'$USER'
+	"$USER"
+	$USER
+}
+Bash {
+	cat << $USER > tmp1
+	> bonjour
+	> je
+	> suis
+	> '$USER'
+	> "$USER"
+	> $USER
+	cat tmp1 
+	bonjour
+	je
+	suis
+	'noahrd0'
+	"noahrd0"
+}

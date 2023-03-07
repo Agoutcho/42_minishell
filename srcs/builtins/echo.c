@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:50:52 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 16:20:50 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/07 17:15:31 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_echo(t_cmd_array *cmd)
 	i = 0;
 	option = false;
 	while (cmd->args && cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
-	{
+	{		
 		option = true;
 		i++;
 	}

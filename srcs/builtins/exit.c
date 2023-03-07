@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:08:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/24 04:58:13 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:24:53 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_exit(char **args)
 			ft_putstr_fd("Rachele: exit: ", 2);
 			ft_putstr_fd(args[0], 2);
 			ft_putendl_fd(": numeric argument required", 2);
-			return (1);
+			return (set_g_exit_code(2, 0));
 		}
 		if (args[1])
 		{

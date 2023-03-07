@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 10:26:31 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/07 17:53:23 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 	else
 	{
 		i = 0;
+		g_exit_code = 0;
 		while (cmd->args[i])
 		{
 			if (is_valid_arg(cmd->args[i]))
@@ -32,7 +33,10 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 					return (set_g_exit_code(1, 0));
 			}
 			else
+			{
 				export_e_print(cmd->args[i]);
+				g_exit_code = 1;
+			}
 			i++;
 		}
 	}
@@ -72,7 +76,7 @@ int	is_valid_arg(char *arg)
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(arg[i++]) == 0)
+	if (arg[i] == '_' || ft_isalpha(arg[i++]) == 0)
 		return (0);
 	while (arg[i] && arg[i] != '=')
 	{
