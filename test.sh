@@ -111,6 +111,11 @@ ou cat | cat | ls
 [ ] 2. tester les signaux
 [x] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
 
+// TODO HEREDOC
+
+[ ] 1. Faire les heredoc avant tout et si on fait un ctrl + c on fait rien du tout => renvoi 130
+[ ] 1. le test cat << here si on ecrit des trucs puis on ctrl+D sa affiche ce quon a ecrit avant
+
 // TEST
 
 1
