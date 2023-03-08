@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 14:52:44 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/08 16:44:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	execution(t_data *data)
 	{
 		if (!ft_create_pipe(data, i))
 			return (0);
-		if (!redirections_handler(&data->cmd[i]))
-			return (ft_close_pipe(&data->cmd[i]), 1);
 		is_bt = is_builtins(data->cmd[i].the_cmd);
 		if (is_bt >= 0)
 		{
@@ -60,16 +58,14 @@ int	execution(t_data *data)
 			}
 			else if (data->cmd[i].pid == 0)
 			{
+				if (!redirections_handler(&data->cmd[i]))
+					exit (EXIT_FAILURE);
 				if (!ft_connect_pipe(&data->cmd[i]))
 				{
 					ft_putendl_fd("connect pipes", 2);
 					return (0);
 				}
 				ft_close_child_fd(data, i);
-				// ft_putendl_fd("Commands, :", 2);
-				// ft_putnbr_fd(data->cmd[i].fd_in, 2);
-				// ft_putnbr_fd(data->cmd[i].fd_out, 2);
-				// ft_putendl_fd("", 2);
 				execute(data, i);
 			}
 		}

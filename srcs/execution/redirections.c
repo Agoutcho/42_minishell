@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 14:56:38 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/08 16:45:39 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,9 @@ int	e_in_handler(t_redirect *redir, t_cmd_array *cmd)
 	redir->file_fd = open(redir->file_name, O_RDONLY);
 	if (access(redir->file_name, F_OK) != 0)
 	{
-		ft_putstr_fd("Rachele: no such file or directory: ", 2);
-		ft_putendl_fd(redir->file_name, 2);
+		ft_putstr_fd("Rachele: ", 2);
+		ft_putstr_fd(redir->file_name, 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		return (set_g_exit_code(1, 0));
 	}
 	if (access(redir->file_name, R_OK) != 0)

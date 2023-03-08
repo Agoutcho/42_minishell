@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 16:20:01 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 16:11:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	builtins_handler(t_data *data, int i)
 			return (perror("Rachele: fork"), 0);
 		else if (data->cmd[i].pid == 0)
 		{
+			if (!redirections_handler(&data->cmd[i]))
+				exit (EXIT_FAILURE);
 			ft_close_child_fd(data, i);
 			if (!builtins_launcher(data, i))
 			{
@@ -61,6 +63,8 @@ int	builtins_handler(t_data *data, int i)
 	}
 	else
 	{
+		if (!redirections_handler(&data->cmd[i]))
+			return (ft_close_pipe(&data->cmd[i]), 1);
 		if (!builtins_launcher(data, i))
 			return (0);
 		return (1);
