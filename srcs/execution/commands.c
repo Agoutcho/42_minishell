@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 14:18:21 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 09:55:16 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	exec_cmd_utils(t_data *data, int i, t_cmd_utils cmd_utils)
 {
 	big_free(data);
 	execve(cmd_utils.path, cmd_utils.args, cmd_utils.envp);
-	ft_putstr_fd("Rachele : ", 2);
-	perror(cmd_utils.path);
 	if (data->cmd[i].fd_in != STDIN_FILENO)
 		close(data->cmd[i].fd_in);
 	if (data->cmd[i].fd_in != STDOUT_FILENO)

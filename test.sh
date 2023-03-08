@@ -126,35 +126,6 @@ Bash {
 }
 
 2
-changer le path avec un truc avant -> PATH="$PWD:$PATH"
-Rachele {
-	Rachele ═> touch ls
-	Rachele ═> chmod 777 ls
-	Rachele ═> export ORIGINALPATH=$PATH
-	Rachele ═> export PATH="$PATH:$PWD"
-	Rachele ═> ls
-	includes  ls        minishell  srcs    test.sh   valgrind_ignore_leaks.txt
-	libft     Makefile  objs       tester  text.txt
-	Rachele ═> export PATH=$ORIGINALPATH
-	Rachele ═> export PATH="$PWD:$PATH"
-	Rachele ═> ls
-	Rachele : /home/noahrd0/goinfre/WORKING/ls: Exec format error
-}
-Bash {
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ touch ls
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ chmod 777 ls
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export ORIGINALPATH=$PATH
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export PATH="$PATH:$PWD"
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ ls
-	includes  ls        minishell  srcs    test.sh   valgrind_ignore_leaks.txt
-	libft     Makefile  objs       tester  text.txt
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export PATH=$ORIGINALPATH
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ export PATH="$PWD:$PATH"
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ ls
-	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ 
-}
-
-3
 heredoc avec les variables d'environnement
 Rachele {
 	Rachele ═> cat << $USER > tmp1

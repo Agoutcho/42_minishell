@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:21:16 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 14:42:37 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 10:05:07 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int	executable_handler(t_data *data, int i)
 		free_exit(data, EXIT_FAILURE);
 	big_free(data);
 	execve(cmd, args, env_array);
-	ft_putstr_fd("Rachele : ", 2);
-	perror(cmd);
 	if (data->cmd[i].fd_in != STDIN_FILENO)
 		close(data->cmd[i].fd_in);
 	if (data->cmd[i].fd_in != STDOUT_FILENO)
