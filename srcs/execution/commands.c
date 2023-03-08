@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:35:35 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 10:40:37 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:00:10 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ t_cmd_utils	prepare_cmd_utils(t_cmd_array *cmd, t_env *env)
 	env_array = env_to_array(env);
 	if (!env_array)
 		return (cmd_utils);
-	cmd_utils.path = get_path(cmd->the_cmd, env_array);
+	if (ft_strcmp(cmd->the_cmd, "") != 0)
+		cmd_utils.path = get_path(cmd->the_cmd, env_array);
 	if (!cmd_utils.path)
 	{
+		ft_putstr_fd("Rachele: ", 2);
 		ft_putstr_fd(cmd->the_cmd, 2);
 		ft_putendl_fd(": command not found", 2);
 		free_strs(env_array);
