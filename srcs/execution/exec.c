@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 10:58:12 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 14:52:44 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	execution(t_data *data)
 				return (0);
 			}
 			else if (data->cmd[i].pid == 0)
-			{	
+			{
 				if (!ft_connect_pipe(&data->cmd[i]))
 				{
 					ft_putendl_fd("connect pipes", 2);

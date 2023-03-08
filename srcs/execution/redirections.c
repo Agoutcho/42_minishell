@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 11:33:01 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 14:56:38 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	redirections_handler(t_cmd_array *cmd)
 		if (redir->type == e_heredoc && !e_heredoc_handler(redir, cmd))
 			return (0);
 		i++;
-		temp_fd = cmd->fd_in;
+		temp_fd = dup(cmd->fd_in);
 	}
 	i = 0;
 	while (cmd->redir_size > i)
@@ -40,7 +40,10 @@ int	redirections_handler(t_cmd_array *cmd)
 		i++;
 	}
 	if (is_hd(cmd))
+	{
+		close(cmd->fd_in);
 		cmd->fd_in = temp_fd;
+	}
 	return (1);
 }
 
