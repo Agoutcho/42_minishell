@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 16:22:34 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 18:47:43 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 23:46:09 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,10 @@ void	sig_int_child_handler(int signum)
 
 void	sig_quit_handler(int signum)
 {
-	char	*tmp;
-
 	if (signum == SIGQUIT)
 	{
-		write(2, "Quit: ", 7);
-		tmp = ft_itoa(signum);
-		if (!tmp)
-			write(2, "0\n", 2);
-		else
-		{
-			write(2, tmp, ft_strlen(tmp));
-			write(2, "\n", 1);
-		}
-		free(tmp);
+		ft_putendl_fd("Quit (core dumped)", 2);
+		// g_exit_code = 131;
 	}
 }
 

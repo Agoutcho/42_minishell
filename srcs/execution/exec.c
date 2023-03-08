@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 21:34:19 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/08 23:49:12 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	execution(t_data *data)
 
 	i = 0;
 	rerestore(&data->termio);
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, sig_int_handler_exec);
+	signal(SIGQUIT, sig_quit_handler);
 	init_cmd_fd(data);
 	while (i < data->size_cmd_array)
 	{
@@ -59,7 +59,10 @@ int	execution(t_data *data)
 			else if (data->cmd[i].pid == 0)
 			{
 				if (!redirections_handler(&data->cmd[i]))
+				{
+					big_free(data);
 					exit (g_exit_code);
+				}
 				if (!ft_connect_pipe(&data->cmd[i]))
 				{
 					ft_putendl_fd("connect pipes", 2);
@@ -85,10 +88,12 @@ int	execution(t_data *data)
 			if (WIFEXITED(g_exit_code))
 				g_exit_code = WEXITSTATUS(g_exit_code);
 			else if (WIFSIGNALED(g_exit_code))
-				g_exit_code = WTERMSIG(g_exit_code);
+				g_exit_code = 128 + WTERMSIG(g_exit_code);
 		}
 		i++;
 	}
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	return (reuncannon(&data->termio), 1);
 }
 
@@ -102,7 +107,7 @@ void	execute(t_data *data, int i)
 	if (is_exec == 1)
 	{
 		if (!executable_handler(data, i))
-			exit (EXIT_FAILURE);
+			exit (g_exit_code);
 	}
 	else if (is_exec == 0)
 			commands_handler(data, i);

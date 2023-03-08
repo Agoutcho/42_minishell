@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/08 16:36:46 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 23:39:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ void	init_term(bool mode);
 void	sig_handler(int sig);
 void	sig_handler_heredoc(int sig);
 void	sig_quit_handler_heredoc(int signum);
+void	sig_quit_handler(int signum);
 void	sig_action(void);
 
 int	set_g_exit_code(int code, int return_value);

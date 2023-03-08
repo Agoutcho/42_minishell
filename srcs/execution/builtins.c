@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 19:38:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/08 22:20:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	builtins_handler(t_data *data, int i)
 		else if (data->cmd[i].pid == 0)
 		{
 			if (!redirections_handler(&data->cmd[i]))
-				exit (EXIT_FAILURE);
+				free_exit(data, EXIT_FAILURE);
 			ft_close_child_fd(data, i);
 			if (!builtins_launcher(data, i))
 			{

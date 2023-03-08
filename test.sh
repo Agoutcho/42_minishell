@@ -86,6 +86,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO IMPORTANT
 
+[ ] 1. GERER LES BUILTINS, export quand ya plus d'env, pwd quand le dossier n'existe plus et cd aussi, enlever PWD de l'env et tester 
 [x] 1. Faire les heredoc en premier, si une redir ne marche pas ne pas faire les autres
 [ ] 1. normer
 [ ] 1. secure les malloc
@@ -99,12 +100,16 @@ ou cat | cat | ls
 [x] 1. finir les signaux
 [ ] 1. les signaux ctrl + \ dans un heredoc marche mal
 
+[ ] 2. creer une variable PWD au cs ou on enleve le dossier actuel et qu'on tape PWD !!!
 [x] 2. Ajouter le pwd apres un cd - 
 [ ] 2. checker les fd avec ls -l /proc/PID/fd/ ou avec le system monitor clique droit open files
 [ ] 2. gerer le segfault unset tous l'env
 
 [ ] 3. ajouter les erreurs lorsque le path est change et qu'on essaie un ls qui n'a pas de droit
 [ ] 3. dans search_key si la variable est set mais n'a pas de value ca marche moyen
+[ ] 3. dans echo gerer -nnnnnnnnnnn
+[ ] 3. OLDPWD doit prendre la valeur de PWD
+[ ] 3. lorsque le dossier n'existe plus les builtin PWD et CD ne marchent plus
 
 // TODO TEST
 
@@ -115,6 +120,10 @@ ou cat | cat | ls
 
 [ ] 1. Faire les heredoc avant tout et si on fait un ctrl + c on fait rien du tout => renvoi 130
 [ ] 1. le test cat << here si on ecrit des trucs puis on ctrl+D sa affiche ce quon a ecrit avant
+
+// TODO LEAKS
+
+[ ] 1. leaks bizarre avec seulement des espaces
 
 // TEST
 
