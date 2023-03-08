@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/07 11:35:30 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 10:53:34 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,7 @@ int		unset_keys(t_cmd_array *cmd, t_env *env);
 int		get_unset_key(char *arg, char **key);
 //@EXEC_C
 int		execution(t_data *data);
-int		execute(t_data *data, int i);
+void	execute(t_data *data, int i);
 //@BUILTINS_C
 int		builtins_handler(t_data *data, int i);
 char	**init_builtins_tab(void);

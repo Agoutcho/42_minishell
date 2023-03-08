@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 19:49:22 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 10:53:17 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,7 @@ int	execution(t_data *data)
 				// ft_putnbr_fd(data->cmd[i].fd_in, 2);
 				// ft_putnbr_fd(data->cmd[i].fd_out, 2);
 				// ft_putendl_fd("", 2);
-				if (!execute(data, i))
-				{
-					ft_putendl_fd("execute", 2);
-					return (0);
-				}
+				execute(data, i);
 			}
 		}
 		if (!ft_close_pipe(&data->cmd[i]))
@@ -96,19 +92,19 @@ int	execution(t_data *data)
 	return (reuncannon(&data->termio), 1);
 }
 
-int	execute(t_data *data, int i)
+void	execute(t_data *data, int i)
 {
 	int is_exec;
 
 	if (!data->cmd[i].the_cmd)
-		return (1);
+		exit (EXIT_SUCCESS);
 	is_exec = is_executable(data, i);
 	if (is_exec == 1)
 	{
 		if (!executable_handler(data, i))
-			return (0);
+			exit (EXIT_FAILURE);
 	}
 	else if (is_exec == 0)
-		commands_handler(data, i);
-	return (1);
+			commands_handler(data, i);
+	exit (EXIT_SUCCESS);
 }
