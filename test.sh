@@ -159,3 +159,19 @@ Bash {
 	'noahrd0'
 	"noahrd0"
 }
+
+3
+< tmp1 | > tmp1
+Rachele {
+	Rachele ═> < tmp1 | > tmp1
+	Rachele: no such file or directory: tmp1
+	Rachele ═> ls
+	includes  libft  Makefile  minishell  objs  srcs  test.sh  text.txt  valgrind_ignore_leaks.txt
+	Rachele ═> 
+}
+Bash {
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ < tmp1 | > tmp1
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$ ls
+	includes  libft  Makefile  minishell  objs  srcs  test.sh  text.txt  tmp1  valgrind_ignore_leaks.txt
+	noahrd0@DESKTOP-60NBG8D:~/goinfre/WORKING$
+}
