@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 16:11:43 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:38:52 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	builtins_launcher(t_data *data, int i)
 			// TODO big free
 			exit_shell();
 		}
+		else 
+			ft_exit(data->cmd[i].args);		
 	}
 	return (1);
 }
@@ -55,9 +57,9 @@ int	builtins_handler(t_data *data, int i)
 			if (!builtins_launcher(data, i))
 			{
 				ft_close_pipe(&data->cmd[i]);
-				free_exit(data, EXIT_FAILURE);
+				free_exit(data, g_exit_code);
 			}
-			free_exit(data, EXIT_SUCCESS);
+			free_exit(data, g_exit_code);
 		}
 		return (1);
 	}

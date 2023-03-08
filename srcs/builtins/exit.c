@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:08:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 17:24:53 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:21:09 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_exit(char **args)
 		if (args[1])
 		{
 			ft_putendl_fd("Rachele: exit: too many arguments", 2);
-			return (1);
+			return (set_g_exit_code(1, 1));
 		}
 		g_exit_code = get_exit_code(args[0]);
 	}
@@ -88,6 +88,6 @@ int	is_exit_arg_valid(char *arg)
 
 void	exit_shell(void)
 {
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("exit", 2);
 	exit(g_exit_code);
 }

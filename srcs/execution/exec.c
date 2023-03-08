@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 16:44:43 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:42:52 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ int	execution(t_data *data)
 		{
 			if (waitpid(data->cmd[i].pid, &g_exit_code, 0) == -1)
 				return (ft_putendl_fd("Rachele: waitpid", 2), 0);
-			g_exit_code %= 255;
+			// g_exit_code %= 255;
+			if (WIFEXITED(g_exit_code))
+				g_exit_code = WEXITSTATUS(g_exit_code);
+			else if (WIFSIGNALED(g_exit_code))
+				g_exit_code = WTERMSIG(g_exit_code);
 		}
 		i++;
 	}
