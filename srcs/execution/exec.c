@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 19:42:52 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/08 21:34:19 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	execution(t_data *data)
 			else if (data->cmd[i].pid == 0)
 			{
 				if (!redirections_handler(&data->cmd[i]))
-					exit (EXIT_FAILURE);
+					exit (g_exit_code);
 				if (!ft_connect_pipe(&data->cmd[i]))
 				{
 					ft_putendl_fd("connect pipes", 2);

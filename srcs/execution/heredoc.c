@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 14:53:30 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/08 21:35:17 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	child_process(int pipe_fd[2], char *heredoc)
 	char	*heredoc_line;
 
 	signal(SIGINT, sig_int_child_handler);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	if (!close_pipe(pipe_fd, 0))
 		exit(EXIT_FAILURE);
 	while (1)
@@ -61,10 +61,7 @@ void	child_process(int pipe_fd[2], char *heredoc)
 	if (!close_pipe(pipe_fd, 1))
 		exit(EXIT_FAILURE);
 	if (g_exit_code == -1)
-	{
-		g_exit_code = 130;
-		exit(EXIT_FAILURE + 1);
-	}
+		exit(130);
 	exit(EXIT_SUCCESS);
 }
 
@@ -74,11 +71,11 @@ int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
 		return (0);
 	if (waitpid(pid, status, 0) == -1)
 		return (perror("Rachele: waitpid"), 0);
-	if (*status == 256 || *status == 512)
+	if (*status != 0)
 	{
 		close_pipe(pipe_fd, 0);
-		if (*status == 512)
-			return (g_exit_code = 130, 0);
+		if (*status %255 == 130)
+			return (set_g_exit_code(130, 0));
 		return (0);
 	}
 	if (cmd->fd_in != STDIN_FILENO)
