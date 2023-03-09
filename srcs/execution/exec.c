@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 23:49:12 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/09 10:59:30 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,31 @@ void init_cmd_fd(t_data *data)
 	{
 		data->cmd[i].fd_in = STDIN_FILENO;
 		data->cmd[i].fd_out = STDOUT_FILENO;
+		data->cmd[i].heredoc_fd = -1;
 		i++;
 	}
+}
+
+int heredoc_maker(t_cmd_array *cmd)
+{
+	int			i;
+	t_redirect	*redir;
+
+	i = 0;
+	while (cmd->redir_size > i)
+	{
+		redir = &cmd->redir_array[i];
+		if (redir->type == e_heredoc)
+		{
+			if (!e_heredoc_handler(redir, cmd))
+				return (0);
+			if (cmd->heredoc_fd != -1)
+				close (cmd->heredoc_fd);
+			cmd->heredoc_fd = dup(cmd->fd_in);
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	execution(t_data *data)
@@ -35,6 +58,13 @@ int	execution(t_data *data)
 	signal(SIGINT, sig_int_handler_exec);
 	signal(SIGQUIT, sig_quit_handler);
 	init_cmd_fd(data);
+	while (i < data->size_cmd_array)
+	{
+		if (!heredoc_maker(&data->cmd[i]))
+			return (1);
+		i++;
+	}
+	i = 0;
 	while (i < data->size_cmd_array)
 	{
 		if (!ft_create_pipe(data, i))

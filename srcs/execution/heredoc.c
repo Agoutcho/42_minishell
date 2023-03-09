@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 21:35:17 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/09 10:17:16 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
 	if (*status != 0)
 	{
 		close_pipe(pipe_fd, 0);
-		if (*status %255 == 130)
+		if (*status % 255 == 130)
 			return (set_g_exit_code(130, 0));
 		return (0);
 	}

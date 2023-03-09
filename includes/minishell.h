@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/08 23:39:58 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/09 10:48:34 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct	s_cmd_array
 	t_args		*arg; // malloc liste chainee
 	int			is_cmd_filled;
 	pid_t		pid;
+	int			heredoc_fd;
 	int			fd_out;
 	int			fd_in;
 	long		redir_size;

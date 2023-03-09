@@ -81,7 +81,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [x] - revoir la gestion des redirections pour toutes les gerees d'un coup et eviter les petites erreuers dans les cas suivants :
 	< outfile cat > 1 > 2 >3 > 4 >> infi <<EOF
 
-[] - gerer les pipes avec les builtins, probleme de lecture ou d'ecriture dans les pipes des builtins.
+[x] - gerer les pipes avec les builtins, probleme de lecture ou d'ecriture dans les pipes des builtins.
 
 
 // TODO IMPORTANT

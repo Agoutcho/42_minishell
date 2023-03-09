@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 17:09:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 16:21:06 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:39:41 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_create_pipe(t_data *data, int i)
 
 int	ft_connect_pipe(t_cmd_array *cmd)
 {
-	if (cmd->fd_in != STDIN_FILENO)// && cmd->fd_in != -1)
+	if (cmd->fd_in != STDIN_FILENO && cmd->fd_in != -1)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
 			return (perror("Rachele: dup2"), 0);

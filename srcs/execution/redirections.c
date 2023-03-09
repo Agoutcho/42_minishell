@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 16:45:39 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:51:55 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,8 @@
 int	redirections_handler(t_cmd_array *cmd)
 {
 	int			i;
-	int			temp_fd;
 	t_redirect	*redir;
 
-	i = 0;
-	while (cmd->redir_size > i)
-	{
-		redir = &cmd->redir_array[i];
-		if (redir->type == e_heredoc && !e_heredoc_handler(redir, cmd))
-			return (0);
-		i++;
-		temp_fd = dup(cmd->fd_in);
-	}
 	i = 0;
 	while (cmd->redir_size > i)
 	{
@@ -41,8 +31,9 @@ int	redirections_handler(t_cmd_array *cmd)
 	}
 	if (is_hd(cmd))
 	{
-		close(cmd->fd_in);
-		cmd->fd_in = temp_fd;
+		if (cmd->fd_in != STDIN_FILENO && cmd->fd_in != -1)
+			close(cmd->fd_in);
+		cmd->fd_in = cmd->heredoc_fd;
 	}
 	return (1);
 }
