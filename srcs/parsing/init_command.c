@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 02:15:24 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/04 15:48:51 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 21:08:26 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ static void	init_cmd_filled(t_data *data)
 		data->cmd[i].args = NULL;
 		data->cmd[i].arg = NULL;
 		data->cmd[i].is_cmd_filled = 0;
+		data->cmd[i].pid = 0;
+		data->cmd[i].heredoc_fd = -1;
+		data->cmd[i].fd_out = -1;
+		data->cmd[i].fd_in = -1;
 		data->cmd[i].redir_size = 0;
 		data->cmd[i].redir_array = NULL;
 		i++;
