@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 16:44:06 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/09 12:10:21 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,6 @@ void	prompt(t_data *data)
 		}
 		if (ret == 1)
 			continue;
-		data->fd_saver.stdin = dup(0);
-		data->fd_saver.stdout = dup(1);
-		data->fd_saver.stderr = dup(2);
 		if (!execution(data))
 		{
 			big_free(data);
@@ -136,9 +133,6 @@ void	prompt(t_data *data)
 		}
 		signal(SIGINT, sig_int_handler);
 		signal(SIGQUIT, SIG_IGN);
-		close(data->fd_saver.stdin);
-		close(data->fd_saver.stdout);
-		close(data->fd_saver.stderr);
 		free_cmd(data);
 		init_to_zero(data, 0);
 	}

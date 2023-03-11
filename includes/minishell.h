@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/09 10:48:34 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/09 18:17:25 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,6 @@ typedef enum	e_redir
 	e_append, // ( >> )
 	e_heredoc // ( << )
 }				t_redir;
-
-typedef struct	s_fd_saver
-{
-	int	stdin;
-	int	stdout;
-	int	stderr;
-}				t_fd_saver;
 
 typedef struct	s_heredoc
 {
@@ -172,7 +165,6 @@ typedef struct	s_data
 	t_quote		quote;
 	t_cmd_array	*cmd; //malloc
 	long		size_cmd_array; // init a 0
-	t_fd_saver	fd_saver;
 	long		i_input;
 	char		*input;
 	t_termios	termio;
@@ -303,7 +295,7 @@ int		ft_export(t_cmd_array *cmd, t_env *env);
 int		is_valid_arg(char *arg);
 int		split_arg_on_equal_sign(char *arg, char **key, char **value);
 //	@PWD_C
-int		ft_pwd(t_cmd_array *cmd);
+int		ft_pwd(t_cmd_array *cmd, t_env *env);
 //	@UNSET_C
 int		ft_unset(t_cmd_array *cmd, t_env *env);
 int		unset_keys(t_cmd_array *cmd, t_env *env);
@@ -343,7 +335,6 @@ int		e_append_handler(t_redirect *redir, t_cmd_array *cmd);
 int		e_in_handler(t_redirect *redir, t_cmd_array *cmd);
 int		e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd);
 //@REDIRECTIONS_UTILS_C
-int		redirections_closer(t_cmd_array *cmd, t_fd_saver fd_saver);
 void	heredoc_print(char *heredoc);
 //@TEMPORAIRE
 // int		check_printable(char *str);

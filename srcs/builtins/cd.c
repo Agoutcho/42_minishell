@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/06 21:11:43 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:40:58 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+int	cd_move(t_cmd_array *cmd, t_env *env);
+
 
 int	ft_cd(t_cmd_array *cmd, t_env *env)
 {
@@ -25,13 +27,34 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 		return (cd_oldpwd(env, cmd));
 	else if (is_directory(cmd->args[0]))
 	{
-		if (!change_pwd(env, "OLDPWD="))
-			return (0);
-		if (chdir(cmd->args[0]) != 0)
-			return (0);
-		if (!change_pwd(env, "PWD="))
+		if (!cd_move(cmd, env))
 			return (0);
 	}
+	return (1);
+}
+
+int	cd_move(t_cmd_array *cmd, t_env *env)
+{
+	char	**split_path;
+	int		i;
+
+	i = 0;
+	split_path = ft_split(cmd->args[0], '/');
+	if (!split_path)
+		return (0);
+	if (!change_pwd(env, "OLDPWD="))
+		return (free_strs(split_path), 0);
+	while (split_path[i])
+	{
+		if (access(split_path[i], F_OK) != 0)
+			break ;
+		if (chdir(split_path[i]) != 0)
+			return (free_strs(split_path), 0);
+		i++;
+	}
+	free_strs(split_path);
+	if (!change_pwd(env, "PWD="))
+		return (0);
 	return (1);
 }
 
@@ -82,7 +105,7 @@ int	cd_oldpwd(t_env *env, t_cmd_array *cmd)
 			if (!change_pwd(env, "PWD="))
 				return (0);
 		}
-		ft_pwd(cmd);
+		ft_pwd(cmd, env);
 		free(path);
 	}
 	else
@@ -104,7 +127,7 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 		env = temp;
 		pwd = getcwd(NULL, 0);
 		if (!pwd)
-			return (0);
+			return (1);
 		replace_node(env, pwd);
 		free(pwd);
 	}
@@ -112,7 +135,7 @@ int	change_pwd(t_env *env, char *pwd_oldpwd_flag)
 	{
 		pwd = getcwd(NULL, 0);
 		if (!pwd)
-			return (0);
+			return (1);
 		create_node(env, pwd_oldpwd_flag, pwd);
 		free(pwd);
 	}

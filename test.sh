@@ -69,39 +69,22 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO globale
 
-[ ] - faire les builtins hors du fork si une seule commande sinon forker 
 [ ] - revoir init_env_creation.c 
 [ ] - revoir dans le parsing du $ ce que je mets dans temp 
 [ ] - revoir init_env_creation.c 
 [ ] - dans l'init env ajouter OLDPWD et SHLVL s'il n'existe pas et verifier si la key est nulle 
 [ ] - gerer le _
 
-// TODO NOAH
-
-[x] - revoir la gestion des redirections pour toutes les gerees d'un coup et eviter les petites erreuers dans les cas suivants :
-	< outfile cat > 1 > 2 >3 > 4 >> infi <<EOF
-
-[x] - gerer les pipes avec les builtins, probleme de lecture ou d'ecriture dans les pipes des builtins.
-
 
 // TODO IMPORTANT
 
 [ ] 1. GERER LES BUILTINS, export quand ya plus d'env, pwd quand le dossier n'existe plus et cd aussi, enlever PWD de l'env et tester 
-[x] 1. Faire les heredoc en premier, si une redir ne marche pas ne pas faire les autres
 [ ] 1. normer
 [ ] 1. secure les malloc
-[x] 1. gerer les waitpid apres toutes les commandes exemple sleep 10 | echo lol 
-ou cat | cat | ls
-[x] 1. Faire le heredoc
 [ ] 1. Finir les codes erreurs
-[x] 1. gerer le cat puis ctrl + C
-[x] 1. Regler le segfault lorsque qu'on fait cd - et que OLDPWD n'est pas set
-[x] 1. Regler les syntaxes error ne pas quitter le shell si ca marche pas.
-[x] 1. finir les signaux
 [ ] 1. les signaux ctrl + \ dans un heredoc marche mal
 
-[ ] 2. creer une variable PWD au cs ou on enleve le dossier actuel et qu'on tape PWD !!!
-[x] 2. Ajouter le pwd apres un cd - 
+[ ] 2. creer une variable PWD au cs ou on enleve le dossier actuel et qu'on tape PWD !!! 
 [ ] 2. checker les fd avec ls -l /proc/PID/fd/ ou avec le system monitor clique droit open files
 [ ] 2. gerer le segfault unset tous l'env
 

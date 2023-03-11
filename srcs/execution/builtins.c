@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 22:20:58 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/09 12:22:58 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	builtins_launcher(t_data *data, int i)
 	else if (which_builtins == 1)
 		return (ft_cd(&data->cmd[i], data->env));
 	else if (which_builtins == 2)
-		return (ft_pwd(&data->cmd[i]));
+		return (ft_pwd(&data->cmd[i], data->env));
 	else if (which_builtins == 3)
 		return (ft_export(&data->cmd[i], data->env));
 	else if (which_builtins == 4)
