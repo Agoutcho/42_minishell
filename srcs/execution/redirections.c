@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 15:12:09 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/09 10:51:55 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 11:37:05 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	redirections_handler(t_cmd_array *cmd)
 		if (cmd->fd_in != STDIN_FILENO && cmd->fd_in != -1)
 			close(cmd->fd_in);
 		cmd->fd_in = cmd->heredoc_fd;
+	}
+	else
+	{
+		if (cmd->heredoc_fd != -1)
+			close(cmd->heredoc_fd);
 	}
 	return (1);
 }
