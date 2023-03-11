@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/09 10:17:16 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 09:01:23 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int	close_pipe(int pipe_fd[2], int fd_index)
 	return (1);
 }
 
-void	child_process(int pipe_fd[2], char *heredoc)
+void	child_process(int pipe_fd[2], char *heredoc, t_data *data)
 {
 	char	*heredoc_line;
 
 	signal(SIGINT, sig_int_child_handler);
 	signal(SIGQUIT, SIG_IGN);
 	if (!close_pipe(pipe_fd, 0))
-		exit(EXIT_FAILURE);
+		free_exit(data, EXIT_FAILURE);
 	while (1)
 	{
 		heredoc_line = readline("> ");
@@ -48,7 +48,7 @@ void	child_process(int pipe_fd[2], char *heredoc)
 			heredoc_print("EOF");
 			free(heredoc_line);
 			close_pipe(pipe_fd, 1);
-			exit(EXIT_FAILURE);
+			free_exit(data, EXIT_FAILURE);
 		}
 		if (!heredoc_line && g_exit_code == -1)
 			break ;
@@ -59,10 +59,10 @@ void	child_process(int pipe_fd[2], char *heredoc)
 	}
 	free(heredoc_line);
 	if (!close_pipe(pipe_fd, 1))
-		exit(EXIT_FAILURE);
+		free_exit(data, EXIT_FAILURE);
 	if (g_exit_code == -1)
 		exit(130);
-	exit(EXIT_SUCCESS);
+	free_exit(data, EXIT_SUCCESS);
 }
 
 int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
@@ -92,7 +92,7 @@ int	parent_process(int pipe_fd[2], int *status, t_cmd_array *cmd, int pid)
 	return (1);
 }
 
-int	e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd)
+int	e_heredoc_handler(t_redirect *redir, t_data *data, t_cmd_array *cmd)
 {
 	int		pipe_fd[2];
 	int		status;
@@ -108,7 +108,7 @@ int	e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd)
 		return (0);
 	}
 	else if (pid == 0)
-		child_process(pipe_fd, redir->file_name);
+		child_process(pipe_fd, redir->file_name, data);
 	else
 		return (parent_process(pipe_fd, &status, cmd, pid));
 	return (1);

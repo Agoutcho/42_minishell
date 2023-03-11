@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/09 18:17:25 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 08:59:45 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ int		redirections_handler(t_cmd_array *cmd);
 int		e_out_handler(t_redirect *redir, t_cmd_array *cmd);
 int		e_append_handler(t_redirect *redir, t_cmd_array *cmd);
 int		e_in_handler(t_redirect *redir, t_cmd_array *cmd);
-int		e_heredoc_handler(t_redirect *redir, t_cmd_array *cmd);
+int		e_heredoc_handler(t_redirect *redir, t_data *data, t_cmd_array *cmd);
 //@REDIRECTIONS_UTILS_C
 void	heredoc_print(char *heredoc);
 //@TEMPORAIRE

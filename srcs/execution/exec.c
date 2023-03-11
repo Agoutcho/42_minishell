@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:02:50 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/09 10:59:30 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 08:59:57 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@ void init_cmd_fd(t_data *data)
 	}
 }
 
-int heredoc_maker(t_cmd_array *cmd)
+int heredoc_maker(t_data *data, int index)
 {
 	int			i;
 	t_redirect	*redir;
 
 	i = 0;
-	while (cmd->redir_size > i)
+	while (data->cmd[index].redir_size > i)
 	{
-		redir = &cmd->redir_array[i];
+		redir = &data->cmd[index].redir_array[i];
 		if (redir->type == e_heredoc)
 		{
-			if (!e_heredoc_handler(redir, cmd))
+			if (!e_heredoc_handler(redir, data, &data->cmd[index]))
 				return (0);
-			if (cmd->heredoc_fd != -1)
-				close (cmd->heredoc_fd);
-			cmd->heredoc_fd = dup(cmd->fd_in);
+			if (data->cmd[index].heredoc_fd != -1)
+				close (data->cmd[index].heredoc_fd);
+			data->cmd[index].heredoc_fd = dup(data->cmd[index].fd_in);
 		}
 		i++;
 	}
@@ -60,7 +60,7 @@ int	execution(t_data *data)
 	init_cmd_fd(data);
 	while (i < data->size_cmd_array)
 	{
-		if (!heredoc_maker(&data->cmd[i]))
+		if (!heredoc_maker(data, i))
 			return (1);
 		i++;
 	}
@@ -132,7 +132,10 @@ void	execute(t_data *data, int i)
 	int is_exec;
 
 	if (!data->cmd[i].the_cmd)
+	{
+		big_free(data);
 		exit (EXIT_SUCCESS);
+	}
 	is_exec = is_executable(data, i);
 	if (is_exec == 1)
 	{
@@ -140,6 +143,6 @@ void	execute(t_data *data, int i)
 			exit (g_exit_code);
 	}
 	else if (is_exec == 0)
-			commands_handler(data, i);
+		commands_handler(data, i);
 	exit (EXIT_SUCCESS);
 }
