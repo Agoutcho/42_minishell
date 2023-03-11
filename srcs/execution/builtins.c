@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/09 12:22:58 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:17:31 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	builtins_launcher(t_data *data, int i)
 	else if (which_builtins == 1)
 		return (ft_cd(&data->cmd[i], data->env));
 	else if (which_builtins == 2)
-		return (ft_pwd(&data->cmd[i], data->env));
+		return (ft_pwd(data->env));
 	else if (which_builtins == 3)
 		return (ft_export(&data->cmd[i], data->env));
 	else if (which_builtins == 4)
 		return (ft_unset(&data->cmd[i], data->env));
 	else if (which_builtins == 5)
-		return (ft_env(data->env, &data->cmd[i]));
+		return (ft_env(data->env));
 	else if (which_builtins == 6)
 	{
 		if (data->size_cmd_array == 1 && ft_exit(data->cmd[i].args) == 0)
@@ -53,6 +53,11 @@ int	builtins_handler(t_data *data, int i)
 		{
 			if (!redirections_handler(&data->cmd[i]))
 				free_exit(data, EXIT_FAILURE);
+			if (!ft_connect_pipe(&data->cmd[i]))
+			{
+				ft_putendl_fd("connect pipes", 2);
+				return (0);
+			}
 			ft_close_child_fd(data, i);
 			if (!builtins_launcher(data, i))
 			{

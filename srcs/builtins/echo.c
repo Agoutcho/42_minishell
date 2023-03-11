@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:50:52 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/08 23:48:17 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:01:04 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	ft_echo(t_cmd_array *cmd)
 	}
 	while (cmd->args && cmd->args[i])
 	{
-		ft_putstr_fd(cmd->args[i], cmd->fd_out);
+		ft_putstr_fd(cmd->args[i], STDOUT_FILENO);
 		if (cmd->args[i + 1] != NULL)
-			ft_putchar_fd(' ', cmd->fd_out);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
 	if (!option)
-		ft_putchar_fd('\n', cmd->fd_out);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (set_g_exit_code(0, 1));
 }

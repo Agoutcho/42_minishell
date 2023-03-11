@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/09 12:10:21 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:15:10 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	prompt(t_data *data)
 		ret = get_input(data);
 		if (ret == 0)
 		{
-			ft_putstr_fd("exit\n", 1);
+			ft_putstr_fd("exit\n", 2);
 			big_free(data);
 			exit(g_exit_code);
 		}

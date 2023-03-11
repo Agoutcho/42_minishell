@@ -78,6 +78,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO IMPORTANT
 
+[ ] 1. Le cd ne marche plus chdir recuperer un split du path du coup ca ne fonctionne pas
 [ ] 1. GERER LES BUILTINS, export quand ya plus d'env, pwd quand le dossier n'existe plus et cd aussi, enlever PWD de l'env et tester 
 [ ] 1. normer
 [ ] 1. secure les malloc
@@ -96,6 +97,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO TEST
 
+[x] 1. cat << 1 << 2 | echo mdr > 1 > 2 | cat << 3 | echo < in | cat << 4 | cat << 5 << 6 dans ce test echo mdr n'est pas ecris dans 2
 [ ] 2. tester les signaux
 [x] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
 

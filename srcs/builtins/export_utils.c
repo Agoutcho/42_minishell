@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:03:47 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/05 18:35:41 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:07:12 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_value(char *arg)
 	return (value);
 }
 
-int	ft_export_no_args(t_env *env, t_cmd_array *cmd)
+int	ft_export_no_args(t_env *env)
 {
 	char	**env_array;
 	char	**env_array_not_sorted;
@@ -85,12 +85,12 @@ int	ft_export_no_args(t_env *env, t_cmd_array *cmd)
 		i = 0;
 		while (env_array[i])
 		{
-			ft_putstr_fd("declare -x ", cmd->fd_out);
-			ft_putstr_fd(env_array[i], cmd->fd_out);
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(env_array[i], STDOUT_FILENO);
 			if (ft_strchr(env_array[i], '=') != 0)
-				ft_putendl_fd("\"", cmd->fd_out);
+				ft_putendl_fd("\"", STDOUT_FILENO);
 			else
-				write(cmd->fd_out, "\n", 1);
+				write(STDOUT_FILENO, "\n", 1);
 			i++;
 		}
 		free_strs(env_array_not_sorted);

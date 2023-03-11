@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/11 08:59:45 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:18:49 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ int		execution(t_data *data);
 int		get_key_length(char *arg);
 char	*get_key(char *arg);
 char	*get_value(char *arg);
-int		ft_export_no_args(t_env *env, t_cmd_array *cmd);
+int		ft_export_no_args(t_env *env);
 char	**sort_strs(char **strs);
 //			@2
 void	export_e_print(char *str);
@@ -277,12 +277,12 @@ int		export_create_node(char *key, char *value, t_env **env);
 int		ft_cd(t_cmd_array *cmd, t_env *env);
 int		change_pwd(t_env *env, char *pwd_oldpwd_flag);
 int		cd_home(t_env *env);
-int		cd_oldpwd(t_env *env, t_cmd_array *cmd);
+int		cd_oldpwd(t_env *env);
 int		is_directory(char *path);
 //	@ECHO_C
 int		ft_echo(t_cmd_array *cmd);
 //	@ENV_C
-int		ft_env(t_env *env, t_cmd_array *cmd);
+int		ft_env(t_env *env);
 //	@EXIT_C
 int		ft_exit(char **args);
 int		get_exit_code(char *arg);
@@ -295,7 +295,7 @@ int		ft_export(t_cmd_array *cmd, t_env *env);
 int		is_valid_arg(char *arg);
 int		split_arg_on_equal_sign(char *arg, char **key, char **value);
 //	@PWD_C
-int		ft_pwd(t_cmd_array *cmd, t_env *env);
+int		ft_pwd(t_env *env);
 //	@UNSET_C
 int		ft_unset(t_cmd_array *cmd, t_env *env);
 int		unset_keys(t_cmd_array *cmd, t_env *env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 00:33:48 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 17:53:23 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:16:15 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_export(t_cmd_array *cmd, t_env *env)
 
 	if (cmd->args == NULL || cmd->args[0] == NULL)
 	{
-		if (!ft_export_no_args(env, cmd))
+		if (!ft_export_no_args(env))
 			return (set_g_exit_code(1, 0));
 	}
 	else

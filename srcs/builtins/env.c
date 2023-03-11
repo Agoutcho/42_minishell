@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:28:47 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/04 15:44:10 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:07:08 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_env(t_env *env, t_cmd_array *cmd)
+int	ft_env(t_env *env)
 {
 	t_env	*ptr;
 
@@ -25,8 +25,8 @@ int	ft_env(t_env *env, t_cmd_array *cmd)
 		{
 			if (!ptr->key || !ptr->value)
 				return (set_g_exit_code(1, 0));
-			ft_putstr_fd(ptr->key, cmd->fd_out);
-			ft_putendl_fd(ptr->value, cmd->fd_out);
+			ft_putstr_fd(ptr->key, STDOUT_FILENO);
+			ft_putendl_fd(ptr->value, STDOUT_FILENO);
 		}
 		ptr = ptr->next;
 	}
