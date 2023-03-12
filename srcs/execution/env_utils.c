@@ -6,52 +6,60 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:09:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/12 05:54:58 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:21:13 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	set_first(t_env *env)
+void	set_first(t_env **env)
 {
 	t_env	*first;
+	t_env	*temp;
 
-	first = env->next;
-	while (env)
+	first = (*env)->next;
+	temp = *env;
+	DEBUG("first : %p", first)
+	while (*env)
 	{
-		env->first = first;
-		env = env->next;
+		DEBUG("env : %p env->first : %p", *env, (*env)->first);
+		(*env)->first = first;
+		*env = (*env)->next;
 	}
-	env = first;
+	*env = temp;
 }
 
-void	remove_node(t_env *env)
+void	remove_node(t_env **env)
 {
 	//danger leaks
 	t_env	*temp;
+	t_env	*first;
 
-	if (env)
+	if (*env)
 	{
-		temp = env->first;
-		if (env == env->first)
+		temp = (*env)->first;
+		if (*env == (*env)->first)
 			set_first(env);
-		while (temp->next && temp->next != env)
+		first = (*env)->first;
+		while (temp->next && temp->next != *env)
 			temp = temp->next;
-		DEBUG("temp : %p temp->next : %p , env : %p, env->next : %p", temp, temp->next, env, env->next)
+		DEBUG("temp : %p temp->next : %p , env : %p, env->next : %p", temp, temp->next, *env, (*env)->next)
 		if (temp->next)
-			temp->next = env->next;
-		if (env->key)
+			temp->next = (*env)->next;
+		if ((*env)->key)
 		{
-			free(env->key);
-			env->key = NULL;
+			free((*env)->key);
+			(*env)->key = NULL;
 		}
-		if (env->value)
+		if ((*env)->value)
 		{
-			free(env->value);
-			env->value = NULL;	
+			free((*env)->value);
+			(*env)->value = NULL;	
 		}
-		free(env);
-		env = NULL;
+		DEBUG("env : %p first : %p", *env, first)
+		free(*env);
+		*env = first;
+		DEBUG("env : %p first : %p", *env, first)
 	}
 }
 
@@ -118,13 +126,16 @@ int	env_ll_len(t_env *env_list)
 	t_env	*ptr;
 
 	ll_len = 0;
-	ptr = env_list;
+	ptr = env_list->first;
+	DEBUG("env_list : %p",env_list);
+	DEBUG("ptr : %p",ptr);
 	DEBUG("ptr : %p key : %s",ptr, ptr->key);
 	while (ptr != NULL)
 	{
 		ll_len++;
 		ptr = ptr->next;
 	}
+	DEBUG("ll_len : %d", ll_len);
 	return (ll_len);
 }
 

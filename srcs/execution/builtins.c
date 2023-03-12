@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:56:21 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/11 22:17:31 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:15:22 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtins_launcher(t_data *data, int i)
 	else if (which_builtins == 3)
 		return (ft_export(&data->cmd[i], data->env));
 	else if (which_builtins == 4)
-		return (ft_unset(&data->cmd[i], data->env));
+		return (ft_unset(&data->cmd[i], &data->env));
 	else if (which_builtins == 5)
 		return (ft_env(data->env));
 	else if (which_builtins == 6)

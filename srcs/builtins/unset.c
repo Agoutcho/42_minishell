@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 09:06:32 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/12 04:35:55 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:23:10 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void afficheee(t_env *env)
 	{
 		DEBUG("temp key : %s temp : %p temp->next : %p", temp->key, temp, temp->next);
 		temp = temp->next;
-		usleep(300000);
+		usleep(100000);
 	}
 }
 
-int	unset_keys(t_cmd_array *cmd, t_env *env)
+int	unset_keys(t_cmd_array *cmd, t_env **env)
 {
 	char	*key;
 	t_env	*temp;
@@ -41,23 +41,24 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 		}
 		else
 		{
-			temp = search_key(key, env);
+			temp = search_key(key, *env);
 			if (temp)
 			{
-				env = temp;
-				afficheee(env);
-				DEBUG("REMOVE NODE")
+				*env = temp;
+				afficheee(*env);
+				DEBUG("REMOVE NODE *env : %p", *env)
 				remove_node(env);
-				afficheee(env);
+				DEBUG("NODE REMOVED *env : %p", *env)
+				afficheee(*env);
 			}
-			env = env->first;
+			*env = (*env)->first;
 		}
 		i++;
 	}
 	return (set_g_exit_code(0, 1));
 }
 
-int	ft_unset(t_cmd_array *cmd, t_env *env)
+int	ft_unset(t_cmd_array *cmd, t_env **env)
 {
 	if (cmd->args == NULL || cmd->args[0] == NULL)
 		return (set_g_exit_code(0, 1));

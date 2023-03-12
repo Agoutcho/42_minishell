@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/11 22:18:49 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:23:17 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
  * 
  * DOC : https://gcc.gnu.org/onlinedocs/cpp/Variadic-Macros.html#Variadic-Macros
  */
-# define DEBUG(x, ...) printf("[%s][%s:%d] "x"\n",__FILE__, __FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
 # define BLACKp  printf("\033[0;30m");
 # define REDp    printf("\033[0;31m");
@@ -62,6 +61,8 @@
 # define CYAN   "\033[0;36m"
 # define WHITE  "\033[0;37m"
 # define RESET  "\033[0m"
+
+# define DEBUG(x, ...) printf(CYAN"[%s]"GREEN"[%s:%d] "YELLOW x RESET"\n",__FILE__, __FUNCTION__ ,__LINE__, ##__VA_ARGS__);
 
 // valgrind --leak-check=full --show-leak-kinds=all 2> text.txt ./minishell
 /* valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --show-mismatched-frees=yes --read-var-info=yes */
@@ -297,8 +298,8 @@ int		split_arg_on_equal_sign(char *arg, char **key, char **value);
 //	@PWD_C
 int		ft_pwd(t_env *env);
 //	@UNSET_C
-int		ft_unset(t_cmd_array *cmd, t_env *env);
-int		unset_keys(t_cmd_array *cmd, t_env *env);
+int		ft_unset(t_cmd_array *cmd, t_env **env);
+int		unset_keys(t_cmd_array *cmd, t_env **env);
 int		get_unset_key(char *arg, char **key);
 //@EXEC_C
 int		execution(t_data *data);
@@ -315,7 +316,7 @@ bool	builtin_option_checker(int cmd_id, char **args);
 int		is_executable(t_data *data, int i);
 int		executable_handler(t_data *data, int i);
 //@ENV_UTILS_C
-void	remove_node(t_env *env);
+void	remove_node(t_env **env);
 t_env	*search_key(char *key, t_env *env);
 int		replace_node(t_env *env, char *value);
 char	**env_to_array(t_env *env_list);
