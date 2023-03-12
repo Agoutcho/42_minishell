@@ -83,8 +83,9 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] 1. normer
 [ ] 1. secure les malloc
 [ ] 1. Finir les codes erreurs
-[ ] 1. les signaux ctrl + \ dans un heredoc marche mal
+[x] 1. les signaux ctrl + \ dans un heredoc marche mal
 
+[ ] 2. si le dossier actuel est supprimer voir une variable temporaire du pwd et remonter jusqu'a ce que ca marche pour cd ..
 [ ] 2. creer une variable PWD au cs ou on enleve le dossier actuel et qu'on tape PWD !!! 
 [ ] 2. checker les fd avec ls -l /proc/PID/fd/ ou avec le system monitor clique droit open files
 [ ] 2. gerer le segfault unset tous l'env
@@ -103,12 +104,12 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO HEREDOC
 
-[ ] 1. Faire les heredoc avant tout et si on fait un ctrl + c on fait rien du tout => renvoi 130
-[ ] 1. le test cat << here si on ecrit des trucs puis on ctrl+D sa affiche ce quon a ecrit avant
+[x] 1. Faire les heredoc avant tout et si on fait un ctrl + c on fait rien du tout => renvoi 130
+[x] 1. le test cat << here si on ecrit des trucs puis on ctrl+D sa affiche ce quon a ecrit avant
 
 // TODO LEAKS
 
-[ ] 1. leaks bizarre avec seulement des espaces
+[x] 1. leaks bizarre avec seulement des espaces
 
 // TEST
 

@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/11 22:15:10 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/12 03:35:07 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,35 @@ void	big_free(t_data *data)
 	rl_clear_history();
 }
 
+void	add_underscore(t_data *data)
+{
+	int		i;
+	int		j;
+	char	*temp;
+	t_env	*tempenv[1];
+
+	j = 0;
+	i = data->size_cmd_array - 1;
+	if (!data->cmd[i].the_cmd)
+		return ;
+	if (data->cmd[i].args)
+	{
+		while (data->cmd[i].args[j])
+			j++;
+		temp = ft_strjoin("_=", data->cmd[i].args[j - 1]);
+	}
+	else
+		temp = ft_strjoin("_=", data->cmd[i].the_cmd);
+	tempenv[0] = data->env;
+	if (!handle_export_arg(temp, tempenv))
+	{
+		free(temp);
+		big_free(data);
+		exit(1);
+	}
+	free(temp);
+}
+
 /**
  * @brief	Handle get_input returns
  */
@@ -131,6 +160,7 @@ void	prompt(t_data *data)
 			big_free(data);
 			exit(1);
 		}
+		add_underscore(data);
 		signal(SIGINT, sig_int_handler);
 		signal(SIGQUIT, SIG_IGN);
 		free_cmd(data);
