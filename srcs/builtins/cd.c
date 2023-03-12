@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/11 22:18:40 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/12 02:35:59 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,44 @@ int	ft_cd(t_cmd_array *cmd, t_env *env)
 
 int	cd_move(t_cmd_array *cmd, t_env *env)
 {
-	char	**split_path;
-	int		i;
-
-	i = 0;
-	split_path = ft_split(cmd->args[0], '/');
-	if (!split_path)
-		return (0);
 	if (!change_pwd(env, "OLDPWD="))
-		return (free_strs(split_path), 0);
-	while (split_path[i])
+		return (0);
+	if (chdir(cmd->args[0]) != 0)
 	{
-		if (access(split_path[i], F_OK) != 0)
-			break ;
-		if (chdir(split_path[i]) != 0)
-			return (free_strs(split_path), 0);
-		i++;
+		ft_putstr_fd("Rachele: cd: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		return (set_g_exit_code(1, 0));
 	}
-	free_strs(split_path);
 	if (!change_pwd(env, "PWD="))
 		return (0);
-	return (1);
+	return (set_g_exit_code(0, 1));
 }
+
+// int	cd_move(t_cmd_array *cmd, t_env *env)
+// {
+// 	char	**split_path;
+// 	int		i;
+
+// 	i = 0;
+	// split_path = ft_split(cmd->args[0], '/');
+// 	if (!split_path)
+// 		return (0);
+// 	if (!change_pwd(env, "OLDPWD="))
+// 		return (free_strs(split_path), 0);
+// 	while (split_path[i])
+// 	{
+// 		if (access(split_path[i], F_OK) != 0)
+// 			break ;
+// 		if (chdir(split_path[i]) != 0)
+// 			return (free_strs(split_path), 0);
+// 		i++;
+// 	}
+// 	free_strs(split_path);
+// 	if (!change_pwd(env, "PWD="))
+// 		return (0);
+// 	return (1);
+// }
 
 int	cd_home(t_env *env)
 {

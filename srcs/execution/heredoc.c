@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:37:54 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/11 09:01:23 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/12 03:01:05 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	child_process(int pipe_fd[2], char *heredoc, t_data *data)
 		heredoc_line = readline("> ");
 		if (!heredoc_line && g_exit_code != -1)
 		{
-			heredoc_print("EOF");
+			heredoc_print(heredoc);
 			free(heredoc_line);
 			close_pipe(pipe_fd, 1);
-			free_exit(data, EXIT_FAILURE);
+			free_exit(data, EXIT_SUCCESS);
 		}
 		if (!heredoc_line && g_exit_code == -1)
 			break ;
