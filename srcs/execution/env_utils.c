@@ -6,11 +6,24 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:09:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/12 05:01:32 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/12 05:54:58 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	set_first(t_env *env)
+{
+	t_env	*first;
+
+	first = env->next;
+	while (env)
+	{
+		env->first = first;
+		env = env->next;
+	}
+	env = first;
+}
 
 void	remove_node(t_env *env)
 {
@@ -19,9 +32,9 @@ void	remove_node(t_env *env)
 
 	if (env)
 	{
-		if (env == env->first)
-			env->first = env->next;
 		temp = env->first;
+		if (env == env->first)
+			set_first(env);
 		while (temp->next && temp->next != env)
 			temp = temp->next;
 		DEBUG("temp : %p temp->next : %p , env : %p, env->next : %p", temp, temp->next, env, env->next)
