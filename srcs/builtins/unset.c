@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 09:06:32 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/13 00:23:10 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:28:54 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ int	unset_keys(t_cmd_array *cmd, t_env **env)
 			if (temp)
 			{
 				*env = temp;
-				afficheee(*env);
+				// afficheee(*env);
 				DEBUG("REMOVE NODE *env : %p", *env)
 				remove_node(env);
 				DEBUG("NODE REMOVED *env : %p", *env)
-				afficheee(*env);
+				// afficheee(*env);
 			}
-			*env = (*env)->first;
+			if (*env)
+				*env = (*env)->first;
 		}
 		i++;
 	}

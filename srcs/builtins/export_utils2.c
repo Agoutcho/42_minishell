@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 18:42:17 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/07 17:53:13 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/13 00:30:57 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	export_search_and_update_key(char *key, char *value, t_env **env)
 	}
 	else
 	{
-		*env = (*env)->first;
+		if (*env)
+			*env = (*env)->first;
 		return (0);
 	}
 	return (1);
@@ -56,7 +57,8 @@ int	export_search_and_update_key(char *key, char *value, t_env **env)
 
 int	export_create_node(char *key, char *value, t_env **env)
 {
-	*env = (*env)->first;
+	if (*env)
+		*env = (*env)->first;
 	if (!create_node(*env, key, value))
 		return (0);
 	return (1);
