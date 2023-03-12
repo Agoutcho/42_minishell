@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:09:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/26 17:41:59 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/12 04:45:34 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ void	remove_node(t_env *env)
 	if (env)
 	{
 		temp = env->first;
+		if (env == env->first && env->next)
+			temp = env->next->first;
 		while (temp->next && temp->next != env)
 			temp = temp->next;
-		temp->next = env->next;
+		DEBUG("temp : %p temp->next : %p , env : %p, env->next : %p", temp, temp->next, env, env->next)
+		if (temp->next)
+			temp->next = env->next;
 		if (env->key)
 		{
 			free(env->key);
@@ -102,6 +106,7 @@ int	env_ll_len(t_env *env_list)
 
 	ll_len = 0;
 	ptr = env_list;
+	DEBUG("ptr : %p key : %s",ptr, ptr->key);
 	while (ptr != NULL)
 	{
 		ll_len++;

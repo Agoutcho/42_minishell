@@ -6,11 +6,24 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 09:06:32 by nradal            #+#    #+#             */
-/*   Updated: 2023/02/27 14:12:16 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/12 04:35:55 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void afficheee(t_env *env)
+{
+	t_env *temp;
+
+	temp = env->first;
+	while (temp)
+	{
+		DEBUG("temp key : %s temp : %p temp->next : %p", temp->key, temp, temp->next);
+		temp = temp->next;
+		usleep(300000);
+	}
+}
 
 int	unset_keys(t_cmd_array *cmd, t_env *env)
 {
@@ -32,7 +45,10 @@ int	unset_keys(t_cmd_array *cmd, t_env *env)
 			if (temp)
 			{
 				env = temp;
+				afficheee(env);
+				DEBUG("REMOVE NODE")
 				remove_node(env);
+				afficheee(env);
 			}
 			env = env->first;
 		}
