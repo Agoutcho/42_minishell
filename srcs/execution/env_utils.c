@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:09:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/13 00:21:13 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:37:41 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	replace_node(t_env *env, char *value)
 		env->value = NULL;
 	}
 	env->value = ft_strdup(value);
+	env->affiche_env = 1;
 	if (!env->value)
 		return (0);
 	return (1);
