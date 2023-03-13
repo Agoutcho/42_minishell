@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:58 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/12 02:35:59 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:57:25 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 int	cd_move(t_cmd_array *cmd, t_env *env);
-
 
 int	ft_cd(t_cmd_array *cmd, t_env *env)
 {
@@ -180,5 +179,4 @@ int	is_directory(char *path)
 		ft_putendl_fd(": Not a directory", 2);
 		return (set_g_exit_code(1, 0));
 	}
-	return (1);
 }

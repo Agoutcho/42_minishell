@@ -78,14 +78,14 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 // TODO IMPORTANT
 
-[ ] 1. Le cd ne marche plus chdir recuperer un split du path du coup ca ne fonctionne pas
-[ ] 1. GERER LES BUILTINS, export quand ya plus d'env, pwd quand le dossier n'existe plus et cd aussi, enlever PWD de l'env et tester 
+[x] 1. Le cd ne marche plus chdir recuperer un split du path du coup ca ne fonctionne pas
+[@] 1. GERER LES BUILTINS, export quand ya plus d'env, pwd quand le dossier n'existe plus et cd aussi, enlever PWD de l'env et tester 
 [ ] 1. normer
 [ ] 1. secure les malloc
 [ ] 1. Finir les codes erreurs
 [x] 1. les signaux ctrl + \ dans un heredoc marche mal
-[ ] 1. quand on a une redirection infile < mais que le fichier n'existe pas, le message d'erreur est mauvais
-[ ] 1. Quand il n'y a plus d'environnement on ne peut plus en ajouter ou il se pqsse des choses bizarre ou on segfault avec env ?
+[x] 1. quand on a une redirection infile < mais que le fichier n'existe pas, le message d'erreur est mauvais
+[x] 1. Quand il n'y a plus d'environnement on ne peut plus en ajouter ou il se pqsse des choses bizarre ou on segfault avec env ?
 
 [ ] 2. si le dossier actuel est supprimer voir une variable temporaire du pwd et remonter jusqu'a ce que ca marche pour cd ..
 [ ] 2. creer une variable PWD au cs ou on enleve le dossier actuel et qu'on tape PWD !!! 
@@ -94,8 +94,8 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 
 [ ] 3. ajouter les erreurs lorsque le path est change et qu'on essaie un ls qui n'a pas de droit
 [ ] 3. dans search_key si la variable est set mais n'a pas de value ca marche moyen
-[ ] 3. dans echo gerer -nnnnnnnnnnn
-[ ] 3. OLDPWD doit prendre la valeur de PWD
+[x] 3. dans echo gerer -nnnnnnnnnnn
+[x] 3. OLDPWD doit prendre la valeur de PWD
 [ ] 3. lorsque le dossier n'existe plus les builtin PWD et CD ne marchent plus
 
 // TODO TEST
