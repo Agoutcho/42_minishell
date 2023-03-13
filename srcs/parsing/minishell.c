@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/13 03:31:37 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:23:14 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void	add_underscore(t_data *data)
 	// DEBUG("tempenv : %p", &tempenv[0])
 	// DEBUG("tempenv : %p", tempenv[0])
 	// DEBUG("data->env : %p", data->env)
-	data->env = tempenv[0];
+	if (NULL == data->env)
+		data->env = tempenv[0];
 	// afficheee(data->env);
 	free(temp);
 }
