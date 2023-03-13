@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 01:43:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/13 00:23:17 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct	s_env
 {
 	char			*key; // PATH= //malloc
 	char			*value; // /bin/:/usr/bin //malloc
-	int				affiche_env; // 0 ou 1
+	int				display_env; // 0 ou 1
 	struct s_env	*first;
 	struct s_env	*next;
 }				t_env;

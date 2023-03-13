@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:29:00 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/01 04:04:36 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	copy_env(t_data *data, char **env)
 	data->env->next = NULL;
 	data->env->key = NULL;
 	data->env->value = NULL;
-	data->env->affiche_env = 0;
+	data->env->display_env = 0;
 	if (!lst_add_env_value(env[0], data->env))
 		return (0);
 	j = 1;
@@ -61,7 +61,7 @@ static int	create_env(t_data *data)
 	data->env->next = NULL;
 	data->env->key = NULL;
 	data->env->value = NULL;
-	data->env->affiche_env = 0;
+	data->env->display_env = 0;
 	if (!lst_add_env_value("SHLVL=0", data->env))
 		return (0);
 	if (!add_to_env(data, "OLDPWD"))

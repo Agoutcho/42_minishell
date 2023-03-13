@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 20:28:47 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/11 22:07:08 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_env(t_env *env)
 	ptr = env->first;
 	while (ptr != NULL)
 	{
-		if (ptr->affiche_env == 1)
+		if (ptr->display_env == 1)
 		{
 			if (!ptr->key || !ptr->value)
 				return (set_g_exit_code(1, 0));

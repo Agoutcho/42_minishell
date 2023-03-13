@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_creation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:09:01 by atchougo          #+#    #+#             */
-/*   Updated: 2023/03/03 22:41:48 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	lst_add_env_value(char *envp, t_env *env)
 	ft_strlcpy(env->value, envp + key_len + 1, value_len + 1);
 	if (ft_strncmp(env->key, "SHLVL=", ft_strlen(env->key) + 1) == 0)
 		env->value = change_shlvl(env->value);
-	env->affiche_env = 1;
+	env->display_env = 1;
 	return (1);
 }
 
@@ -63,7 +63,7 @@ int	lst_add_back_env(t_data *data, char **env, int j)
 	new->next = NULL;
 	new->key = NULL;
 	new->value = NULL;
-	new->affiche_env = 0;
+	new->display_env = 0;
 	temp->next = new;
 	if (!lst_add_env_value(env[j], new))
 		return (0);

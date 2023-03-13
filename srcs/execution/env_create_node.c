@@ -6,7 +6,7 @@
 /*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:24:22 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/13 14:21:25 by nradal           ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_env	*init_new_node(void)
 		return (NULL);
 	node->key = NULL;
 	node->value = NULL;
-	node->affiche_env = 0;
+	node->display_env = 0;
 	node->next = NULL;
 	return (node);
 }
@@ -55,9 +55,9 @@ int	set_value(t_env *node, char *value)
 	if (value)
 	{
 		node->value = ft_strdup(value);
-		node->affiche_env = 1;
+		node->display_env = 1;
 	}
 	else
-		node->affiche_env = 0;
+		node->display_env = 0;
 	return (1);
 }

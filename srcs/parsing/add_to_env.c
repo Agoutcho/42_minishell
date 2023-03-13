@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_to_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nradal <nradal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 01:53:37 by atchougo          #+#    #+#             */
-/*   Updated: 2023/02/22 18:27:33 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:43 by nradal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	add_printable(char *str, t_env *env)
 		return (0);
 	ft_strlcat(env->key, str, key_len + 2);
 	ft_strlcpy(env->value, str + key_len + 1, value_len + 2);
-	env->affiche_env = check_printable(str);
+	env->display_env = check_printable(str);
 	return (1);
 }
 
@@ -60,7 +60,7 @@ static int	add_not_printable(char *str, t_env *env)
 	if (!env->key)
 		return (0);
 	env->key = ft_strdup(str);
-	env->affiche_env = check_printable(str);
+	env->display_env = check_printable(str);
 	return (1);
 }
 
@@ -86,7 +86,7 @@ int	add_to_env(t_data *data, char *str)
 	new->next = NULL;
 	new->key = NULL;
 	new->value = NULL;
-	new->affiche_env = 0;
+	new->display_env = 0;
 	temp->next = new;
 	if (check_printable(str))
 		return (add_printable(str, new));
