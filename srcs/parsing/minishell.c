@@ -6,7 +6,7 @@
 /*   By: atchougo <atchougo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:18:40 by nradal            #+#    #+#             */
-/*   Updated: 2023/03/12 03:35:07 by atchougo         ###   ########.fr       */
+/*   Updated: 2023/03/13 03:31:37 by atchougo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,19 @@ void	add_underscore(t_data *data)
 	else
 		temp = ft_strjoin("_=", data->cmd[i].the_cmd);
 	tempenv[0] = data->env;
-	if (!handle_export_arg(temp, tempenv))
+	// DEBUG("tempenv : %p", &tempenv[0])
+	// DEBUG("tempenv : %p", tempenv[0])
+	if (!handle_export_arg(temp, &tempenv[0]))
 	{
 		free(temp);
 		big_free(data);
 		exit(1);
 	}
+	// DEBUG("tempenv : %p", &tempenv[0])
+	// DEBUG("tempenv : %p", tempenv[0])
+	// DEBUG("data->env : %p", data->env)
+	data->env = tempenv[0];
+	// afficheee(data->env);
 	free(temp);
 }
 

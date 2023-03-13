@@ -85,6 +85,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [ ] 1. Finir les codes erreurs
 [x] 1. les signaux ctrl + \ dans un heredoc marche mal
 [ ] 1. quand on a une redirection infile < mais que le fichier n'existe pas, le message d'erreur est mauvais
+[ ] 1. Quand il n'y a plus d'environnement on ne peut plus en ajouter ou il se pqsse des choses bizarre ou on segfault avec env ?
 
 [ ] 2. si le dossier actuel est supprimer voir une variable temporaire du pwd et remonter jusqu'a ce que ca marche pour cd ..
 [ ] 2. creer une variable PWD au cs ou on enleve le dossier actuel et qu'on tape PWD !!! 
@@ -102,7 +103,7 @@ cat>f2<f1>f3>>f5>f4|echo lol|cat
 [x] 1. cat << 1 << 2 | echo mdr > 1 > 2 | cat << 3 | echo < in | cat << 4 | cat << 5 << 6 dans ce test echo mdr n'est pas ecris dans 2
 [ ] 2. tester les signaux
 [x] 2. TEST : tester la priorite des infiles et des HEREDOC melange les deux
-[ ] 1. Les valeurs de retour en commande not found doivent etre a 127
+[x] 1. Les valeurs de retour en commande not found doivent etre a 127
 
 
 // TODO HEREDOC
